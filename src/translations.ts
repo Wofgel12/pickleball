@@ -159,6 +159,18 @@ export const translations = {
         fr: "Nous sommes un club multisport proposant une large gamme d’activités en plein air ou en salle. Le Pickleball fait partie de ces activités. Si vous êtes intéressés par d’autres sports, n’hésitez pas à regarder les autres sports que nous proposons sur Meetup !",
         en: "We are a multi-sport club offering a wide range of indoor and outdoor activities, and pickleball is one of them. If you are interested in other sports, feel free to explore the other activities we offer on Meetup!",
       },
+
+    },
+    q7: {
+      question: {
+        fr: "Où jouer au Pickleball à Genève ?",
+        en: "Where to play Pickleball in Geneva?",
+      },
+      answer: {
+        fr: "Geneva Sports Club vous propose deux sessions de Pickleball par semaine à la Jonction. Venez apprendre le Pickleball avec d'autres joueurs.",
+        en: "Geneva Sports Club offers two Pickleball sessions per week at La Jonction. Come learn Pickleball with other players.",
+      },
+
     },
   },
 
