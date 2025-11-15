@@ -69,8 +69,8 @@ export default function HomeSection({ language }: HomeSectionProps) {
       icon: TrendingUp,
       title: language === 'fr' ? 'Facile à Apprendre' : 'Easy to Learn',
       description: language === 'fr'
-        ? 'Accessible à tous les âges et niveaux, progressez rapidement'
-        : 'Accessible to all ages and levels, progress quickly',
+        ? 'Accessible à tous les âges et niveaux, progressez rapidement !'
+        : 'Accessible to all ages and levels, progress quickly!',
     },
   ];
 
