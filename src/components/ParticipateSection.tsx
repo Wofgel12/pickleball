@@ -87,7 +87,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
             <ExternalLink size={20} />
           </a>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-  <div className="flex items-center ">
+  <div className="flex justify-center">
     {/* Taille normale sur mobile, légèrement agrandie sur desktop */}
     <div className="origin-center scale-100 lg:scale-[1.15]">
       <DotLottieReact
