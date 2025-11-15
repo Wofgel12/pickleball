@@ -88,7 +88,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
           </a>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
   {/* Ce wrapper centre l'animation par rapport au bouton */}
-  <div className="flex items-center justify-center w-[160%] h-[130%] origin-center lg:scale-[1.15]">
+  <div className="flex items-center justify-center w-[200%] h-[130%] origin-center lg:scale-[1.15]">
     <DotLottieReact
       src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
       loop
