@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    line-height: 1.2;
+  }
+
+  h2 {
+    line-height: 1.2;
+  }
+
+  p {
+    line-height: 1.5;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  [class*="bg-amber-"],
+  [class*="bg-green-"],
+  [class*="bg-red-"] {
+    border: 2px solid #002B2B !important;
+  }
+}
