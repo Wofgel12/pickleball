@@ -100,10 +100,6 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
   </div>
 </div>
 
-    </div>
-  </div>
-</div>
-
 
 
 
