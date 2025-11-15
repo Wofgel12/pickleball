@@ -87,16 +87,14 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
             <ExternalLink size={20} />
           </a>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-  <div className="w-full h-full md:w-[300%] md:h-[300%] flex items-center justify-center">
-    {/* Taille normale sur mobile, légèrement agrandie sur desktop */}
-    <div className="origin-center scale-100 lg:scale-[1.15]">
-      <DotLottieReact
-        src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
-        loop
-        autoplay
-        style={{ width: "100%", height: "100%" }}
-      />
-    </div>
+  {/* Ce wrapper centre l'animation par rapport au bouton */}
+  <div className="flex items-center justify-center w-[160%] h-[130%] origin-center lg:scale-[1.15]">
+    <DotLottieReact
+      src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
+      loop
+      autoplay
+      className="w-full h-full"
+    />
   </div>
 </div>
 
