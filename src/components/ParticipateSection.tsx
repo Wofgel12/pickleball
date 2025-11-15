@@ -87,15 +87,19 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
             <ExternalLink size={20} />
           </a>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-  <div className="w-full h-full md:w-[400%] md:h-[300%] flex items-center justify-center">
-    <DotLottieReact
-      src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
-      loop
-      autoplay
-      style={{ width: "120%", height: "100%" }}
-    />
+  <div className="w-full h-full md:w-[300%] md:h-[300%] flex items-center justify-center">
+    {/* Double la taille sur mobile, taille normale à partir de md */}
+    <div className="origin-center scale-[2] md:scale-100">
+      <DotLottieReact
+        src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
+        loop
+        autoplay
+        style={{ width: "100%", height: "100%" }}
+      />
+    </div>
   </div>
 </div>
+
 
 
     
