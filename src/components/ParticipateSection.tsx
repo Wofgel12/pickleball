@@ -55,7 +55,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
               />
             )}
           </div>
-          <div className="w-32 h-32 rotate-180 scale-x-[-1]">
+          <div className="w-64 h-32 rotate-180 scale-x-[-1]">
             {isVisible && (
               <DotLottieReact
                 key={`right-${animationKey}`}
