@@ -94,7 +94,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
         src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
         loop
         autoplay
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "120%", height: "120%" }}
       />
     </div>
   </div>
