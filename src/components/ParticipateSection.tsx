@@ -93,7 +93,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
       src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
       loop
       autoplay
-      className="w-full h-full"
+      className="w-300px h-full"
     />
   </div>
 </div>
