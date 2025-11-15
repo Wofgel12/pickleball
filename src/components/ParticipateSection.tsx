@@ -97,7 +97,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
   </div>
 </div>
 
-          </div>
+    
         </div>
 
         <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border-2" style={{ borderColor: '#002b2b' }}>
