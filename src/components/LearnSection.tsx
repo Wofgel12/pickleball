@@ -96,7 +96,7 @@ export default function LearnSection({ language }: LearnSectionProps) {
           </h3>
 
           <div className="space-y-4 max-w-4xl mx-auto">
-            {[1, 2, 3, 4, 5,6  ].map((num) => (
+            {[1, 2, 3, 4, 5, 6 ].map((num) => (
               <div
                 key={num}
                 className="bg-white/90 backdrop-blur-sm rounded-xl border-2 overflow-hidden transition-all duration-300 hover:shadow-md"
