@@ -43,7 +43,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
       className="pb-20 px-4"
       ref={sectionRef}
     >
-      <div className="w-32 h-32 mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="flex justify-between mb-4">
           <div className="w-32 h-32 rotate-180">
             {isVisible && (

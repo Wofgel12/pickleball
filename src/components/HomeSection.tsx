@@ -94,7 +94,7 @@ export default function HomeSection({ language }: HomeSectionProps) {
               />
             </div>
           </div>
-          <p className="text-lg leading-relaxed text-gray-700 text-justify">
+          <p className="text-lg leading-relaxed text-gray-700">
             {t('home.intro', language)}
           </p>
         </div>
