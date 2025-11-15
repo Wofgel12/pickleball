@@ -87,7 +87,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
             <ExternalLink size={20} />
           </a>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-  <div className="w-200% h-full md:w-[300%] md:h-[300%]">
+  <div className="w-[300%] h-full md:w-[300%] md:h-[300%]">
     <DotLottieReact
       src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
       loop
