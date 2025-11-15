@@ -25,7 +25,7 @@ export default function LearnSection({ language }: LearnSectionProps) {
           <h2 className="text-4xl font-bold mb-4 text-gray-900">
             {t('learn.title', language)}
           </h2>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed text-justify">
             {t('learn.intro', language)}
           </p>
         </div>
