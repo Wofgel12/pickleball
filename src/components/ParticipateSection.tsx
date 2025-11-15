@@ -86,7 +86,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
             {t('participate.button', language)}
             <ExternalLink size={20} />
           </a>
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-50">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
             <div className="w-full h-full md:w-[200%] md:h-[200%]">
               <DotLottieReact
                 src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
