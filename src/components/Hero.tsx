@@ -13,6 +13,9 @@ export default function Hero({ language }: HeroProps) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
 
       <div className="relative z-10 text-center px-4 max-w-8xl mx-auto">
+      <h1 className="sr-only">
+ Sessions de Pickleball à Genève
+        </h1>
         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
           {t('hero.title', language)}
         </h2>
