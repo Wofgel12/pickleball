@@ -16,12 +16,12 @@ export const translations = {
     },
     subtitle: {
       fr: {
-        before: "Le seul club pratiquant activement à ",
+        before: "La seule association sportive pratiquant activement à ",
         city: "Genève",
         after: ".",
       },
       en: {
-        before: "The only club actively playing in ",
+        before: "The only sports association actively playing in ",
         city: "Geneva",
         after: ".",
       },
@@ -45,8 +45,8 @@ export const translations = {
       en: "Join our training sessions",
     },
     description: {
-      fr: "Notre club propose deux séances d'entraînement par semaine ouvertes à tous les niveaux : le lundi et le vendredi. Il n'y a pas de frais d'adhésion au club. Une simple cotisation de 10.- est demandée uniquement lorsque vous participez à une session.",
-      en: "Our club offers two training sessions per week, open to all levels, on Mondays and Fridays. There is no membership fee. A small fee of 10.- is requested only when you take part in a session.",
+      fr: "Notre association sportive propose deux séances d'entraînement par semaine ouvertes à tous les niveaux : le lundi et le vendredi. Il n'y a pas de frais d'adhésion à l'association. Une simple cotisation de 10.- est demandée uniquement lorsque vous participez à une session.",
+      en: "Our sports association offers two training sessions per week, open to all levels, on Mondays and Fridays. There is no membership fee. A small fee of 10.- is requested only when you take part in a session.",
     },
     button: {
       fr: "Voir nos événements sur Meetup",
@@ -101,8 +101,8 @@ export const translations = {
         en: "How do I register for the next pickleball session?",
       },
       answer: {
-        fr: 'Il suffit de cliquer sur le lien disponible dans la section « Participer » et de rechercher la prochaine activité Pickleball. Étant donné que le club propose d\'autres sports, il sera nécessaire de faire défiler les sessions d\'autres sports pour trouver la prochaine date de la session de Pickleball.',
-        en: 'Just click on the link available in the "Participate" section and look for the next pickleball activity. Since the club also offers other sports, you may need to scroll through the list to find the date of the next pickleball session.',
+        fr: 'Il suffit de cliquer sur le lien disponible dans la section « Participer » et de rechercher la prochaine activité Pickleball. Étant donné que l\'association propose d\'autres sports, il sera nécessaire de faire défiler les sessions d\'autres sports pour trouver la prochaine date de la session de Pickleball.',
+        en: 'Just click on the link available in the "Participate" section and look for the next pickleball activity. Since the association also offers other sports, you may need to scroll through the list to find the date of the next pickleball session.',
       },
     },
 
@@ -145,8 +145,8 @@ export const translations = {
         en: "What is the best sport to start in Geneva in 2025?",
       },
       answer: {
-        fr: "Définitivement le Pickleball. C'est un sport qui peut se jouer individuellement et collectivement et qui est facile à apprendre. Deux sessions par semaine sont proposées par le club GSC (Geneva Sports Club) si vous souhaitez le découvrir.",
-        en: "Definitely pickleball. It is a sport that can be played both individually and in teams, and it is easy to learn. The GSC (Geneva Sports Club) offers two sessions per week if you would like to try it.",
+        fr: "Définitivement le Pickleball. C'est un sport qui peut se jouer individuellement et collectivement et qui est facile à apprendre. Deux sessions par semaine sont proposées par l'association sportive GSC (Geneva Sports Club) si vous souhaitez le découvrir.",
+        en: "Definitely pickleball. It is a sport that can be played both individually and in teams, and it is easy to learn. The GSC association (Geneva Sports Club) offers two sessions per week if you would like to try it.",
       },
     },
 
@@ -156,8 +156,8 @@ export const translations = {
         en: "What is the GSC (Geneva Sports Club)?",
       },
       answer: {
-        fr: "Nous sommes un club multisport proposant une large gamme d’activités en plein air ou en salle. Le Pickleball fait partie de ces activités. Si vous êtes intéressés par d’autres sports, n’hésitez pas à regarder les autres sports que nous proposons sur Meetup !",
-        en: "We are a multi-sport club offering a wide range of indoor and outdoor activities, and pickleball is one of them. If you are interested in other sports, feel free to explore the other activities we offer on Meetup!",
+        fr: "Nous sommes une association multisports proposant une large gamme d’activités en plein air ou en salle. Le Pickleball fait partie de ces activités. Si vous êtes intéressés par d’autres sports, n’hésitez pas à regarder les autres sports que nous proposons sur Meetup !",
+        en: "We are a multi-sport association offering a wide range of indoor and outdoor activities, and pickleball is one of them. If you are interested in other sports, feel free to explore the other activities we offer on Meetup!",
       },
 
     },
