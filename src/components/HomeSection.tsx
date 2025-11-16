@@ -56,7 +56,20 @@ export default function HomeSection({ language }: HomeSectionProps) {
               {' '}!
             </>
           )
-        : 'Improve your cardio, coordination and agility with a low-impact sport',
+        : (
+            <>
+              Improve your overall health by playing a racket sport. It's{' '}
+              <a
+                href="https://www.menshealth.com/health/a63754502/racquet-sports-health-longevity-benefits/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-teal-600 hover:text-teal-700 underline font-semibold"
+              >
+                scientifically proven
+              </a>
+              {' '}!
+            </>
+          ),
     },
     {
       icon: Users,
@@ -74,7 +87,18 @@ export default function HomeSection({ language }: HomeSectionProps) {
               {' '}sont ouvertes à tous !
             </>
           )
-        : 'Meet new people in a relaxed and fun atmosphere',
+        : (
+            <>
+              Meet new people in a relaxed and fun atmosphere.{' '}
+              <a
+                href="#participate"
+                className="text-teal-600 hover:text-teal-700 underline font-semibold"
+              >
+                Our sessions
+              </a>
+              {' '}are open to everyone!
+            </>
+          ),
     },
     {
       icon: TrendingUp,
