@@ -74,9 +74,15 @@ function App() {
       </div>
 
       <div
-        className="bg-cover bg-center bg-fixed min-h-screen"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      >
+  className="min-h-screen"
+  style={{
+    backgroundImage: `url(${bgImage})`,
+    backgroundRepeat: 'repeat',
+    backgroundSize: '180px 180px', // à ajuster selon le rendu désiré
+    backgroundAttachment: 'scroll', // optionnel : pour enlever l'effet "fixed"
+  }}
+>
+
         <HomeSection language={language} />
         <ParticipateSection language={language} />
         <LearnSection language={language} />
