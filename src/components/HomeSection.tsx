@@ -62,7 +62,18 @@ export default function HomeSection({ language }: HomeSectionProps) {
       icon: Users,
       title: language === 'fr' ? 'Social & Convivial' : 'Social & Friendly',
       description: language === 'fr'
-        ? 'Rencontrez de nouvelles personnes dans une atmosphère détendue et amusante. Nos sessions sont ouvertes à tous !'
+        ? (
+            <>
+              Rencontrez de nouvelles personnes dans une atmosphère détendue et amusante.{' '}
+              <a
+                href="#participate"
+                className="text-teal-600 hover:text-teal-700 underline font-semibold"
+              >
+                Nos sessions
+              </a>
+              {' '}sont ouvertes à tous !
+            </>
+          )
         : 'Meet new people in a relaxed and fun atmosphere',
     },
     {
