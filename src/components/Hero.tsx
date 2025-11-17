@@ -22,11 +22,11 @@ export default function Hero({ language }: HeroProps) {
         <p className="text-xl sm:text-2xl md:text-3xl text-white/95 font-medium">
   {language === 'fr' ? (
     <>
-      Le seul club pratiquant activement à <span className="font-bold">Genève</span>.
+      La seule association sportive pratiquant activement à <span className="font-bold">Genève</span>.
     </>
   ) : (
     <>
-      The only club actively playing in <span className="font-bold">Geneva</span>.
+      The only sports association actively playing in <span className="font-bold">Geneva</span>.
     </>
   )}
 </p>
