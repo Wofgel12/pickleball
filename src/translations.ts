@@ -188,6 +188,10 @@ export const translations = {
       fr: "Nous recommandons cette raquette pour sa qualité et son excellent rapport qualité-prix. Idéale pour les débutants comme pour les joueurs confirmés.",
       en: "We recommend this paddle for its quality and excellent value. Ideal for both beginners and experienced players.",
     },
+    pros: { fr: "Avantages", en: "Pros" },
+    cons: { fr: "Inconvénients", en: "Cons" },
+    why: { fr: "Pourquoi nous le recommandons", en: "Why we recommend it" },
+    buyButton: { fr: "Où acheter", en: "Where to buy" },
     ballTitle: {
       fr: "Balles recommandées",
       en: "Recommended Balls",
