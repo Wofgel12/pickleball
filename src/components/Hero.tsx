@@ -12,6 +12,11 @@ export default function Hero({ language }: HeroProps) {
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
 
+      <div className="absolute top-24 right-8 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center">
+        <div className="text-4xl font-bold text-white mb-1">+ 8000 membres</div>
+        <div className="text-sm text-white/80">tout sport confondu</div>
+      </div>
+
       <div className="relative z-10 text-center px-4 max-w-8xl mx-auto">
       <h1 className="sr-only">
  Sessions de Pickleball à Genève
