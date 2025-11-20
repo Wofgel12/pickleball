@@ -2,6 +2,7 @@ import { ShoppingBag, Check, X, ExternalLink } from 'lucide-react';
 import { Language } from '../types';
 import { t } from '../translations';
 import raquette from '../assets/raquette.png';
+import balle from '../assets/balle.png';
 
 interface GearSectionProps {
   language: Language;
