@@ -5,6 +5,7 @@ export const translations = {
     home: { fr: "Accueil", en: "Home" },
     participate: { fr: "Participer", en: "Participate" },
     learn: { fr: "Comprendre", en: "Learn" },
+    gear: { fr: "Nos recommandations", en: "Our Recommendations" },
     faq: { fr: "FAQ", en: "FAQ" },
     contact: { fr: "Nous contacter", en: "Contact Us" },
   },
@@ -171,6 +172,29 @@ export const translations = {
         en: "Geneva Sports Club offers two Pickleball sessions per week at La Jonction. Come learn Pickleball with other players.",
       },
 
+    },
+  },
+
+  gear: {
+    title: {
+      fr: "Nos recommandations",
+      en: "Our Recommendations",
+    },
+    paddleTitle: {
+      fr: "Raquette recommandée",
+      en: "Recommended Paddle",
+    },
+    paddleDesc: {
+      fr: "Nous recommandons cette raquette pour sa qualité et son excellent rapport qualité-prix. Idéale pour les débutants comme pour les joueurs confirmés.",
+      en: "We recommend this paddle for its quality and excellent value. Ideal for both beginners and experienced players.",
+    },
+    ballTitle: {
+      fr: "Balles recommandées",
+      en: "Recommended Balls",
+    },
+    ballDesc: {
+      fr: "Ces balles offrent une excellente durabilité et un rebond optimal pour des parties en intérieur comme en extérieur.",
+      en: "These balls offer excellent durability and optimal bounce for both indoor and outdoor games.",
     },
   },
 

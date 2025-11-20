@@ -18,6 +18,7 @@ export default function Navigation({ activeSection, onNavigate, language, onLang
     { id: 'home', label: t('nav.home', language) },
     { id: 'participate', label: t('nav.participate', language) },
     { id: 'learn', label: t('nav.learn', language) },
+    { id: 'gear', label: t('nav.gear', language) },
     { id: 'faq', label: t('nav.faq', language) },
     { id: 'contact', label: t('nav.contact', language) },
   ];

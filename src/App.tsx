@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import HomeSection from './components/HomeSection';
 import ParticipateSection from './components/ParticipateSection';
 import LearnSection from './components/LearnSection';
+import GearSection from './components/GearSection';
 import ContactSection from './components/ContactSection';
 import { Language } from './types';
 import bgVideo from './assets/bg-video.mp4';
@@ -16,7 +17,7 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'participate', 'learn', 'faq', 'contact'];
+      const sections = ['home', 'participate', 'learn', 'gear', 'faq', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -86,6 +87,7 @@ function App() {
         <HomeSection language={language} />
         <ParticipateSection language={language} />
         <LearnSection language={language} />
+        <GearSection language={language} />
         <ContactSection language={language} />
       </div>
 
