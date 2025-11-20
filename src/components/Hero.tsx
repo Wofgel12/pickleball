@@ -21,7 +21,7 @@ export default function Hero({ language }: HeroProps) {
         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
           {t('hero.title', language)}
         </h2>
-        <p className="text-xl sm:text-2xl md:text-3xl text-white/95 font-medium">
+        <p className="text-xl sm:text-2xl md:text-3xl text-white/95 font-medium mb-8">
   {language === 'fr' ? (
     <>
       La seule association sportive pratiquant activement à <span className="font-bold">Genève</span>.
@@ -32,10 +32,11 @@ export default function Hero({ language }: HeroProps) {
     </>
   )}
 </p>
-              <div className="absolute top-24 right-8 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center">
-        <div className="text-4xl font-bold text-white mb-1">+ 8000 membres</div>
-        <div className="text-sm text-white/80">tout sport confondu</div>
-      </div>
+
+        <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center">
+          <div className="text-4xl font-bold text-white mb-1">+ 8000 membres</div>
+          <div className="text-sm text-white/80">tout sport confondu</div>
+        </div>
 
       </div>
 
