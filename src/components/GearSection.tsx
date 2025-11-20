@@ -130,7 +130,7 @@ export default function GearSection({ language }: GearSectionProps) {
               <div className="grid md:grid-cols-2 gap-8 items-center mb-6">
                 <div className="flex justify-center">
                   <img
-                    src="https://images.pexels.com/photos/6253914/pexels-photo-6253914.jpeg?auto=compress&cs=tinysrgb&w=800"
+                    src={balle}
                     alt="Pickleball Balls"
                     className="rounded-xl shadow-lg max-w-full h-auto"
                   />
