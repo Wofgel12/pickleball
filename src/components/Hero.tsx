@@ -33,8 +33,10 @@ export default function Hero({ language }: HeroProps) {
   )}
 </p>
 
-        <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center">
-          <div className="text-4xl font-bold text-white mb-1">+ 8000 membres</div>
+        <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center animate-[slideDown_0.8s_ease-out]">
+          <div className="text-4xl font-bold text-white mb-1">
+            + 8000 <a href="https://www.suissepickleball.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/80 transition-colors">membres</a>
+          </div>
           <div className="text-sm text-white/80">tout sport confondu</div>
         </div>
 
