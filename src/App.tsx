@@ -13,11 +13,12 @@ import logoImg from "./assets/logo-img.png";
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
+  const [currentPage, setCurrentPage] = useState<'main' | 'gear'>('main');
   const [language, setLanguage] = useState<Language>('fr');
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'participate', 'learn', 'gear', 'faq', 'contact'];
+      const sections = ['home', 'participate', 'learn', 'faq', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -39,6 +40,28 @@ function App() {
   }, []);
 
   const handleNavigate = (sectionId: string) => {
+    if (sectionId === 'gear') {
+      setCurrentPage('gear');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (currentPage !== 'main') {
+      setCurrentPage('main');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const offset = 80;
+          const elementPosition = element.offsetTop - offset;
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth',
+          });
+        }
+      }, 100);
+      return;
+    }
+
     const element = document.getElementById(sectionId);
     if (element) {
       const offset = 80;
@@ -57,39 +80,54 @@ function App() {
         onNavigate={handleNavigate}
         language={language}
         onLanguageChange={setLanguage}
+        currentPage={currentPage}
       />
 
-      <div className="relative">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
+      {currentPage === 'main' ? (
+        <>
+          <div className="relative">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover z-0"
+            >
+              <source src={bgVideo} type="video/mp4" />
+            </video>
+            <div className="relative z-10">
+              <Hero language={language} />
+            </div>
+          </div>
+
+          <div
+            className="min-h-screen"
+            style={{
+              backgroundImage: `url(${bgImage})`,
+              backgroundRepeat: 'repeat',
+              backgroundSize: '180px 180px',
+              backgroundAttachment: 'scroll',
+            }}
+          >
+            <HomeSection language={language} />
+            <ParticipateSection language={language} />
+            <LearnSection language={language} />
+            <ContactSection language={language} />
+          </div>
+        </>
+      ) : (
+        <div
+          className="min-h-screen pt-20"
+          style={{
+            backgroundImage: `url(${bgImage})`,
+            backgroundRepeat: 'repeat',
+            backgroundSize: '180px 180px',
+            backgroundAttachment: 'scroll',
+          }}
         >
-          <source src={bgVideo} type="video/mp4" />
-        </video>
-        <div className="relative z-10">
-          <Hero language={language} />
+          <GearSection language={language} />
         </div>
-      </div>
-
-      <div
-  className="min-h-screen"
-  style={{
-    backgroundImage: `url(${bgImage})`,
-    backgroundRepeat: 'repeat',
-    backgroundSize: '180px 180px', // à ajuster selon le rendu désiré
-    backgroundAttachment: 'scroll', // optionnel : pour enlever l'effet "fixed"
-  }}
->
-
-        <HomeSection language={language} />
-        <ParticipateSection language={language} />
-        <LearnSection language={language} />
-        <GearSection language={language} />
-        <ContactSection language={language} />
-      </div>
+      )}
 
       <footer className="relative z-10 bg-gray-900 text-white py-8 px-4" style={{ backgroundImage: `url(${bgImage})` }}>
         <div className="max-w-6xl mx-auto text-center">

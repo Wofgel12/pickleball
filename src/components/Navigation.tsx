@@ -9,9 +9,10 @@ interface NavigationProps {
   onNavigate: (section: string) => void;
   language: Language;
   onLanguageChange: (lang: Language) => void;
+  currentPage: 'main' | 'gear';
 }
 
-export default function Navigation({ activeSection, onNavigate, language, onLanguageChange }: NavigationProps) {
+export default function Navigation({ activeSection, onNavigate, language, onLanguageChange, currentPage }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const sections = [
@@ -19,7 +20,6 @@ export default function Navigation({ activeSection, onNavigate, language, onLang
     { id: 'participate', label: t('nav.participate', language) },
     { id: 'learn', label: t('nav.learn', language) },
     { id: 'gear', label: t('nav.gear', language) },
-    { id: 'faq', label: t('nav.faq', language) },
     { id: 'contact', label: t('nav.contact', language) },
   ];
 
