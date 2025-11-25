@@ -227,8 +227,8 @@ export const translations = {
     },
     info: {
       title: {
-        fr: "Club Multisports GSC",
-        en: "GSC Multisports Club",
+        fr: "Association Multisports GSC",
+        en: "GSC Multisports Association",
       },
       titlesession: {
         fr: "Sessions de Pickleball",
