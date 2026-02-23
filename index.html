@@ -9,15 +9,19 @@
     <!-- Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Title SEO -->
-    <title>
-      Cours de Pickleball à Genève | Play Pickleball in Geneva
-    </title>
+    <!-- Title SEO optimise : mot-cle principal + localisation en 55 caracteres -->
+    <title>Cours de Pickleball à Geneve | Geneva Sports Club</title>
 
-    <!-- Meta description -->
+    <!-- Meta description optimisee : 155 caracteres, CTA, mot-cle + lieu -->
     <meta
       name="description"
-      content="Découvrez le pickleball à Genève avec le Geneva Sports Club. Deux sessions par semaine sont disponibles. Un sport de raquette dynamique, convivial et accessible à tous."
+      content="Rejoignez nos sessions de pickleball à Geneve : cours pour débutants et confirmés, deux séances par semaine. Sport de raquette convivial et accessible à tous."
+    />
+
+    <!-- Meta keywords -->
+    <meta
+      name="keywords"
+      content="pickleball Geneve, cours pickleball Geneve, apprendre pickleball Geneve, club pickleball Geneve, sport raquette Geneve, pickleball Suisse romande, initiation pickleball Geneve, où jouer pickleball Geneve, session de pickleball Genève"
     />
 
     <!-- Canonical -->
@@ -26,61 +30,271 @@
       href="https://pickleballgeneva.netlify.app/"
     />
 
+    <!-- Hreflang pour le contenu bilingue FR/EN -->
+    <link rel="alternate" hreflang="fr" href="https://pickleballgeneva.netlify.app/" />
+    <link rel="alternate" hreflang="en" href="https://pickleballgeneva.netlify.app/" />
+    <link rel="alternate" hreflang="x-default" href="https://pickleballgeneva.netlify.app/" />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_CH" />
+    <meta property="og:locale:alternate" content="en_GB" />
     <meta
       property="og:title"
-      content="Pickleball Genève – Sessions de pickleball à Genève"
+      content="Cours de Pickleball a Geneve | Geneva Sports Club"
     />
     <meta
       property="og:description"
-      content="Rejoignez le Geneva Sports Club pour découvrir le pickleball à Genève : un sport de raquette fun, dynamique et facile à apprendre."
+      content="Decouvrez le pickleball a Geneve avec le Geneva Sports Club. Deux sessions par semaine ouvertes a tous les niveaux. Rejoignez-nous !"
     />
     <meta
       property="og:url"
       content="https://pickleballgeneva.netlify.app/"
     />
-    <!-- Mets ici une vraie image existante sur ton site -->
+    <meta property="og:site_name" content="Geneva Pickleball" />
     <meta
       property="og:image"
-      content="https://pickleballgeneva.netlify.app/images/pickleball-geneve-cover.jpg"
+      content="https://pickleballgeneva.netlify.app/og-pickleball-geneve.jpg"
     />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Session de pickleball a Geneve avec le Geneva Sports Club" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Pickleball Genève – Nouveau sport de raquette à Genève"
+      content="Cours de Pickleball a Geneve | Geneva Sports Club"
     />
     <meta
       name="twitter:description"
-      content="Découvre le pickleball à Genève avec deux sessions par semaine, ouvertes à tous les niveaux."
+      content="Rejoignez nos sessions de pickleball a Geneve : sport de raquette fun et accessible, deux seances par semaine pour tous les niveaux."
     />
     <meta
       name="twitter:image"
-      content="https://pickleballgeneva.netlify.app/images/pickleball-geneve-cover.jpg"
+      content="https://pickleballgeneva.netlify.app/og-pickleball-geneve.jpg"
     />
+
+    <!-- Google Site Verification -->
     <meta name="google-site-verification" content="0HMPf1oI1whiEWTVMzup7LjCJ5czuROLL3fdYDyOSsE" />
 
-    <!-- Données structurées Schema.org -->
+    <!-- Geo meta tags pour le SEO local -->
+    <meta name="geo.region" content="CH-GE" />
+    <meta name="geo.placename" content="Geneve" />
+    <meta name="geo.position" content="46.2044;6.1432" />
+    <meta name="ICBM" content="46.2044, 6.1432" />
+
+    <!-- Donnees structurees Schema.org : SportsClub / LocalBusiness -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "SportsClub",
-        "name": "Geneva Sports Club – Pickleball Genève",
+        "name": "Geneva Sports Club - Pickleball Geneve",
+        "alternateName": "GSC Pickleball",
         "url": "https://pickleballgeneva.netlify.app/",
-        "description": "Association sportive à Genève proposant deux sessions de pickleball par semaine pour découvrir ce nouveau sport de raquette dynamique et convivial.",
+        "description": "Cours de pickleball a Geneve : deux sessions par semaine pour debutants et confirmes. Rejoignez le Geneva Sports Club pour decouvrir ce sport de raquette convivial en Suisse romande.",
         "sport": "Pickleball",
+        "image": "https://pickleballgeneva.netlify.app/og-pickleball-geneve.jpg",
+        "email": "hello@genevasportsclub.ch",
+        "telephone": "+41762141203",
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Genève",
+          "streetAddress": "La Jonction",
+          "addressLocality": "Geneve",
+          "postalCode": "1205",
           "addressRegion": "GE",
           "addressCountry": "CH"
         },
-        "areaServed": {
-          "@type": "City",
-          "name": "Genève"
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 46.2044,
+          "longitude": 6.1432
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Geneve"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Suisse romande"
+          }
+        ],
+        "sameAs": [
+          "https://www.meetup.com/genevasportsclub/"
+        ],
+        "priceRange": "CHF 10",
+        "currenciesAccepted": "CHF",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Monday",
+            "opens": "18:00",
+            "closes": "20:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Friday",
+            "opens": "18:00",
+            "closes": "20:00"
+          }
+        ]
+      }
+    </script>
+
+    <!-- Donnees structurees Schema.org : FAQPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Comment m'inscrire a la prochaine session de Pickleball ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Il suffit de cliquer sur le lien disponible dans la section Participer et de rechercher la prochaine activite Pickleball. Etant donne que l'association propose d'autres sports, il sera necessaire de faire defiler les sessions d'autres sports pour trouver la prochaine date de la session de Pickleball."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Je suis debutant, est-ce ok ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui, tous les niveaux sont les bienvenus. Nous nous ferons un plaisir de vous expliquer comment jouer correctement."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Comment fonctionnent les sessions ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nous nous retrouvons sur trois terrains de Pickleball et jouons tous ensemble en faisant des equipes de deux. Nous nous repartissons idealement par niveau et cherchons a progresser ensemble tout en passant un moment convivial avec les autres membres."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Ou jouer au Pickleball a Geneve ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Geneva Sports Club vous propose deux sessions de Pickleball par semaine a la Jonction. Venez apprendre le Pickleball avec d'autres joueurs passionnes a Geneve."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Qu'est-ce que le Pickleball ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Le Pickleball est un sport de raquette dynamique et convivial qui combine des elements du tennis, du padel, du badminton et du ping-pong. Facile a apprendre et accessible a tous les ages, c'est l'activite ideale pour ameliorer votre cardio, votre coordination et votre agilite tout en vous amusant."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Qu'est-ce que le GSC (Geneva Sports Club) ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Le GSC est une association multisports a Geneve proposant une large gamme d'activites en plein air ou en salle. Le Pickleball fait partie de ces activites avec deux sessions par semaine."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quel est le meilleur sport a commencer a Geneve ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Definitivement le Pickleball. C'est un sport qui peut se jouer individuellement et collectivement et qui est facile a apprendre. Deux sessions par semaine sont proposees par l'association sportive GSC (Geneva Sports Club)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Combien coute une session de pickleball a Geneve ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Une session de pickleball avec le Geneva Sports Club coute seulement 10 CHF par participation. Il n'y a aucun frais d'adhesion a l'association. Vous payez uniquement lorsque vous participez a une session, ce qui rend ce sport de raquette tres accessible a Geneve."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Faut-il apporter son propre equipement pour jouer au pickleball ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Non, il n'est pas necessaire d'avoir votre propre equipement pour debuter. Des raquettes et des balles sont disponibles lors de nos sessions a Geneve. Si vous souhaitez investir dans votre propre materiel, consultez notre page de recommandations."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Donnees structurees Schema.org : Course -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "Cours de Pickleball a Geneve",
+        "description": "Sessions de pickleball pour tous niveaux a Geneve. Apprenez ce sport de raquette dynamique avec le Geneva Sports Club : deux entrainements par semaine, debutants bienvenus.",
+        "provider": {
+          "@type": "Organization",
+          "name": "Geneva Sports Club",
+          "url": "https://pickleballgeneva.netlify.app/"
+        },
+        "courseMode": "onsite",
+        "inLanguage": "fr",
+        "availableLanguage": ["fr", "en"],
+        "locationCreated": {
+          "@type": "Place",
+          "name": "La Jonction, Geneve",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Geneve",
+            "addressRegion": "GE",
+            "addressCountry": "CH"
+          }
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "10",
+          "priceCurrency": "CHF",
+          "availability": "https://schema.org/InStock"
         }
+      }
+    </script>
+
+    <!-- Donnees structurees Schema.org : BreadcrumbList -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://pickleballgeneva.netlify.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Participer aux sessions",
+            "item": "https://pickleballgeneva.netlify.app/#participate"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Apprendre le Pickleball",
+            "item": "https://pickleballgeneva.netlify.app/#learn"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "FAQ Pickleball Geneve",
+            "item": "https://pickleballgeneva.netlify.app/#faq"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Contact",
+            "item": "https://pickleballgeneva.netlify.app/#contact"
+          }
+        ]
       }
     </script>
   </head>

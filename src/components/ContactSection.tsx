@@ -1,4 +1,4 @@
-import { Mail, Phone, AlertCircle, CheckCircle } from 'lucide-react';
+import { Mail, Phone, AlertCircle, CheckCircle, MapPin } from 'lucide-react';
 import { useState, FormEvent } from 'react';
 import { Language } from '../types';
 import { t } from '../translations';
@@ -206,7 +206,7 @@ export default function ContactSection({ language }: ContactSectionProps) {
                       {language === 'fr' ? 'Téléphone' : 'Phone'}
                     </p>
                     <a
-                      href="tel:+41762141203"
+                      href="tel:+41788826810"
                       className="text-blue-600 hover:text-blue-700 transition-colors"
                     >
                       +41 78.882.68.10
@@ -214,6 +214,19 @@ export default function ContactSection({ language }: ContactSectionProps) {
                   </div>
                 </div>
 
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <MapPin className="text-white" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900 mb-1">
+                      {language === 'fr' ? 'Lieu des sessions' : 'Session location'}
+                    </p>
+                    <address className="not-italic text-teal-600">
+                      La Jonction, 1205 Genève, Suisse
+                    </address>
+                  </div>
+                </div>
 
               </div>
             </div>

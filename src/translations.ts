@@ -168,10 +168,31 @@ export const translations = {
         en: "Where to play Pickleball in Geneva?",
       },
       answer: {
-        fr: "Geneva Sports Club vous propose deux sessions de Pickleball par semaine à la Jonction. Venez apprendre le Pickleball avec d'autres joueurs.",
-        en: "Geneva Sports Club offers two Pickleball sessions per week at La Jonction. Come learn Pickleball with other players.",
+        fr: "Geneva Sports Club vous propose deux sessions de Pickleball par semaine à la Jonction, en plein cœur de Genève. Venez apprendre le Pickleball avec d'autres joueurs passionnés dans une ambiance conviviale.",
+        en: "Geneva Sports Club offers two Pickleball sessions per week at La Jonction, in the heart of Geneva. Come learn Pickleball with other passionate players in a friendly atmosphere.",
       },
+    },
 
+    q8: {
+      question: {
+        fr: "Combien coûte une session de pickleball à Genève ?",
+        en: "How much does a pickleball session cost in Geneva?",
+      },
+      answer: {
+        fr: "Une session de pickleball avec le Geneva Sports Club coûte seulement 10 CHF par participation. Il n'y a aucun frais d'adhésion à l'association. Vous payez uniquement lorsque vous participez à une session, ce qui rend ce sport de raquette très accessible à Genève.",
+        en: "A pickleball session with the Geneva Sports Club costs only CHF 10 per attendance. There is no membership fee. You only pay when you attend a session, making this racket sport very accessible in Geneva.",
+      },
+    },
+
+    q9: {
+      question: {
+        fr: "Faut-il apporter son propre équipement pour jouer au pickleball ?",
+        en: "Do I need to bring my own equipment to play pickleball?",
+      },
+      answer: {
+        fr: "Non, il n'est pas nécessaire d'avoir votre propre équipement pour débuter. Des raquettes et des balles sont disponibles lors de nos sessions à Genève. Si vous souhaitez investir dans votre propre matériel, consultez notre page de recommandations pour découvrir les raquettes et balles que nous conseillons.",
+        en: "No, you do not need your own equipment to get started. Paddles and balls are available at our sessions in Geneva. If you wish to invest in your own gear, check out our recommendations page for the paddles and balls we suggest.",
+      },
     },
   },
 

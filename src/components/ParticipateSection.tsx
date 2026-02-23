@@ -115,7 +115,7 @@ export default function ParticipateSection({ language }: ParticipateSectionProps
             </h3>
           </div>
           <div className="relative">
-            <iframe src='https://widgets.sociablekit.com/meetup-group-events/iframe/25622080' frameborder='0' width='100%' height='500'></iframe>
+            <iframe src='https://widgets.sociablekit.com/meetup-group-events/iframe/25622080' frameBorder='0' width='100%' height='500' title="Événements Meetup du Geneva Sports Club — Prochaines sessions de pickleball à Genève"></iframe>
           </div>
         </div>
       </div>

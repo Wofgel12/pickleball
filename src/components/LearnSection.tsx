@@ -39,7 +39,7 @@ export default function LearnSection({ language }: LearnSectionProps) {
               {t('learn.courtDesc', language)}
             </p>
             <div className="bg-white p-6 rounded-xl shadow-sm border-2" style={{ borderColor: '#002b2b' }}>
-              <img src={courtImage} alt="Pickleball Court" className="w-full h-auto rounded-lg" />
+              <img src={courtImage} alt="Terrain de pickleball avec dimensions et zones de jeu à Genève" className="w-full h-auto rounded-lg" />
             </div>
           </div>
 
@@ -85,7 +85,7 @@ export default function LearnSection({ language }: LearnSectionProps) {
               className="absolute inset-0 w-full h-full rounded-xl"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              title="What is Pickleball"
+              title="Vidéo explicative : comment jouer au pickleball - règles et techniques"
             />
           </div>
         </div>
@@ -96,7 +96,7 @@ export default function LearnSection({ language }: LearnSectionProps) {
           </h3>
 
           <div className="space-y-4 max-w-4xl mx-auto">
-            {[1, 2, 3, 4, 5, 6, 7 ].map((num) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
               <div
                 key={num}
                 className="bg-white/90 backdrop-blur-sm rounded-xl border-2 overflow-hidden transition-all duration-300 hover:shadow-md"

@@ -16,8 +16,8 @@ export default function Hero({ language }: HeroProps) {
 
       <div className="relative z-10 text-center px-4 max-w-8xl mx-auto">
       <h1 className="sr-only">
- Sessions de Pickleball à Genève
-        </h1>
+        Cours de Pickleball à Genève — Sessions et entraînements avec le Geneva Sports Club
+      </h1>
         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
           {t('hero.title', language)}
         </h2>

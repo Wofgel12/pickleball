@@ -58,7 +58,7 @@ export default function GearSection({ language }: GearSectionProps) {
                 <div className="flex justify-center">
                   <img
                     src={raquette}
-                    alt="Pickleball Paddle"
+                    alt="Raquette de pickleball recommandée pour jouer à Genève"
                     className="rounded-xl shadow-lg max-w-full h-auto"
                   />
                 </div>
@@ -131,7 +131,7 @@ export default function GearSection({ language }: GearSectionProps) {
                 <div className="flex justify-center">
                   <img
                     src={balle}
-                    alt="Pickleball Balls"
+                    alt="Balles de pickleball pour entraînement en intérieur et extérieur"
                     className="rounded-xl shadow-lg max-w-full h-auto"
                   />
                 </div>
