@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ParticipateContent from '../components/ParticipateContent.astro';
+import { facts } from '../i18n/ui';
+
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Comment participer à une session de pickleball à Genève',
+  description: "Inscription en cinq étapes via Meetup pour rejoindre une session du Geneva Sports Club à La Jonction, Genève.",
+  totalTime: 'PT5M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'CHF', value: facts.priceCHF },
+  supply: [
+    { '@type': 'HowToSupply', name: 'Compte Meetup gratuit' },
+    { '@type': 'HowToSupply', name: 'Tenue de sport et chaussures intérieures' },
+    { '@type': 'HowToSupply', name: '10 CHF en espèces ou Twint' },
+  ],
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Accéder à la page de l'association", url: facts.meetupUrl, text: 'Ouvrir la page Geneva Sports Club sur Meetup.' },
+    { '@type': 'HowToStep', position: 2, name: 'Parcourir les événements', text: "Aller sur l'onglet Événements pour voir toutes les sessions hebdomadaires." },
+    { '@type': 'HowToStep', position: 3, name: 'Choisir votre session pickleball', text: 'Sélectionner la session pickleball du lundi ou vendredi 18h-20h.' },
+    { '@type': 'HowToStep', position: 4, name: "Créer votre compte et rejoindre", text: "Cliquer sur Rejoindre et créer un compte Meetup gratuit." },
+    { '@type': 'HowToStep', position: 5, name: 'Venir à la session', text: 'Se présenter à La Jonction 5 minutes avant le début, 10 CHF sur place.' },
+  ],
+};
+---
+<BaseLayout pageKey="participate" lang="fr" jsonLd={[howTo]}>
+  <div class="bg-tile">
+    <PageHero
+      lang="fr"
+      title="Participer à une session de pickleball à Genève"
+    />
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <ParticipateContent lang="fr" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

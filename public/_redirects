@@ -1,0 +1,18 @@
+# Anchor-style URLs from the legacy SPA — redirect to the right Astro route.
+/index.html#participate /participer/ 301!
+/index.html#learn       /apprendre/ 301!
+/index.html#gear        /equipement/ 301!
+/index.html#faq         /faq/ 301!
+/index.html#contact     /contact/ 301!
+/#participate /participer/ 301!
+/#learn       /apprendre/ 301!
+/#gear        /equipement/ 301!
+/#faq         /faq/ 301!
+/#contact     /contact/ 301!
+
+# English helpers
+/en/index.html#participate /en/participate/ 301!
+/en/index.html#learn       /en/learn/ 301!
+/en/index.html#gear        /en/gear/ 301!
+/en/index.html#faq         /en/faq/ 301!
+/en/index.html#contact     /en/contact/ 301!

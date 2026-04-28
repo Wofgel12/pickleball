@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import GearContent from '../components/GearContent.astro';
+import { facts } from '../i18n/ui';
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Équipement de pickleball : guide d\'achat raquette & balles 2026',
+  description: 'Comment choisir sa raquette de pickleball à Genève : poids, matériaux (graphite, composite), niveau cible, balles indoor vs outdoor.',
+  inLanguage: 'fr-CH',
+  author: { '@type': 'Organization', name: 'Geneva Sports Club', url: SITE + '/' },
+  publisher: { '@type': 'Organization', name: 'Geneva Sports Club', logo: { '@type': 'ImageObject', url: SITE + '/logo-img.png' } },
+  datePublished: '2026-01-15',
+  dateModified: facts.lastReviewedISO,
+  mainEntityOfPage: SITE + '/equipement/',
+  image: SITE + '/og-pickleball-geneve.jpg',
+};
+---
+<BaseLayout pageKey="gear" lang="fr" jsonLd={[articleSchema]}>
+  <div class="bg-tile">
+    <PageHero
+      lang="fr"
+      title="Équipement de pickleball : raquettes & balles"
+      lead="Guide d'achat pratique pour choisir votre première raquette de pickleball : poids (légère, medium, lourde), matériaux (graphite, composite), niveau cible. Conseils balles indoor et outdoor."
+    />
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <GearContent lang="fr" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

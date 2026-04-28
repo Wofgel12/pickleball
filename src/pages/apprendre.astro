@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import LearnContent from '../components/LearnContent.astro';
+import { facts } from '../i18n/ui';
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Apprendre le pickleball : règles complètes, lexique et technique',
+  description: "Guide complet en français pour apprendre le pickleball à Genève : terrain, service, scoring, lexique technique (cuisine, dink, drive), équipement minimum et fautes à éviter.",
+  inLanguage: 'fr-CH',
+  author: { '@type': 'Organization', name: 'Geneva Sports Club', url: SITE + '/' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Geneva Sports Club',
+    logo: { '@type': 'ImageObject', url: SITE + '/logo-img.png' },
+  },
+  datePublished: '2026-01-15',
+  dateModified: facts.lastReviewedISO,
+  mainEntityOfPage: SITE + '/apprendre/',
+  image: SITE + '/og-pickleball-geneve.jpg',
+};
+---
+<BaseLayout pageKey="learn" lang="fr" jsonLd={[articleSchema]}>
+  <div class="bg-tile">
+    <PageHero
+      lang="fr"
+      title="Apprendre le pickleball à Genève"
+      lead="Tout ce qu'il faut savoir pour comprendre et jouer au pickleball : règles officielles, dimensions du terrain, lexique technique, scoring, équipement minimum et fautes de débutant à éviter."
+    />
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <LearnContent lang="fr" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

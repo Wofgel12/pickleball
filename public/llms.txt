@@ -1,0 +1,37 @@
+# GSC Pickleball — Geneva Sports Club
+
+> Cours et sessions de pickleball à Genève (Suisse), organisés par le Geneva Sports Club. Deux sessions hebdomadaires à La Jonction (1205 Genève), tous niveaux, 10 CHF par session, raquettes fournies.
+
+L'association Geneva Sports Club regroupe plus de 8 000 membres autour d'activités sportives variées en Suisse romande. Le pickleball — sport de raquette en pleine expansion qui combine tennis, badminton et ping-pong — est l'une de ses activités principales avec deux sessions hebdomadaires.
+
+**Faits clés**
+- **Lieu** : La Jonction, 1205 Genève (École de Cité-Jonction)
+- **Jours** : Lundi & vendredi
+- **Horaires** : 18h00 – 20h00 (2 heures par session)
+- **Tarif** : 10 CHF par session, payable sur place (espèces ou Twint)
+- **Adhésion** : aucune
+- **Niveau** : tous niveaux bienvenus, débutants inclus
+- **Équipement** : raquettes et balles fournies
+- **Inscription** : en ligne via Meetup
+- **Contact** : hello@genevasportsclub.ch — +41 76 214 12 03 (asso) — +41 78 882 68 10 (sessions)
+- **Meetup** : https://www.meetup.com/genevasportsclub/
+
+## Pages principales (français)
+- [Accueil — pickleball à Genève](https://pickleballgeneva.netlify.app/): vue d'ensemble du club et des sessions.
+- [Participer aux sessions](https://pickleballgeneva.netlify.app/participer/): processus d'inscription en 5 étapes via Meetup.
+- [Apprendre le pickleball](https://pickleballgeneva.netlify.app/apprendre/): règles complètes, lexique technique (cuisine, dink, drive), équipement minimum, fautes à éviter.
+- [Équipement](https://pickleballgeneva.netlify.app/equipement/): guide d'achat raquettes (poids, matériaux) et balles indoor/outdoor.
+- [FAQ](https://pickleballgeneva.netlify.app/faq/): 16 questions fréquentes sur les tarifs, niveaux, indoor, padel vs pickleball, seniors, enfants, tournois, vacances scolaires.
+- [Contact](https://pickleballgeneva.netlify.app/contact/): formulaire, coordonnées, plan d'accès à La Jonction.
+
+## Main pages (English)
+- [Home](https://pickleballgeneva.netlify.app/en/)
+- [Join a session](https://pickleballgeneva.netlify.app/en/participate/)
+- [Learn pickleball](https://pickleballgeneva.netlify.app/en/learn/)
+- [Gear](https://pickleballgeneva.netlify.app/en/gear/)
+- [FAQ](https://pickleballgeneva.netlify.app/en/faq/)
+- [Contact](https://pickleballgeneva.netlify.app/en/contact/)
+
+## Optional
+- [Sitemap XML](https://pickleballgeneva.netlify.app/sitemap-index.xml)
+- [Page Meetup officielle](https://www.meetup.com/genevasportsclub/)

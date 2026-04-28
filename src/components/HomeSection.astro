@@ -1,0 +1,82 @@
+---
+import { getImage } from 'astro:assets';
+import LottiePlayer from './islands/LottiePlayer.tsx';
+import FeatureCardsAnimated from './islands/FeatureCardsAnimated.tsx';
+import { routes, type Lang } from '../i18n/ui';
+import pickleballImg from '../assets/istockphoto-1301500044-612x612.jpg';
+import socialImg from '../assets/682770c0db016bc645a094a4_happy-pickleball-community.webp';
+import learnImg from '../assets/61450694ce316326cd9bf4ec_DSC08698.jpg';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+
+// Optimised image URLs for the React island (plain <img>).
+const [pickleballOpt, socialOpt, learnOpt] = await Promise.all([
+  getImage({ src: pickleballImg, format: 'webp', width: 800 }),
+  getImage({ src: socialImg, format: 'webp', width: 800 }),
+  getImage({ src: learnImg, format: 'webp', width: 800 }),
+]);
+
+const linkClass = 'text-teal-600 hover:text-teal-700 underline font-semibold';
+const cards = [
+  {
+    src: pickleballOpt.src,
+    alt: fr ? "Joueur frappant une balle de pickleball lors d'une session indoor à Genève" : 'Player hitting a pickleball during an indoor session in Geneva',
+    title: fr ? 'Santé & Bien-être' : 'Health & Wellness',
+    bodyHtml: fr
+      ? `Améliorez votre santé globale en pratiquant un sport de raquette. C'est <a href="https://www.menshealth.com/health/a63754502/racquet-sports-health-longevity-benefits/" target="_blank" rel="noopener noreferrer" class="${linkClass}">scientifiquement prouvé</a> !`
+      : `Improve your overall health by playing a racket sport. It's <a href="https://www.menshealth.com/health/a63754502/racquet-sports-health-longevity-benefits/" target="_blank" rel="noopener noreferrer" class="${linkClass}">scientifically proven</a>!`,
+  },
+  {
+    src: socialOpt.src,
+    alt: fr ? 'Groupe de joueurs souriants après une session de pickleball à Genève' : 'Smiling group of players after a pickleball session in Geneva',
+    title: fr ? 'Social & Convivial' : 'Social & Friendly',
+    bodyHtml: fr
+      ? `Rencontrez de nouvelles personnes dans une atmosphère détendue et amusante. <a href="${routes.participate[lang]}" class="${linkClass}">Nos sessions</a> sont ouvertes à tous !`
+      : `Meet new people in a relaxed and fun atmosphere. <a href="${routes.participate[lang]}" class="${linkClass}">Our sessions</a> are open to everyone!`,
+  },
+  {
+    src: learnOpt.src,
+    alt: fr ? 'Démonstration de service au pickleball lors d\'une session à La Jonction, Genève' : 'Pickleball serve demonstration during a session at La Jonction, Geneva',
+    title: fr ? 'Facile à Apprendre' : 'Easy to Learn',
+    bodyHtml: fr
+      ? 'Accessible à tous les âges et niveaux, progressez rapidement !'
+      : 'Accessible to all ages and levels, progress quickly!',
+  },
+];
+---
+<section id="home" class="pt-12 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="max-w-4xl mx-auto mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+        {fr ? 'Qu\'est-ce que le pickleball ?' : 'What is pickleball?'}
+      </h2>
+      <div class="flex items-center justify-center pointer-events-none mb-[15px] -mt-10">
+        <LottiePlayer
+          client:visible
+          src="https://lottie.host/dab2586b-7573-4db2-87d6-ee21f91968d3/kRfJvlcr1i.lottie"
+          replayOnView
+          className="w-full max-w-[200px] md:max-w-none md:w-auto md:h-24"
+        />
+      </div>
+      <p class="text-lg leading-relaxed text-gray-700">
+        {fr
+          ? "Le pickleball est un sport de raquette créé aux États-Unis en 1965, qui combine des éléments du tennis, du badminton et du ping-pong. Il se joue avec une raquette pleine, une balle perforée en plastique et un filet à 91 cm de hauteur, sur un terrain de 6,10 × 13,41 m. Facile à apprendre, accessible à tous les âges, c'est aujourd'hui le sport de raquette qui croît le plus vite au monde — avec une expansion rapide en Suisse romande depuis 2023."
+          : 'Pickleball is a racket sport invented in the United States in 1965, combining elements of tennis, badminton and table tennis. It is played with a solid paddle, a perforated plastic ball and a 36-inch-high net, on a 20 × 44 ft court. Easy to learn, accessible at all ages, it is currently the fastest-growing racket sport in the world — and has been expanding rapidly in French-speaking Switzerland since 2023.'}
+      </p>
+    </div>
+
+    <FeatureCardsAnimated client:visible cards={cards} />
+
+    <div class="flex justify-center">
+      <a
+        href={routes.participate[lang]}
+        class="btn-press inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-teal-600 hover:to-teal-700 shadow-lg hover:shadow-xl"
+      >
+        {fr ? "Rejoindre l'une de nos sessions" : 'Join one of our sessions'}
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

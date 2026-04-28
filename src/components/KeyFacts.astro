@@ -1,0 +1,43 @@
+---
+import { facts, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  variant?: 'default' | 'compact';
+}
+const { lang, variant = 'default' } = Astro.props;
+const fr = lang === 'fr';
+
+// Definition list = AI-friendly structured key facts.
+// Each row is a discrete, citable fact. Use semantic <dl>/<dt>/<dd>.
+const rows = [
+  { dt: fr ? 'Lieu' : 'Location',     dd: facts.location },
+  { dt: fr ? 'Jours' : 'Days',        dd: fr ? 'Lundi & vendredi' : 'Monday & Friday' },
+  { dt: fr ? 'Horaires' : 'Hours',    dd: fr ? '18:00 – 20:00' : '6:00 pm – 8:00 pm' },
+  { dt: fr ? 'Tarif' : 'Fee',         dd: fr ? `${facts.priceCHF} CHF par session — sans abonnement` : `CHF ${facts.priceCHF} per session — no membership` },
+  { dt: fr ? 'Niveaux' : 'Levels',    dd: fr ? 'Tous niveaux bienvenus, débutants inclus' : 'All levels welcome, beginners included' },
+  { dt: fr ? 'Équipement fourni' : 'Equipment provided', dd: fr ? 'Raquettes et balles incluses' : 'Paddles and balls included' },
+  { dt: fr ? 'Inscription' : 'Registration', dd: fr ? 'En ligne via Meetup' : 'Online via Meetup' },
+  { dt: fr ? 'Contact' : 'Contact',   dd: facts.email },
+];
+---
+<section
+  aria-label={fr ? 'Faits clés sur les sessions de pickleball à Genève' : 'Key facts about pickleball sessions in Geneva'}
+  class:list={[
+    'bg-white/95 backdrop-blur-sm rounded-2xl border-2 shadow-sm overflow-hidden',
+    variant === 'compact' ? 'p-6' : 'p-8',
+  ]}
+  style="border-color:#002b2b"
+>
+  <h2 class="text-xl font-semibold text-gray-900 mb-4">
+    {fr ? 'Faits clés' : 'Key facts'}
+  </h2>
+  <dl class="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+    {rows.map((row) => (
+      <div class="contents">
+        <dt class="font-semibold text-teal-700">{row.dt}</dt>
+        <dd class="text-gray-800">{row.dd}</dd>
+      </div>
+    ))}
+  </dl>
+</section>

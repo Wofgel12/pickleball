@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqContent from '../../components/FaqContent.astro';
+import { faqEN, faqJsonLd } from '../../i18n/faq';
+---
+<BaseLayout pageKey="faq" lang="en" jsonLd={[faqJsonLd(faqEN)]}>
+  <div class="bg-tile">
+    <PageHero
+      lang="en"
+      title="Pickleball Geneva FAQ"
+      lead="Answers to the 16 most-asked questions about pickleball in Geneva."
+    />
+    <section class="py-12 px-4">
+      <div class="max-w-4xl mx-auto">
+        <FaqContent lang="en" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

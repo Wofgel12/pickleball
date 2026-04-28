@@ -1,0 +1,131 @@
+---
+import LottiePlayer from './islands/LottiePlayer.tsx';
+import KeyFacts from './KeyFacts.astro';
+import { facts, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+
+const steps = fr
+  ? [
+      { n: '01', t: "Accéder à la page de l'association",
+        d: "Cliquez sur le bouton Meetup en bas de cette page pour ouvrir la page du Geneva Sports Club. Aucun compte requis pour parcourir les sessions." },
+      { n: '02', t: 'Parcourir les événements',
+        d: "Ouvrez l'onglet « Événements ». Toutes les activités hebdomadaires de l'association y sont publiées : pickleball, mais aussi autres sports proposés." },
+      { n: '03', t: 'Choisir votre session pickleball',
+        d: 'Sélectionnez la session pickleball qui vous arrange : lundi ou vendredi, 18h-20h. Les sessions sont publiées chaque semaine, généralement 7 jours à l\'avance.' },
+      { n: '04', t: "Créer votre compte et finaliser l'inscription",
+        d: "Cliquez sur « Rejoindre ». Meetup vous demande de créer un compte gratuit (email + mot de passe, ou connexion Google/Facebook). Suivez les étapes et lisez les détails de la session : adresse exacte, niveau, équipement." },
+      { n: '05', t: "À vos raquettes — on s'occupe du reste !",
+        d: "Le jour J, présentez-vous à La Jonction 5 minutes avant. Apportez 10 CHF en espèces ou Twint, des chaussures de sport et une bouteille d'eau. Raquettes et balles fournies." },
+    ]
+  : [
+      { n: '01', t: 'Access the association page',
+        d: 'Click the Meetup button at the bottom of this page to open the Geneva Sports Club page. No account needed to browse the sessions.' },
+      { n: '02', t: 'Browse the events',
+        d: 'Open the "Events" tab. All weekly association activities are listed there: pickleball, plus other sports we offer.' },
+      { n: '03', t: 'Choose your pickleball session',
+        d: 'Pick the pickleball session that suits you: Monday or Friday, 6pm-8pm. Sessions are published weekly, usually 7 days in advance.' },
+      { n: '04', t: 'Create your account and complete registration',
+        d: 'Click "Join". Meetup will ask you to create a free account (email + password, or Google/Facebook login). Follow the steps and read the session details: exact address, level, gear.' },
+      { n: '05', t: 'Grab your paddle — we handle the rest!',
+        d: 'On the day, show up at La Jonction 5 minutes early. Bring CHF 10 in cash or via Twint, sports shoes and a water bottle. Paddles and balls are provided.' },
+    ];
+---
+<div class="space-y-10">
+  <!-- Citable opening passage -->
+  <p class="text-lg leading-relaxed text-gray-700 bg-white/95 p-6 rounded-2xl border-2" style="border-color:#002b2b">
+    {fr
+      ? "Pour participer à l'une de nos sessions de pickleball à Genève, l'inscription se fait en ligne via Meetup. Les sessions ont lieu le lundi et le vendredi de 18h à 20h à La Jonction. Celles-ci sont ouvertes à tous les niveaux et coûtent 10 CHF par participation. Aucune adhésion préalable n'est demandée."
+      : "To take part in one of our pickleball sessions in Geneva, registration happens online via Meetup. Sessions run Monday and Friday from 6pm to 8pm at La Jonction. They are open to all levels and cost CHF 10 per attendance. No prior membership is required."}
+  </p>
+
+  <!-- Decorative lotties (preserved from original) -->
+  <div class="flex justify-between mb-4 -mb-6">
+    <div class="w-32 h-32 rotate-180">
+      <LottiePlayer
+        client:visible
+        src="https://lottie.host/351c971b-23f8-419d-9f35-f44e03fe1e60/poVzdsh4zU.lottie"
+        speed={0.5}
+        replayOnView
+        style={{ width: '100%', height: '100%' }}
+      />
+    </div>
+    <div class="w-32 h-32" style="transform: rotate(180deg) scaleX(-1);">
+      <LottiePlayer
+        client:visible
+        src="https://lottie.host/351c971b-23f8-419d-9f35-f44e03fe1e60/poVzdsh4zU.lottie"
+        speed={0.5}
+        replayOnView
+        style={{ width: '100%', height: '100%' }}
+      />
+    </div>
+  </div>
+
+  <!-- Step list -->
+  <article class="bg-white/95 rounded-2xl shadow-xl border-2 overflow-hidden" style="border-color:#002b2b">
+    <div class="px-6 py-5" style="background: linear-gradient(to right, #003d3d, #005555);">
+      <h2 class="text-xl font-semibold text-white">
+        {fr ? "Comment s'inscrire — étape par étape" : 'How to register — step by step'}
+      </h2>
+    </div>
+    <ol class="divide-y divide-gray-100">
+      {steps.map((s) => (
+        <li class="flex gap-5 px-6 py-5 hover:bg-teal-50/50 transition-colors">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white" style="background: linear-gradient(135deg, #14b8a6, #0d9488)">
+            {s.n}
+          </div>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-gray-900 mb-1">{s.t}</h3>
+            <p class="text-gray-600 leading-relaxed text-sm">{s.d}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </article>
+
+  <!-- CTA -->
+  <div class="flex justify-center relative">
+    <a
+      href={facts.meetupUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-press inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-teal-600 hover:to-teal-700 shadow-lg hover:shadow-xl relative z-10"
+    >
+      {fr ? 'Voir nos événements sur Meetup' : 'View our events on Meetup'}
+    </a>
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+      <LottiePlayer
+        client:visible
+        src="https://lottie.host/7214da79-8fa8-4cf5-9e96-52774d50fadb/jgzIfgVPpq.lottie"
+        loop
+        replayOnView={false}
+        style={{ width: '100%', height: '100%' }}
+      />
+    </div>
+  </div>
+
+  <!-- Embedded map -->
+  <article class="bg-white/95 rounded-2xl border-2 overflow-hidden" style="border-color:#002b2b">
+    <h2 class="text-xl font-semibold text-gray-900 px-6 pt-6 mb-2">{fr ? 'Plan d\'accès à La Jonction' : 'Map to La Jonction'}</h2>
+    <p class="text-gray-700 px-6 pb-4">
+      {fr
+        ? 'Le lieu des sessions est l\'École de Cité-Jonction à Genève (1205). Accessible en 5 minutes à pied depuis la gare de Cornavin via la passerelle Sous-Terre, ou par les lignes de bus 2 et 19.'
+        : 'Sessions take place at École de Cité-Jonction in Geneva (1205). Reachable in 5 minutes on foot from Cornavin train station via the Sous-Terre footbridge, or by bus lines 2 and 19.'}
+    </p>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d972.9041837863234!2d6.1314766!3d46.199053!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478c65a6c4ab4dc7%3A0x554b55d62ef23749!2sPickleball%20Geneva%20Sports%20Club!5e0!3m2!1sfr!2sch!4v1773674166278!5m2!1sfr!2sch"
+      width="100%"
+      height="320"
+      style="border:0;display:block"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title={fr ? 'Carte Pickleball Geneva Sports Club — La Jonction, Genève' : 'Pickleball Geneva Sports Club map — La Jonction, Geneva'}
+    ></iframe>
+  </article>
+
+  <!-- Key facts at the bottom of the page -->
+  <KeyFacts lang={lang} />
+</div>

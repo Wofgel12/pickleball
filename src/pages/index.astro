@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import HomeSection from '../components/HomeSection.astro';
+import ParticipateTeaser from '../components/ParticipateTeaser.astro';
+import KeyFacts from '../components/KeyFacts.astro';
+import { faqFR, faqJsonLd } from '../i18n/faq';
+import { facts } from '../i18n/ui';
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+
+// Page-specific JSON-LD
+const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'Cours de Pickleball à Genève',
+  description: "Sessions hebdomadaires de pickleball à Genève (La Jonction), lundi et vendredi 18h-20h, 10 CHF par session, équipement fourni.",
+  provider: { '@type': 'Organization', name: 'Geneva Sports Club', url: SITE + '/' },
+  courseMode: 'onsite',
+  inLanguage: 'fr',
+  availableLanguage: ['fr', 'en'],
+  locationCreated: {
+    '@type': 'Place',
+    name: 'La Jonction, Genève',
+    address: { '@type': 'PostalAddress', addressLocality: 'Genève', addressRegion: 'GE', addressCountry: 'CH' },
+  },
+  offers: { '@type': 'Offer', price: facts.priceCHF, priceCurrency: 'CHF', availability: 'https://schema.org/InStock' },
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: 'onsite',
+    courseSchedule: {
+      '@type': 'Schedule',
+      byDay: ['https://schema.org/Monday', 'https://schema.org/Friday'],
+      startTime: '18:00',
+      endTime: '20:00',
+      duration: 'PT2H',
+    },
+  },
+};
+---
+<BaseLayout pageKey="home" lang="fr" jsonLd={[courseSchema, faqJsonLd(faqFR.slice(0, 6))]}>
+  <Hero lang="fr" />
+
+  <div class="bg-tile">
+    <HomeSection lang="fr" />
+
+    <ParticipateTeaser lang="fr" />
+
+    <!-- Citable summary passage (factual, AI-friendly) -->
+    <section class="pt-6 pb-6 px-4">
+      <div class="max-w-4xl mx-auto">
+        <p class="text-lg md:text-xl text-gray-800 leading-relaxed bg-white/95 p-6 rounded-2xl border-2 text-center" style="border-color:#002b2b">
+          Le <strong>Geneva Sports Club</strong> organise deux sessions de pickleball par semaine à <strong>La Jonction, Genève</strong> — lundi et vendredi de 18h à 20h, <strong>10&nbsp;CHF par session</strong>, tous niveaux, raquettes fournies.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-16 px-4">
+      <div class="max-w-6xl mx-auto">
+        <KeyFacts lang="fr" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,65 @@
+---
+import BackgroundVideo from './islands/BackgroundVideo.tsx';
+import CounterAnimated from './islands/CounterAnimated.tsx';
+import ReviewsBubbles from './islands/ReviewsBubbles.tsx';
+import { fetchGoogleReviews } from '../lib/google-reviews';
+import { type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const fr = lang === 'fr';
+
+// Build-time fetch — runs once per Netlify build, returns null if env vars
+// missing (graceful: bubbles just don't render).
+const reviewsData = await fetchGoogleReviews();
+const reviewsForBubbles = reviewsData?.reviews ?? [];
+const mapsUri = reviewsData?.mapsUri || 'https://maps.app.goo.gl/xy3RKsiqXPPNkLXQ9';
+---
+<section class="relative w-full min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
+  <!-- Static poster as the LCP image for crawlers and reduced-motion users -->
+  <div
+    class="absolute inset-0 w-full h-full bg-center bg-cover z-0"
+    style="background-image: url('/bg-tile.webp');"
+    aria-hidden="true"
+  ></div>
+  <BackgroundVideo
+    client:visible
+    src="/bg-video.mp4"
+    webmSrc="/bg-video.webm"
+    poster="/bg-tile.webp"
+    className="absolute inset-0 w-full h-full object-cover z-0"
+  />
+  <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50 z-10"></div>
+
+  <div class="relative z-20 text-center px-4 max-w-6xl mx-auto hero-stagger">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight text-balance">
+      <span class="font-light text-white/90">{fr ? 'Venez ' : 'Come '}</span>
+      {fr ? 'jouer au Pickleball à Genève' : 'play Pickleball in Geneva'}
+    </h1>
+    <p class="text-xl sm:text-2xl md:text-3xl text-white/95 font-medium mb-8 max-w-4xl mx-auto">
+      {fr ? (
+        <>La seule association sportive pratiquant activement le pickleball dans le <span class="font-bold">canton de Genève</span>.</>
+      ) : (
+        <>The only sports association actively playing pickleball in the <span class="font-bold">canton of Geneva</span>.</>
+      )}
+    </p>
+
+    <div class="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center">
+      <div class="text-4xl font-bold text-white mb-1">
+        + <CounterAnimated client:visible to={8000} /> <a href="https://www.meetup.com/genevasportsclub/members/?op=all" target="_blank" rel="noopener noreferrer" class="underline hover:text-white/80 transition-colors">{fr ? 'membres' : 'members'}</a>
+      </div>
+      <div class="text-sm text-white/80">{fr ? 'tout sport confondu' : 'across all sports'}</div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20" aria-hidden="true">
+    <div class="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center p-2">
+      <div class="w-1 h-3 bg-white/50 rounded-full"></div>
+    </div>
+  </div>
+
+  <ReviewsBubbles client:idle reviews={reviewsForBubbles} mapsUri={mapsUri} />
+</section>

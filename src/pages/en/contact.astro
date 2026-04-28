@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ContactContent from '../../components/ContactContent.astro';
+import { facts } from '../../i18n/ui';
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': SITE + '/en/contact/#localbusiness',
+  name: 'Geneva Sports Club — Pickleball',
+  url: SITE + '/en/contact/',
+  email: facts.email,
+  telephone: facts.phonePrimary,
+  image: SITE + '/og-pickleball-geneve.jpg',
+  priceRange: 'CHF 10',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'La Jonction',
+    addressLocality: 'Geneva',
+    postalCode: '1205',
+    addressRegion: 'GE',
+    addressCountry: 'CH',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: facts.geo.lat, longitude: facts.geo.lon },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '18:00', closes: '20:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '18:00', closes: '20:00' },
+  ],
+  contactPoint: [
+    { '@type': 'ContactPoint', contactType: 'customer support', email: facts.email, telephone: facts.phonePrimary, availableLanguage: ['fr', 'en'] },
+    { '@type': 'ContactPoint', contactType: 'sessions',         telephone: facts.phoneSession, availableLanguage: ['fr', 'en'] },
+  ],
+};
+---
+<BaseLayout pageKey="contact" lang="en" jsonLd={[localBusiness]}>
+  <div class="bg-tile">
+    <PageHero
+      lang="en"
+      title="Contact — Geneva Sports Club Pickleball"
+    />
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <ContactContent lang="en" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

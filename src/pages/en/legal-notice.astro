@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+---
+<BaseLayout pageKey="legal" lang="en">
+  <div class="bg-tile">
+    <PageHero
+      lang="en"
+      title="Legal Notice"
+      lead="Legal notice for the Geneva Sports Club Pickleball website: information about the publisher, the host, the editorial responsibility, and the applicable law."
+    />
+    <section class="py-12 px-4">
+      <div class="max-w-4xl mx-auto">
+        <article
+          class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-sm border-2 p-8 md:p-12 text-gray-800 leading-relaxed prose-legal"
+          style="border-color: #002b2b;"
+        >
+          <p class="text-sm text-gray-500 mb-8">
+            Last updated: 28 April 2026
+          </p>
+
+          <h2 class="text-2xl font-semibold mb-3 mt-2 text-gray-900">Publisher</h2>
+          <p class="mb-2"><strong>Geneva Sports Club</strong> (multi-sport association)</p>
+          <p class="mb-2">La Jonction, 1205 Geneva, Switzerland</p>
+          <p class="mb-2">
+            Email: <a href="mailto:hello@genevasportsclub.ch" class="text-teal-700 underline">hello@genevasportsclub.ch</a><br />
+            Phone: <a href="tel:+41762141203" class="text-teal-700 underline">+41 76 214 12 03</a>
+          </p>
+          <p class="mb-6">
+            Main association website:
+            <a href="https://genevasportsclub.ch/" target="_blank" rel="noopener noreferrer" class="text-teal-700 underline">https://genevasportsclub.ch/</a>
+          </p>
+
+          <h2 class="text-2xl font-semibold mb-3 mt-8 text-gray-900">Editorial responsibility</h2>
+          <p class="mb-6">
+            Editorial responsibility lies with the committee of the Geneva Sports Club association. For any editorial inquiry,
+            please contact <a href="mailto:hello@genevasportsclub.ch" class="text-teal-700 underline">hello@genevasportsclub.ch</a>.
+          </p>
+
+          <h2 class="text-2xl font-semibold mb-3 mt-8 text-gray-900">Hosting</h2>
+          <p class="mb-6">
+            The website <a href="https://pickleballgeneva.netlify.app/" class="text-teal-700 underline">https://pickleballgeneva.netlify.app/</a>
+            is hosted by <strong>Netlify, Inc.</strong>, 512 2nd Street, Suite 200, San Francisco, CA 94107, United States —
+            <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer" class="text-teal-700 underline">https://www.netlify.com/</a>.
+          </p>
+
+          <h2 class="text-2xl font-semibold mb-3 mt-8 text-gray-900">Intellectual property</h2>
+          <p class="mb-4">
+            All content on this website (texts, images, logos, videos, animations, layout) is protected by copyright and neighbouring rights.
+            Any reproduction, representation or distribution, in whole or in part, without prior written consent from Geneva Sports Club
+            is prohibited and would constitute infringement under the Swiss Code of Obligations and the Federal Act on Copyright (CopA).
+          </p>
+          <p class="mb-6">
+            The trademarks and logos mentioned on this site (in particular "Geneva Sports Club", "GSC Pickleball") are the exclusive
+            property of the Geneva Sports Club association, or of their respective owners for third-party trademarks (e.g. Meetup, Lottie,
+            YouTube, Netlify).
+          </p>
+
+          <h2 class="text-2xl font-semibold mb-3 mt-8 text-gray-900">Limitation of liability</h2>
+          <p class="mb-4">
+            Geneva Sports Club makes every effort to provide accurate and up-to-date information but cannot guarantee the accuracy,
+            completeness or currency of information published on this site. Use of the website is at the user's sole responsibility.
+          </p>
+          <p class="mb-6">
+            Geneva Sports Club shall not be liable for any direct or indirect damage resulting from access to the site, its use,
+            or any malfunction, nor for the content of third-party websites linked from this site.
+          </p>
+
+          <h2 class="text-2xl font-semibold mb-3 mt-8 text-gray-900">External links</h2>
+          <p class="mb-6">
+            This site may contain links to external sites (notably Meetup, YouTube, Lottie, Amazon, Google Maps).
+            Geneva Sports Club has no control over these sites and disclaims any responsibility for their content, privacy practices
+            or service availability.
+          </p>
+
+          <h2 class="text-2xl font-semibold mb-3 mt-8 text-gray-900">Personal data</h2>
+          <p class="mb-6">
+            The processing of personal data collected through this site is described in our
+            <a href="/en/privacy-policy/" class="text-teal-700 underline">privacy policy</a>.
+          </p>
+
+          <h2 class="text-2xl font-semibold mb-3 mt-8 text-gray-900">Applicable law and jurisdiction</h2>
+          <p class="mb-6">
+            This website and this legal notice are governed by Swiss law. In the event of a dispute and failing an amicable settlement,
+            the courts of the canton of Geneva shall have exclusive jurisdiction.
+          </p>
+        </article>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

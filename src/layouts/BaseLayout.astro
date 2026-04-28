@@ -1,0 +1,172 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import SchemaSportsClub from '../components/SchemaSportsClub.astro';
+import { meta as pageMeta, routes, navLabels, ui, facts, type Lang, type RouteKey } from '../i18n/ui';
+
+interface Props {
+  /** Logical page key (drives titles, hreflang, breadcrumb) */
+  pageKey: RouteKey;
+  /** Active language for this rendered page */
+  lang: Lang;
+  /** Optional override for <title> (otherwise from meta dictionary) */
+  title?: string;
+  /** Optional override for meta description */
+  description?: string;
+  /** Optional OG image absolute path (defaults to /og-pickleball-geneve.jpg) */
+  ogImage?: string;
+  /** Optional list of additional <script type="application/ld+json"> JSON objects */
+  jsonLd?: unknown[];
+  /** ISO date for content's last meaningful update (E-E-A-T signal) */
+  lastReviewedISO?: string;
+}
+
+const {
+  pageKey,
+  lang,
+  title,
+  description,
+  ogImage,
+  jsonLd = [],
+  lastReviewedISO = facts.lastReviewedISO,
+} = Astro.props;
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+const route = routes[pageKey];
+const canonical = SITE + route[lang];
+const altFr = SITE + route.fr;
+const altEn = SITE + route.en;
+
+const pageTitle = title ?? pageMeta[pageKey][lang].title;
+const pageDesc = description ?? pageMeta[pageKey][lang].description;
+const ogImageUrl = (ogImage ?? '/og-pickleball-geneve.jpg').startsWith('http')
+  ? (ogImage ?? '/og-pickleball-geneve.jpg')
+  : SITE + (ogImage ?? '/og-pickleball-geneve.jpg');
+
+const ogLocale = lang === 'fr' ? 'fr_CH' : 'en_GB';
+const ogLocaleAlt = lang === 'fr' ? 'en_GB' : 'fr_CH';
+
+// Breadcrumb auto-built from logical page (always rooted on locale homepage)
+const breadcrumbItems = pageKey === 'home'
+  ? [
+      { name: lang === 'fr' ? 'Accueil' : 'Home', url: canonical },
+    ]
+  : [
+      { name: lang === 'fr' ? 'Accueil' : 'Home', url: SITE + routes.home[lang] },
+      { name: navLabels[pageKey][lang], url: canonical },
+    ];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbItems.map((it, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: it.name,
+    item: it.url,
+  })),
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'GSC Pickleball — Geneva Sports Club',
+  url: SITE + '/',
+  inLanguage: ['fr-CH', 'en-GB'],
+  publisher: {
+    '@type': 'SportsClub',
+    name: 'Geneva Sports Club',
+    url: SITE + '/',
+  },
+};
+
+const lastReviewedDisplay = lang === 'fr'
+  ? `${ui.lastUpdated.fr} : ${new Date(lastReviewedISO).toLocaleDateString('fr-CH', { day: '2-digit', month: 'long', year: 'numeric' })}`
+  : `${ui.lastUpdated.en}: ${new Date(lastReviewedISO).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}`;
+---
+
+<!doctype html>
+<html lang={lang === 'fr' ? 'fr-CH' : 'en-GB'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+
+    <link rel="canonical" href={canonical} />
+
+    <!-- Hreflang reciprocals -->
+    <link rel="alternate" hreflang="fr-CH" href={altFr} />
+    <link rel="alternate" hreflang="fr" href={altFr} />
+    <link rel="alternate" hreflang="en-GB" href={altEn} />
+    <link rel="alternate" hreflang="en" href={altEn} />
+    <link rel="alternate" hreflang="x-default" href={altFr} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#002b2b" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="GSC Pickleball — Geneva Sports Club" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={lang === 'fr' ? 'Session de pickleball à Genève — Geneva Sports Club' : 'Pickleball session in Geneva — Geneva Sports Club'} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Geo -->
+    <meta name="geo.region" content="CH-GE" />
+    <meta name="geo.placename" content="Genève" />
+    <meta name="geo.position" content={`${facts.geo.lat};${facts.geo.lon}`} />
+    <meta name="ICBM" content={`${facts.geo.lat}, ${facts.geo.lon}`} />
+
+    <!-- Google Search Console verification (preserved from previous deploy) -->
+    <meta name="google-site-verification" content="0HMPf1oI1whiEWTVMzup7LjCJ5czuROLL3fdYDyOSsE" />
+
+    <!-- Preload background tile (small, used as page background by CSS variable) -->
+    <link rel="preconnect" href="https://lottie.host" crossorigin />
+
+    <!-- Always-on global structured data -->
+    <SchemaSportsClub site={SITE} lang={lang} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} is:inline />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} is:inline />
+
+    <!-- Page-specific JSON-LD blocks -->
+    {jsonLd.map((obj) => (
+      <script type="application/ld+json" set:html={JSON.stringify(obj)} is:inline />
+    ))}
+
+    <slot name="head" />
+  </head>
+  <body>
+    <Navigation lang={lang} pageKey={pageKey} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} lastReviewedDisplay={lastReviewedDisplay} />
+
+    <!-- Inline tile background variable so CSS can use the public asset path -->
+    <style is:global>
+      :root { --bg-tile-url: url('/bg-tile.webp'); }
+    </style>
+  </body>
+</html>

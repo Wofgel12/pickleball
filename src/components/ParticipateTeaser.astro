@@ -1,0 +1,26 @@
+---
+import { routes, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+---
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+      {fr ? 'Rejoignez nos entraînements de Pickleball' : 'Join our Pickleball training sessions'}
+    </h2>
+    <p class="text-lg leading-relaxed text-gray-700 mb-10">
+      {fr
+        ? "Notre association sportive propose deux sessions de Pickleball à Genève par semaine ouvertes à tous les niveaux : le lundi et le vendredi. Il n'y a pas de frais d'adhésion à l'association. Une simple cotisation de 10.- est demandée uniquement lorsque vous participez à une session. Le processus d'inscription pour découvrir le pickleball est très simple : il vous suffit de cliquer sur le bouton ci-dessous et de suivre les instructions. À très vite !"
+        : "Our sports association offers two Pickleball sessions in Geneva per week, open to all levels: on Mondays and Fridays. There is no membership fee. A small fee of 10.- is requested only when you take part in a session. The registration process to discover pickleball is very simple: just click the button below and follow the instructions. See you soon!"}
+    </p>
+    <a
+      href={routes.participate[lang]}
+      class="btn-press inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-teal-600 hover:to-teal-700 shadow-lg hover:shadow-xl"
+    >
+      {fr ? 'Comment participer ?' : 'How to participate?'}
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>

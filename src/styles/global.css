@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased text-gray-900;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  h1 { line-height: 1.2; }
+  h2 { line-height: 1.2; }
+  p  { line-height: 1.55; }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Tile background helper used across pages */
+  .bg-tile {
+    background-image: var(--bg-tile-url);
+    background-repeat: repeat;
+    background-size: 180px 180px;
+    background-attachment: scroll;
+  }
+}
+
+@layer components {
+  [class*="bg-amber-"],
+  [class*="bg-green-"],
+  [class*="bg-red-"] {
+    border: 2px solid #002B2B !important;
+  }
+}
+
+/* Animations preserved verbatim from previous Tailwind config */
+@keyframes slideDown {
+  0% { transform: translateY(-100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Hero stagger entrance (CSS-only — keeps LCP fast, no JS dependency).
+   Each direct child fades up sequentially. Children stay invisible until
+   their delay fires, but the text is still in the DOM for SEO/AI crawlers. */
+@keyframes heroFadeUp {
+  0%   { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.hero-stagger > * {
+  opacity: 0;
+  animation: heroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero-stagger > *:nth-child(1) { animation-delay: 0.10s; }
+.hero-stagger > *:nth-child(2) { animation-delay: 0.24s; }
+.hero-stagger > *:nth-child(3) { animation-delay: 0.40s; }
+
+/* Button micro-interaction: lift on hover + press feedback (transform/opacity only) */
+.btn-press {
+  transition:
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 200ms ease;
+  will-change: transform;
+}
+.btn-press:hover  { transform: translateY(-2px); }
+.btn-press:active { transform: translateY(0) scale(0.97); transition-duration: 100ms; }
+.btn-press:focus-visible { outline: 2px solid #14b8a6; outline-offset: 3px; }
+
+/* Card hover lift (used together with framer-motion's whileHover or alone) */
+.card-lift {
+  transition:
+    box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.card-lift:hover {
+  box-shadow: 0 14px 28px -10px rgba(0, 43, 43, 0.22), 0 6px 12px -6px rgba(0, 43, 43, 0.12);
+}
+
+/* Respect prefers-reduced-motion across all custom animations */
+@media (prefers-reduced-motion: reduce) {
+  .hero-stagger > * {
+    opacity: 1;
+    animation: none;
+  }
+  .btn-press,
+  .btn-press:hover,
+  .btn-press:active,
+  .card-lift,
+  .card-lift:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+}

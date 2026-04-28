@@ -1,0 +1,197 @@
+---
+import { routes, navLabels, ui, type Lang, type RouteKey } from '../i18n/ui';
+import LangSwitcher from './islands/LangSwitcher.tsx';
+
+interface Props {
+  lang: Lang;
+  pageKey: RouteKey;
+}
+const { lang, pageKey } = Astro.props;
+
+// Top-level menu order. The "Le Pickleball" group is rendered separately
+// because it contains sub-routes (learn + gear).
+const topLevel: RouteKey[] = ['home', 'participate'];
+const trailing: RouteKey[] = ['faq', 'contact'];
+const pickleballChildren: RouteKey[] = ['learn', 'gear'];
+const isPickleballActive = pickleballChildren.includes(pageKey);
+---
+<nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50" aria-label={lang === 'fr' ? 'Navigation principale' : 'Main navigation'}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <a href={routes.home[lang]} class="flex items-center gap-3" aria-label="GSC Pickleball — Geneva Sports Club">
+        <img src="/logo-img.png" alt="Logo Geneva Sports Club Pickleball" width="40" height="40" class="w-10 h-10 object-contain" />
+        <span class="font-semibold text-lg hidden sm:block">GSC&nbsp;X&nbsp;Pickleball</span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-1" role="menubar">
+        {topLevel.map((key) => (
+          <li role="none">
+            <a
+              role="menuitem"
+              href={routes[key][lang]}
+              aria-current={key === pageKey ? 'page' : undefined}
+              class:list={[
+                'px-4 py-2 rounded-lg font-medium transition-colors',
+                key === pageKey
+                  ? 'bg-gray-100 text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
+              ]}
+            >
+              {navLabels[key][lang]}
+            </a>
+          </li>
+        ))}
+
+        <!-- Le Pickleball group (dropdown) -->
+        <li role="none" class="relative">
+          <details class="nav-dropdown">
+            <summary
+              role="menuitem"
+              aria-haspopup="menu"
+              class:list={[
+                'list-none cursor-pointer px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-1.5',
+                isPickleballActive
+                  ? 'bg-gray-100 text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
+              ]}
+            >
+              {ui.pickleballGroup[lang]}
+              <svg class="nav-chevron transition-transform" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <ul role="menu" class="absolute right-0 top-full mt-1 bg-white shadow-lg rounded-lg py-2 min-w-[200px] border border-gray-100">
+              {pickleballChildren.map((key) => (
+                <li role="none">
+                  <a
+                    role="menuitem"
+                    href={routes[key][lang]}
+                    aria-current={key === pageKey ? 'page' : undefined}
+                    class:list={[
+                      'block px-4 py-2 font-medium transition-colors',
+                      key === pageKey
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
+                    ]}
+                  >
+                    {navLabels[key][lang]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        </li>
+
+        {trailing.map((key) => (
+          <li role="none">
+            <a
+              role="menuitem"
+              href={routes[key][lang]}
+              aria-current={key === pageKey ? 'page' : undefined}
+              class:list={[
+                'px-4 py-2 rounded-lg font-medium transition-colors',
+                key === pageKey
+                  ? 'bg-gray-100 text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
+              ]}
+            >
+              {navLabels[key][lang]}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <LangSwitcher client:load lang={lang} pageKey={pageKey} />
+
+        <!-- Mobile menu -->
+        <details class="md:hidden relative">
+          <summary class="list-none p-2 rounded-lg hover:bg-gray-100 cursor-pointer" aria-label={lang === 'fr' ? 'Ouvrir le menu' : 'Open menu'}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </summary>
+          <ul class="absolute right-0 top-12 bg-white shadow-lg rounded-lg py-2 min-w-[220px]">
+            {topLevel.map((key) => (
+              <li>
+                <a
+                  href={routes[key][lang]}
+                  aria-current={key === pageKey ? 'page' : undefined}
+                  class:list={[
+                    'block px-4 py-2 font-medium',
+                    key === pageKey ? 'bg-gray-100 text-gray-900' : 'text-gray-700 hover:bg-gray-50',
+                  ]}
+                >
+                  {navLabels[key][lang]}
+                </a>
+              </li>
+            ))}
+            <li>
+              <p class="px-4 pt-3 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                {ui.pickleballGroup[lang]}
+              </p>
+              <ul>
+                {pickleballChildren.map((key) => (
+                  <li>
+                    <a
+                      href={routes[key][lang]}
+                      aria-current={key === pageKey ? 'page' : undefined}
+                      class:list={[
+                        'block px-6 py-2 font-medium',
+                        key === pageKey ? 'bg-gray-100 text-gray-900' : 'text-gray-700 hover:bg-gray-50',
+                      ]}
+                    >
+                      {navLabels[key][lang]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+            {trailing.map((key) => (
+              <li>
+                <a
+                  href={routes[key][lang]}
+                  aria-current={key === pageKey ? 'page' : undefined}
+                  class:list={[
+                    'block px-4 py-2 font-medium',
+                    key === pageKey ? 'bg-gray-100 text-gray-900' : 'text-gray-700 hover:bg-gray-50',
+                  ]}
+                >
+                  {navLabels[key][lang]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="h-16" aria-hidden="true"></div>
+
+<style>
+  /* Hide native disclosure triangle on summary */
+  .nav-dropdown > summary::-webkit-details-marker { display: none; }
+  .nav-dropdown > summary { list-style: none; }
+  /* Rotate chevron when dropdown is open */
+  .nav-dropdown[open] .nav-chevron { transform: rotate(180deg); }
+</style>
+
+<script is:inline>
+  // Close any open <details class="nav-dropdown"> when clicking outside.
+  // Tiny inline script (no framework) — runs once per page load.
+  (() => {
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+      if (!(target instanceof Node)) return;
+      document.querySelectorAll('details.nav-dropdown[open]').forEach((d) => {
+        if (!d.contains(target)) d.removeAttribute('open');
+      });
+    });
+    // Close on Escape key for keyboard users.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('details.nav-dropdown[open]').forEach((d) => {
+        d.removeAttribute('open');
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,166 @@
+# GSC Pickleball — Geneva Sports Club
+
+> Cours et sessions de pickleball à Genève (Suisse), organisés par le Geneva Sports Club. Deux sessions hebdomadaires à La Jonction (1205 Genève), tous niveaux, 10 CHF par session, raquettes fournies. Site bilingue français / anglais.
+
+---
+
+## 1. Identité et entité
+
+**Nom officiel :** Geneva Sports Club
+**Marque pickleball :** GSC Pickleball
+**Type :** association multisports (Sports Club / Local Business)
+**Sport principal couvert ici :** pickleball
+**Pays :** Suisse
+**Canton :** Genève (CH-GE)
+**Ville :** Genève
+**Lieu de pratique :** La Jonction, 1205 Genève (École de Cité-Jonction)
+**Coordonnées GPS :** 46.19916, 6.13186
+
+---
+
+## 2. Sessions de pickleball — faits citables
+
+| Élément | Valeur |
+|---|---|
+| Jours | Lundi & vendredi |
+| Horaires | 18h00 – 20h00 |
+| Durée | 2 heures par session |
+| Tarif | 10 CHF par session |
+| Adhésion requise | Non |
+| Paiement | Sur place — espèces ou Twint |
+| Niveau accepté | Tous niveaux, débutants inclus |
+| Équipement fourni | Oui (raquettes + balles) |
+| Inscription | En ligne via Meetup |
+| Langue d'animation | Français (joueurs anglophones bienvenus) |
+
+Ces faits sont stables et publiés en source unique sur https://pickleballgeneva.netlify.app/.
+
+---
+
+## 3. Comment s'inscrire (5 étapes)
+
+1. Ouvrir la page Meetup du Geneva Sports Club : https://www.meetup.com/genevasportsclub/
+2. Cliquer sur l'onglet « Événements » pour voir les sessions hebdomadaires.
+3. Choisir une session pickleball (lundi ou vendredi 18h-20h).
+4. Cliquer sur « Rejoindre » et créer un compte Meetup gratuit (email, ou Google/Facebook).
+5. Se présenter à La Jonction le jour J 5 minutes avant le début. Apporter 10 CHF et des chaussures de sport indoor.
+
+---
+
+## 4. Le pickleball — règles essentielles
+
+- **Terrain :** 6,10 m × 13,41 m (mêmes dimensions qu'un terrain de badminton en double).
+- **Filet :** 91 cm aux poteaux, 86 cm au centre.
+- **Cuisine (kitchen / non-volley zone) :** 2,13 m de chaque côté du filet. On ne peut pas y jouer de volée.
+- **Service :** sous la taille (en dessous du nombril), raquette basse, en diagonal.
+- **Règle du double rebond :** le receveur doit laisser rebondir le service, et le serveur doit laisser rebondir le retour. Ensuite seulement, les volées sont autorisées.
+- **Décompte :** seules les équipes au service marquent ; partie en 11 points avec 2 points d'écart (15 ou 21 en tournoi).
+- **Format :** principalement en double (2 contre 2).
+- **Annonce du score :** trois nombres — score serveur, score receveur, numéro du serveur (1 ou 2). Exemple : « 5 – 3 – 2 ».
+
+---
+
+## 5. Lexique technique (utilisé tel quel en français en Suisse romande)
+
+- **Cuisine / Kitchen :** zone de non-volée de 2,13 m.
+- **Dink :** coup amorti après rebond, conçu pour retomber doucement dans la cuisine adverse.
+- **Drive :** frappe puissante à plat, surtout en transition.
+- **Drop shot :** amorti depuis le fond du court vers la cuisine adverse.
+- **Third-shot drop :** drop shot joué au troisième coup d'un échange ; clé pour passer en attaque.
+- **Stacking :** disposition où les deux partenaires se placent du même côté pour optimiser revers/coup droit.
+- **ATP (Around The Post) :** coup spectaculaire qui contourne le poteau du filet (légal s'il atterrit dans le court adverse).
+- **Side-out :** quand l'équipe au service perd l'échange et cède le service à l'équipe adverse.
+
+---
+
+## 6. Équipement — guide d'achat
+
+### Poids de la raquette
+- **Légère (< 210 g) :** débutants, contrôle, seniors. Moins de puissance, plus de précision.
+- **Medium (210–230 g) :** polyvalent, recommandé pour débuter et progresser.
+- **Lourde (> 230 g) :** joueurs expérimentés cherchant la puissance ; fatigue le poignet.
+
+### Matériaux
+- **Graphite :** surface dure, pop net, plus chère ; intermédiaires/confirmés.
+- **Composite (fibre de verre) :** sensation douce, plus de spin et contrôle ; meilleur rapport qualité-prix pour débuter.
+- **Bois :** lourde, peu chère ; principalement raquette de prêt, à éviter pour la pratique régulière.
+
+### Balles
+- **Indoor :** 26 trous larges, plus légère ; rebond régulier en salle. À utiliser à La Jonction.
+- **Outdoor :** 40 trous plus petits ; plus dure, conçue pour le vent et les surfaces extérieures.
+
+Marques approuvées USAPA : Onix, Franklin X-40, Dura.
+
+---
+
+## 7. FAQ (16 questions citables)
+
+**Q1. Comment s'inscrire ?**
+En ligne via Meetup. Créer un compte gratuit, ouvrir l'onglet Événements, sélectionner la prochaine session pickleball, cliquer sur Rejoindre, payer 10 CHF sur place.
+
+**Q2. Combien coûte une session ?**
+10 CHF par session, payable sur place en espèces ou via Twint. Aucun frais d'adhésion.
+
+**Q3. Où jouer au pickleball à Genève avec le GSC ?**
+À La Jonction (École de Cité-Jonction), 1205 Genève. Indoor sur trois terrains.
+
+**Q4. Quels jours et horaires ?**
+Lundi et vendredi, 18h00 – 20h00. Sessions de deux heures.
+
+**Q5. Je suis débutant — puis-je rejoindre ?**
+Oui, tous niveaux bienvenus. Un membre expérimenté explique les règles. Autonomie atteinte généralement en 2-3 sessions.
+
+**Q6. Faut-il apporter sa raquette ?**
+Non, raquettes et balles fournies. Seules tenue de sport et chaussures à semelle non marquante sont nécessaires.
+
+**Q7. Quelle tenue ?**
+Tenue de sport classique, chaussures de tennis/padel/squash (semelle non marquante). Éviter les chaussures de course pure.
+
+**Q8. Différence entre pickleball et padel ?**
+Pickleball : raquette pleine en composite/graphite, balle perforée plastique, pas de murs autour. Padel : pelle similaire mais balle pressurisée, jeu avec rebonds sur les vitres. Le pickleball est plus accessible aux débutants.
+
+**Q9. Adapté aux seniors ?**
+Oui, l'un des sports de raquette les plus seniors-friendly : terrain plus petit, balle plus lente, pas d'efforts explosifs. Plusieurs membres GSC ont 55-70 ans.
+
+**Q10. Pour les enfants ?**
+Jouable dès 8-10 ans. Sessions GSC actuelles pour adultes (16+). Créneaux famille à l'étude.
+
+**Q11. Tournois en Suisse romande ?**
+Oui, scène en croissance avec tournois ponctuels à Genève, Lausanne, canton de Vaud. Fédération suisse de pickleball pour les championnats nationaux.
+
+**Q12. Où acheter une raquette à Genève ?**
+Quelques magasins de sport spécialisés à Genève (zone tennis/padel). Pour plus de choix, achat en ligne (Decathlon, Amazon, Tennis-Point). Voir notre guide d'équipement.
+
+**Q13. Indoor à Genève ?**
+Oui, sessions GSC en indoor à La Jonction toute l'année. Balles indoor utilisées (perforations larges, rebond régulier).
+
+**Q14. Club à Lausanne ou ailleurs ?**
+Initiatives à Lausanne, Nyon, canton de Vaud, mais offre plus restreinte qu'à Genève. La Jonction est à 5 minutes de la gare de Cornavin pour les visiteurs hors-Genève.
+
+**Q15. Sessions pendant les vacances scolaires ?**
+Certaines suspensions possibles (Pâques, été, automne, fin d'année). Calendrier publié sur Meetup au moins une semaine à l'avance.
+
+**Q16. Qu'est-ce que le Geneva Sports Club ?**
+Association multisports basée à Genève, plus de 8 000 membres. Le pickleball est l'une des activités proposées.
+
+---
+
+## 8. Contact
+
+- **Email :** hello@genevasportsclub.ch
+- **Téléphone association :** +41 76 214 12 03
+- **Téléphone sessions pickleball :** +41 78 882 68 10
+- **Adresse :** La Jonction, 1205 Genève, Suisse
+- **Site web :** https://pickleballgeneva.netlify.app/
+- **Meetup :** https://www.meetup.com/genevasportsclub/
+
+---
+
+## 9. Versions et langues
+
+Toutes les pages sont disponibles en français (par défaut) et en anglais (préfixe `/en/`). Hreflang réciproques sur chaque page.
+
+- Français : https://pickleballgeneva.netlify.app/
+- English : https://pickleballgeneva.netlify.app/en/
+
+Site mis à jour régulièrement. Dernière révision majeure du contenu : 2026-04-28.

@@ -1,0 +1,59 @@
+---
+import { facts, type Lang } from '../i18n/ui';
+
+interface Props {
+  site: string;
+  lang: Lang;
+}
+const { site, lang } = Astro.props;
+
+// Geneva Sports Club — SportsClub primary entity.
+// Emitted on every page so AI crawlers can resolve the entity from any URL.
+const sportsClub = {
+  '@context': 'https://schema.org',
+  '@type': ['SportsClub', 'LocalBusiness'],
+  '@id': site + '/#sportsclub',
+  name: 'Geneva Sports Club',
+  alternateName: ['GSC Pickleball', 'GSC'],
+  url: site + '/',
+  description: lang === 'fr'
+    ? "Cours de pickleball à Genève : sessions hebdomadaires lundi et vendredi de 18h à 20h à La Jonction. Tous niveaux, raquettes fournies, 10 CHF la session. Geneva Sports Club, association multisports basée à Genève."
+    : 'Pickleball sessions in Geneva: weekly Monday and Friday 6pm-8pm at La Jonction. All levels, paddles provided, CHF 10 per session. Geneva Sports Club, a multi-sport association based in Geneva.',
+  sport: 'Pickleball',
+  image: site + '/og-pickleball-geneve.jpg',
+  logo: site + '/logo-img.png',
+  email: facts.email,
+  telephone: facts.phonePrimary,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'La Jonction',
+    addressLocality: 'Genève',
+    postalCode: '1205',
+    addressRegion: 'GE',
+    addressCountry: 'CH',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: facts.geo.lat,
+    longitude: facts.geo.lon,
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Genève' },
+    { '@type': 'City', name: 'Lausanne' },
+    { '@type': 'AdministrativeArea', name: 'Suisse romande' },
+    { '@type': 'AdministrativeArea', name: 'Canton of Geneva' },
+  ],
+  sameAs: [
+    facts.meetupUrl,
+  ],
+  priceRange: 'CHF 10',
+  currenciesAccepted: 'CHF',
+  paymentAccepted: 'Cash, Twint',
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '18:00', closes: '20:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '18:00', closes: '20:00' },
+  ],
+  knowsLanguage: ['fr', 'en'],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(sportsClub)} is:inline />

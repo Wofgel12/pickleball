@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import GearContent from '../../components/GearContent.astro';
+import { facts } from '../../i18n/ui';
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Pickleball gear: paddle and ball buying guide 2026',
+  description: 'How to choose your pickleball paddle in Geneva: weight, materials (graphite, composite), target level, indoor vs outdoor balls.',
+  inLanguage: 'en-GB',
+  author: { '@type': 'Organization', name: 'Geneva Sports Club', url: SITE + '/' },
+  publisher: { '@type': 'Organization', name: 'Geneva Sports Club', logo: { '@type': 'ImageObject', url: SITE + '/logo-img.png' } },
+  datePublished: '2026-01-15',
+  dateModified: facts.lastReviewedISO,
+  mainEntityOfPage: SITE + '/en/gear/',
+  image: SITE + '/og-pickleball-geneve.jpg',
+};
+---
+<BaseLayout pageKey="gear" lang="en" jsonLd={[articleSchema]}>
+  <div class="bg-tile">
+    <PageHero
+      lang="en"
+      title="Pickleball gear: paddles & balls"
+      lead="Practical buying guide for your first pickleball paddle: weight (light, medium, heavy), materials (graphite, composite), target level. Indoor vs outdoor ball recommendations."
+    />
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <GearContent lang="en" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

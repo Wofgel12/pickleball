@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ParticipateContent from '../../components/ParticipateContent.astro';
+import { facts } from '../../i18n/ui';
+
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to join a pickleball session in Geneva',
+  description: 'Five-step registration via Meetup to join a Geneva Sports Club session at La Jonction, Geneva.',
+  totalTime: 'PT5M',
+  estimatedCost: { '@type': 'MonetaryAmount', currency: 'CHF', value: facts.priceCHF },
+  supply: [
+    { '@type': 'HowToSupply', name: 'Free Meetup account' },
+    { '@type': 'HowToSupply', name: 'Sportswear and indoor shoes' },
+    { '@type': 'HowToSupply', name: 'CHF 10 in cash or via Twint' },
+  ],
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Access the association page', url: facts.meetupUrl, text: 'Open the Geneva Sports Club Meetup page.' },
+    { '@type': 'HowToStep', position: 2, name: 'Browse events', text: 'Open the Events tab to see all weekly sessions.' },
+    { '@type': 'HowToStep', position: 3, name: 'Choose a pickleball session', text: 'Pick a Monday or Friday 6pm-8pm pickleball session.' },
+    { '@type': 'HowToStep', position: 4, name: 'Create your account and register', text: 'Click Join and create a free Meetup account.' },
+    { '@type': 'HowToStep', position: 5, name: 'Come to the session', text: 'Arrive at La Jonction 5 minutes early, CHF 10 on site.' },
+  ],
+};
+---
+<BaseLayout pageKey="participate" lang="en" jsonLd={[howTo]}>
+  <div class="bg-tile">
+    <PageHero
+      lang="en"
+      title="Join a pickleball session in Geneva"
+    />
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <ParticipateContent lang="en" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

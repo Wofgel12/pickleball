@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import courtImage from '../assets/court.jpg';
+import type { Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+
+// Glossary entries shared between FR and EN — terms are used in both languages
+// in the actual GSC sessions, so keep the English originals as headwords and
+// localise only the definitions.
+const glossary = [
+  { term: 'Cuisine / Kitchen',
+    fr: 'Zone de non-volée de 2,13 m de chaque côté du filet. On ne peut pas y frapper la balle de volée — un fondamental tactique du pickleball.',
+    en: '7-foot non-volley zone on each side of the net. You cannot volley while standing in it — one of the core tactical concepts of pickleball.' },
+  { term: 'Dink',
+    fr: 'Coup doux frappé après le rebond, conçu pour retomber dans la cuisine adverse à très faible vitesse. C\'est le coup de patience qui définit le jeu de haut niveau.',
+    en: 'Soft shot played after the bounce, designed to drop just over the net into the opposing kitchen at very low speed. The patience shot that defines high-level play.' },
+  { term: 'Drive',
+    fr: 'Coup puissant frappé à plat ou avec un léger lift pour mettre l\'adversaire sous pression. Surtout utilisé en transition.',
+    en: 'Hard, flat or slightly topspin drive used to put the opponent under pressure. Mostly used during transition.' },
+  { term: 'Drop shot',
+    fr: 'Coup amorti du fond de court qui retombe doucement dans la cuisine adverse. Permet à votre équipe de monter au filet.',
+    en: 'Soft shot from the baseline that lands gently in the opposing kitchen. Lets your team move up to the net.' },
+  { term: 'Third-shot drop',
+    fr: 'Le drop shot joué au troisième coup d\'un échange. Mouvement clé pour transformer un service en jeu offensif au filet.',
+    en: 'The drop shot played as the third shot of a rally. Key move for converting a serve into offensive net play.' },
+  { term: 'Stacking',
+    fr: 'Position d\'équipe où les deux joueurs se placent du même côté pour optimiser leur revers/coup droit. Tactique avancée en double.',
+    en: 'Team formation where both players stand on the same side to optimise forehand/backhand alignment. Advanced doubles tactic.' },
+  { term: 'ATP (Around The Post)',
+    fr: 'Coup spectaculaire qui contourne le poteau du filet (légal s\'il atterrit dans le court adverse).',
+    en: 'Spectacular shot that goes around the net post (legal as long as it lands in the opposing court).' },
+  { term: 'Side-out',
+    fr: 'Quand l\'équipe au service perd l\'échange et cède le service à l\'équipe adverse.',
+    en: 'When the serving team loses the rally and the serve passes to the opposing team.' },
+];
+
+// Common beginner faults — citable list.
+const faults = fr
+  ? [
+      'Frapper de volée en zone de cuisine (faute systématique).',
+      'Servir au-dessus de la taille (le service doit être effectué en dessous de la hanche, raquette basse).',
+      'Rater la double-rebond rule : le receveur ET le serveur doivent laisser rebondir la balle au premier échange.',
+      'Monter au filet trop tôt sans drop shot — vous offrez la cuisine à l\'adversaire.',
+      'Sur-jouer en puissance : le pickleball récompense la patience, pas la vitesse.',
+    ]
+  : [
+      'Volleying inside the kitchen (a systematic fault).',
+      'Serving above the waist — the serve must be hit below hip level, paddle low.',
+      'Missing the double-bounce rule: receiver AND server must let the ball bounce on the first exchange.',
+      'Moving up too early without a drop shot — you hand the kitchen to your opponent.',
+      'Over-hitting for power: pickleball rewards patience, not speed.',
+    ];
+---
+<div class="space-y-12">
+  <!-- Citable opening passage -->
+  <p class="text-lg leading-relaxed text-gray-700 bg-white/95 p-6 rounded-2xl border-2" style="border-color:#002b2b">
+    {fr
+      ? "Le pickleball se joue sur un terrain de 6,10 × 13,41 m, avec un filet de 91 cm au centre. Les parties se jouent au meilleur des points en double, jusqu'à 11 points avec 2 points d'écart. Seule l'équipe au service peut marquer. Cette page couvre les règles complètes, le lexique technique, l'équipement minimum et les fautes de débutant à éviter."
+      : 'Pickleball is played on a 20 × 44 ft court with a 91 cm net at the centre. Doubles games are played to 11 points, win by 2. Only the serving team can score. This page covers full rules, technical glossary, minimum gear, and beginner mistakes to avoid.'}
+  </p>
+
+  <!-- Court + scoring -->
+  <div class="grid md:grid-cols-2 gap-6">
+    <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Le terrain' : 'The court'}</h2>
+      <p class="text-gray-700 mb-4 leading-relaxed">
+        {fr
+          ? 'Un terrain de pickleball mesure 6,10 m de large × 13,41 m de long (les mêmes dimensions qu\'un terrain de badminton en double). Le filet est à 91 cm aux poteaux et 86 cm au centre. La zone de non-volée — surnommée la cuisine — s\'étend sur 2,13 m de chaque côté du filet. Les zones de service sont à l\'arrière, divisées par une ligne médiane.'
+          : 'A pickleball court is 20 ft wide × 44 ft long (same dimensions as a badminton doubles court). The net is 36 in at the posts and 34 in at the centre. The non-volley zone — nicknamed the kitchen — extends 7 ft on each side of the net. Service boxes are at the back, split by a centreline.'}
+      </p>
+      <Image src={courtImage} alt={fr ? 'Schéma d\'un terrain de pickleball avec dimensions et zones de jeu' : 'Pickleball court diagram with dimensions and play zones'} class="rounded-lg w-full h-auto" widths={[400, 800]} sizes="(max-width: 768px) 100vw, 50vw" />
+    </article>
+
+    <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Le décompte des points' : 'Scoring'}</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        {fr
+          ? 'Seule l\'équipe au service marque. Une partie se joue en 11 points avec 2 points d\'écart (15 ou 21 en tournoi). Le score s\'annonce à voix haute en trois nombres : score serveur, score receveur, et numéro du serveur (1 ou 2). Exemple : « 5 – 3 – 2 ».'
+          : 'Only the serving team scores. A game is played to 11 with a 2-point margin (15 or 21 in tournaments). The score is announced aloud as three numbers: server score, receiver score, server number (1 or 2). Example: "5 – 3 – 2".'}
+      </p>
+      <h3 class="font-semibold text-gray-900 mb-2">{fr ? 'Règle du double rebond' : 'Two-bounce rule'}</h3>
+      <p class="text-gray-700 leading-relaxed">
+        {fr
+          ? 'Au début de chaque échange, le receveur DOIT laisser rebondir le service, et le serveur DOIT laisser rebondir le retour. Ensuite seulement, on peut frapper de volée. Cette règle équilibre le jeu et empêche les services-volées agressifs.'
+          : 'At the start of every rally, the receiver MUST let the serve bounce, and the server MUST let the return bounce. Only then can volleys begin. This rule balances the game and prevents aggressive serve-and-volley.'}
+      </p>
+    </article>
+  </div>
+
+  <!-- Video -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-6 text-center text-gray-900">{fr ? 'Découvrez le pickleball en vidéo' : 'Discover pickleball on video'}</h2>
+    <div class="relative" style="padding-top:56.25%;">
+      <iframe
+        src="https://www.youtube.com/embed/fTvPYdKZqO0"
+        class="absolute inset-0 w-full h-full rounded-xl"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+        title={fr ? 'Vidéo explicative : règles et techniques du pickleball' : 'Explainer video: pickleball rules and techniques'}
+      ></iframe>
+    </div>
+  </article>
+
+  <!-- Glossary -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Lexique technique' : 'Technical glossary'}</h2>
+    <p class="text-gray-700 mb-6">
+      {fr
+        ? 'Les termes anglais sont utilisés tels quels en Suisse romande car le pickleball reste largement anglophone. Les voici expliqués clairement.'
+        : 'The English terms are used as-is internationally — here are clear definitions.'}
+    </p>
+    <dl class="grid sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+      {glossary.map((g) => (
+        <div>
+          <dt class="font-bold text-teal-800">{g.term}</dt>
+          <dd class="text-gray-700">{fr ? g.fr : g.en}</dd>
+        </div>
+      ))}
+    </dl>
+  </article>
+
+  <!-- Equipment minimum -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Équipement minimum' : 'Minimum equipment'}</h2>
+    <ul class="list-disc list-inside text-gray-700 space-y-2">
+      <li>{fr
+        ? 'Une raquette pleine en composite ou graphite (poids 200-250 g pour débuter).'
+        : 'A solid composite or graphite paddle (weight 200-250 g for starters).'}</li>
+      <li>{fr
+        ? 'Des chaussures à semelle non marquante adaptées aux déplacements latéraux (tennis, padel, squash).'
+        : 'Non-marking sole shoes built for lateral movement (tennis, padel, squash).'}</li>
+      <li>{fr
+        ? 'Une tenue sport classique respirante.'
+        : 'Standard breathable sportswear.'}</li>
+      <li>{fr
+        ? 'Une bouteille d\'eau et une serviette — les sessions durent deux heures intenses.'
+        : 'A water bottle and a towel — sessions last two intense hours.'}</li>
+    </ul>
+    <p class="text-gray-600 mt-4 text-sm">
+      {fr
+        ? 'Le Geneva Sports Club fournit raquettes et balles. Vous n\'avez besoin que des chaussures et de la tenue.'
+        : 'Geneva Sports Club provides paddles and balls. You only need to bring shoes and sportswear.'}
+    </p>
+  </article>
+
+  <!-- Common beginner faults -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Fautes les plus fréquentes' : 'Most common beginner mistakes'}</h2>
+    <ol class="list-decimal list-inside text-gray-700 space-y-2">
+      {faults.map((f) => <li>{f}</li>)}
+    </ol>
+  </article>
+
+  <!-- Doubles format -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Format de jeu en double' : 'Doubles format'}</h2>
+    <p class="text-gray-700 leading-relaxed">
+      {fr
+        ? 'Le pickleball récréatif se joue presque exclusivement en double (2 vs 2). Le serveur tient le service jusqu\'à ce que son équipe perde un échange — alors son partenaire prend le service. Si l\'équipe perd le second service, c\'est un side-out : le service passe à l\'équipe adverse. Au début d\'une partie, l\'équipe qui sert en premier ne dispose que d\'un seul service (règle du « 0-0-2 starting score »), pour compenser l\'avantage initial du service.'
+        : 'Recreational pickleball is almost exclusively doubles (2 vs 2). The server keeps serving until the team loses a rally — then their partner serves. If they lose the second serve too, it is a side-out: the serve passes to the opposing team. At the start of a game, the first serving team gets only one serve (the "0-0-2 starting score" rule) to offset the initial server advantage.'}
+    </p>
+  </article>
+
+</div>

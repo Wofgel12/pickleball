@@ -1,0 +1,130 @@
+---
+import { Image } from 'astro:assets';
+import raquette from '../assets/raquette.png';
+import balle from '../assets/balle.png';
+import type { Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+
+// Paddle weight buckets — citable buying guide.
+const weightBuckets = fr
+  ? [
+      { label: 'Légère', range: '< 210 g', who: 'Débutants, joueurs cherchant le contrôle, seniors', tradeoff: 'Moins de puissance, plus de précision et de manœuvrabilité.' },
+      { label: 'Medium', range: '210 – 230 g', who: 'Polyvalents, joueurs intermédiaires', tradeoff: 'Le meilleur compromis pour débuter et progresser.' },
+      { label: 'Lourde', range: '> 230 g', who: 'Joueurs expérimentés cherchant la puissance', tradeoff: 'Plus de puissance, mais fatigue le poignet et ralentit les volées.' },
+    ]
+  : [
+      { label: 'Light', range: '< 7.4 oz', who: 'Beginners, control-oriented players, seniors', tradeoff: 'Less power, more precision and maneuverability.' },
+      { label: 'Medium', range: '7.4 – 8.1 oz', who: 'All-round, intermediate players', tradeoff: 'Best trade-off for starters and improvers.' },
+      { label: 'Heavy', range: '> 8.1 oz', who: 'Experienced players seeking power', tradeoff: 'More power, but tires the wrist and slows volleys.' },
+    ];
+
+const materials = fr
+  ? [
+      { name: 'Graphite', body: 'Surface dure, pop net, frappe précise. Plus chère, idéale pour les joueurs intermédiaires à confirmés.' },
+      { name: 'Composite (fibre de verre)', body: 'Sensation plus douce, plus de spin et de contrôle. Excellent rapport qualité-prix pour débuter.' },
+      { name: 'Bois', body: 'Lourde, peu chère, principalement utilisée comme raquette de prêt. À éviter pour la pratique régulière.' },
+    ]
+  : [
+      { name: 'Graphite', body: 'Hard hitting surface, sharp pop, precise touch. Pricier — best for intermediate-to-advanced players.' },
+      { name: 'Composite (fibreglass)', body: 'Softer feel, more spin and control. Excellent value for beginners.' },
+      { name: 'Wood', body: 'Heavy, cheap, mostly used as loaner paddles. Avoid for regular play.' },
+    ];
+
+const ballGuide = fr
+  ? [
+      { type: 'Indoor', body: '26 trous, plus larges. Plus légère, rebond régulier en salle. À utiliser pour nos sessions à La Jonction.' },
+      { type: 'Outdoor', body: '40 trous, plus petits. Plus dure et lourde, conçue pour résister au vent et aux surfaces extérieures.' },
+    ]
+  : [
+      { type: 'Indoor', body: '26 holes, wider. Lighter, consistent bounce on hardwood. Use for our La Jonction sessions.' },
+      { type: 'Outdoor', body: '40 holes, smaller. Harder and heavier, built to resist wind and outdoor surfaces.' },
+    ];
+---
+<div class="space-y-12">
+  <!-- Citable opening passage -->
+  <p class="text-lg leading-relaxed text-gray-700 bg-white/95 p-6 rounded-2xl border-2" style="border-color:#002b2b">
+    {fr
+      ? "Pour débuter le pickleball, une raquette de poids medium (210-230 g) en composite est le meilleur compromis. Comptez entre 60 et 120 CHF pour une raquette de qualité, et 15-25 CHF pour un tube de balles. Geneva Sports Club fournit raquettes et balles lors des sessions — vous n'êtes pas obligé d'acheter immédiatement."
+      : 'To start pickleball, a medium-weight (7.4-8.1 oz) composite paddle is the best balance. Expect to spend CHF 60-120 for a quality paddle, and CHF 15-25 for a tube of balls. Geneva Sports Club provides paddles and balls at sessions — you do not need to buy gear immediately.'}
+  </p>
+
+  <!-- Buying guide: weight -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Choisir le poids de votre raquette' : 'Choosing your paddle weight'}</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      {weightBuckets.map((b) => (
+        <div class="border rounded-xl p-5">
+          <p class="font-bold text-teal-700 text-lg">{b.label}</p>
+          <p class="text-sm text-gray-500 mb-3">{b.range}</p>
+          <p class="text-sm text-gray-800 mb-2"><span class="font-semibold">{fr ? 'Pour qui ?' : 'For whom?'}</span> {b.who}</p>
+          <p class="text-sm text-gray-700">{b.tradeoff}</p>
+        </div>
+      ))}
+    </div>
+  </article>
+
+  <!-- Buying guide: materials -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Matériaux : graphite, composite ou bois ?' : 'Materials: graphite, composite or wood?'}</h2>
+    <dl class="space-y-3">
+      {materials.map((m) => (
+        <div>
+          <dt class="font-bold text-gray-900">{m.name}</dt>
+          <dd class="text-gray-700">{m.body}</dd>
+        </div>
+      ))}
+    </dl>
+  </article>
+
+  <!-- Recommended paddle -->
+  <article class="bg-white/95 rounded-2xl shadow-xl overflow-hidden border-2" style="border-color:#002b2b">
+    <div class="px-6 py-4" style="background: linear-gradient(to right, #003d3d, #005555);">
+      <h2 class="text-2xl font-semibold text-white">{fr ? 'Notre raquette recommandée' : 'Our recommended paddle'}</h2>
+    </div>
+    <div class="p-8 grid md:grid-cols-2 gap-8 items-center">
+      <Image src={raquette} alt={fr ? 'Raquette de pickleball recommandée pour jouer à Genève' : 'Recommended pickleball paddle for Geneva players'} class="rounded-xl shadow-lg max-w-full h-auto mx-auto" widths={[400, 800]} sizes="(max-width: 768px) 100vw, 50vw" />
+      <div>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          {fr
+            ? 'Cette raquette en composite/graphite hybride pèse environ 220 g, dans la plage medium. Elle offre un excellent contrôle au filet, un sweet spot généreux et une durabilité élevée. Idéale pour débuter sans freiner votre progression.'
+            : 'This composite/graphite hybrid paddle weighs around 7.8 oz — squarely medium. It delivers excellent net control, a generous sweet spot, and high durability. Ideal to start without bottlenecking your progression.'}
+        </p>
+        <ul class="text-sm text-gray-700 space-y-1 mb-4">
+          <li>{fr ? '• Poids 220 g (medium)' : '• Weight 7.8 oz (medium)'}</li>
+          <li>{fr ? '• Surface composite + noyau polymère' : '• Composite face + polymer core'}</li>
+          <li>{fr ? '• Sweet spot généreux' : '• Generous sweet spot'}</li>
+          <li>{fr ? '• Garantie constructeur 1 an' : '• 1-year manufacturer warranty'}</li>
+        </ul>
+        <a href="https://www.amazon.com/s?k=pickleball+paddle" target="_blank" rel="noopener noreferrer" class="btn-press inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-teal-600 hover:to-teal-700">
+          {fr ? 'Voir les options' : 'See options'}
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Recommended ball + indoor vs outdoor -->
+  <article class="bg-white/95 rounded-2xl shadow-xl overflow-hidden border-2" style="border-color:#002b2b">
+    <div class="px-6 py-4" style="background: linear-gradient(to right, #003d3d, #005555);">
+      <h2 class="text-2xl font-semibold text-white">{fr ? 'Balles : indoor vs outdoor' : 'Balls: indoor vs outdoor'}</h2>
+    </div>
+    <div class="p-8 grid md:grid-cols-2 gap-8 items-center">
+      <Image src={balle} alt={fr ? 'Balles de pickleball indoor et outdoor' : 'Indoor and outdoor pickleball balls'} class="rounded-xl shadow-lg max-w-full h-auto mx-auto" widths={[400, 800]} sizes="(max-width: 768px) 100vw, 50vw" />
+      <dl class="space-y-3">
+        {ballGuide.map((b) => (
+          <div>
+            <dt class="font-bold text-teal-700">{b.type}</dt>
+            <dd class="text-gray-700">{b.body}</dd>
+          </div>
+        ))}
+        <p class="text-sm text-gray-600 pt-2">
+          {fr
+            ? 'Les marques approuvées USAPA (Onix, Franklin X-40, Dura) sont la référence en compétition.'
+            : 'USAPA-approved brands (Onix, Franklin X-40, Dura) are the competition standard.'}
+        </p>
+      </dl>
+    </div>
+  </article>
+</div>

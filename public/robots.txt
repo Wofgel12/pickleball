@@ -1,0 +1,58 @@
+## Geneva Sports Club — robots policy
+## Goals: full crawl access for major search engines AND AI engines.
+## Sitemap exposed for both Google and AI bots.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Major AI crawlers — explicitly allowed for visibility in
+# ChatGPT search, Perplexity, Claude, Google AI Overviews, etc.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# Throttle aggressive SEO crawlers
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Block low-value scraper
+User-agent: MJ12bot
+Disallow: /
+
+Sitemap: https://pickleballgeneva.netlify.app/sitemap.xml

@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "https://www.pickleballgeneva.netlify.app/*"
+  to = "https://pickleballgeneva.netlify.app/:splat"
+  status = 301
+  force = true

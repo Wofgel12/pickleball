@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  pageKey="home"
+  lang="fr"
+  title="Page introuvable — GSC Pickleball Genève"
+  description="Cette page n'existe pas. Retour à l'accueil pour rejoindre nos sessions de pickleball à Genève."
+>
+  <div class="bg-tile min-h-[70vh] flex items-center px-4">
+    <div class="max-w-2xl mx-auto text-center bg-white/95 p-10 rounded-2xl border-2" style="border-color:#002b2b">
+      <p class="text-7xl font-bold text-teal-700 mb-4">404</p>
+      <h1 class="text-3xl font-bold mb-3">Page introuvable</h1>
+      <p class="text-gray-700 mb-6">
+        Cette page n'existe plus ou a été déplacée. Pas de panique — tout le contenu sur le pickleball à Genève est accessible depuis l'accueil.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/" class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-semibold">Accueil</a>
+        <a href="/participer/" class="border-2 border-teal-600 text-teal-700 hover:bg-teal-50 px-6 py-3 rounded-lg font-semibold">Participer</a>
+        <a href="/faq/" class="border-2 border-teal-600 text-teal-700 hover:bg-teal-50 px-6 py-3 rounded-lg font-semibold">FAQ</a>
+      </div>
+      <hr class="my-8" />
+      <p class="text-sm text-gray-600">English speakers: head to <a class="underline text-teal-700" href="/en/">our English homepage</a>.</p>
+    </div>
+  </div>
+</BaseLayout>

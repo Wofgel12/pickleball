@@ -1,0 +1,32 @@
+## Netlify edge headers ##
+
+# Long-cache static, immutable assets (Astro hashed)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Long-cache typical media (1 month, revalidated)
+/*.webp
+  Cache-Control: public, max-age=2592000
+/*.png
+  Cache-Control: public, max-age=2592000
+/*.jpg
+  Cache-Control: public, max-age=2592000
+/*.svg
+  Cache-Control: public, max-age=2592000
+/*.mp4
+  Cache-Control: public, max-age=2592000
+
+# llms.txt + llms-full.txt — explicit text/plain so AI crawlers parse correctly
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+# Sensible default security headers
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(self)

@@ -1,8 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}',
+    './public/**/*.html',
+  ],
   theme: {
     extend: {
+      colors: {
+        brand: {
+          DEFAULT: '#002b2b',
+          dark: '#001818',
+          accent: '#14b8a6',
+        },
+      },
       keyframes: {
         slideDown: {
           '0%': { transform: 'translateY(-100%)', opacity: '0' },

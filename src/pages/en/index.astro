@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import HomeSection from '../../components/HomeSection.astro';
+import ParticipateTeaser from '../../components/ParticipateTeaser.astro';
+import KeyFacts from '../../components/KeyFacts.astro';
+import { faqEN, faqJsonLd } from '../../i18n/faq';
+import { facts } from '../../i18n/ui';
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+
+const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'Pickleball Sessions in Geneva',
+  description: 'Weekly pickleball sessions in Geneva (La Jonction), Monday and Friday 6pm-8pm, CHF 10 per session, equipment provided.',
+  provider: { '@type': 'Organization', name: 'Geneva Sports Club', url: SITE + '/' },
+  courseMode: 'onsite',
+  inLanguage: 'en',
+  availableLanguage: ['fr', 'en'],
+  locationCreated: {
+    '@type': 'Place',
+    name: 'La Jonction, Geneva',
+    address: { '@type': 'PostalAddress', addressLocality: 'Geneva', addressRegion: 'GE', addressCountry: 'CH' },
+  },
+  offers: { '@type': 'Offer', price: facts.priceCHF, priceCurrency: 'CHF', availability: 'https://schema.org/InStock' },
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: 'onsite',
+    courseSchedule: {
+      '@type': 'Schedule',
+      byDay: ['https://schema.org/Monday', 'https://schema.org/Friday'],
+      startTime: '18:00',
+      endTime: '20:00',
+      duration: 'PT2H',
+    },
+  },
+};
+---
+<BaseLayout pageKey="home" lang="en" jsonLd={[courseSchema, faqJsonLd(faqEN.slice(0, 6))]}>
+  <Hero lang="en" />
+  <div class="bg-tile">
+    <HomeSection lang="en" />
+    <ParticipateTeaser lang="en" />
+    <section class="pt-6 pb-6 px-4">
+      <div class="max-w-4xl mx-auto">
+        <p class="text-lg md:text-xl text-gray-800 leading-relaxed bg-white/95 p-6 rounded-2xl border-2 text-center" style="border-color:#002b2b">
+          <strong>Geneva Sports Club</strong> runs two pickleball sessions per week at <strong>La Jonction, Geneva</strong> — Monday and Friday 6pm-8pm, <strong>CHF&nbsp;10 per session</strong>, all levels, paddles provided.
+        </p>
+      </div>
+    </section>
+    <section class="py-16 px-4">
+      <div class="max-w-6xl mx-auto">
+        <KeyFacts lang="en" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

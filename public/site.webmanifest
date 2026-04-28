@@ -1,0 +1,16 @@
+{
+  "name": "GSC Pickleball — Geneva Sports Club",
+  "short_name": "GSC Pickleball",
+  "description": "Cours de pickleball à Genève — Geneva Sports Club. Sessions hebdomadaires à La Jonction, tous niveaux.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#002b2b",
+  "background_color": "#ffffff",
+  "lang": "fr-CH",
+  "icons": [
+    { "src": "/favicon-32x32.png", "type": "image/png", "sizes": "32x32", "purpose": "any" },
+    { "src": "/android-chrome-192x192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "/android-chrome-512x512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}
