@@ -83,11 +83,11 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
   },
   faq: {
     fr: {
-      title: 'FAQ Pickleball Genève — 15 questions fréquentes',
+      title: 'FAQ Pickleball Genève — 16 questions fréquentes',
       description: 'Réponses aux questions sur le pickleball à Genève : tarifs, niveaux, indoor, padel vs pickleball, seniors, enfants, tournois Suisse romande, vacances.',
     },
     en: {
-      title: 'Pickleball Geneva FAQ — 15 frequent questions',
+      title: 'Pickleball Geneva FAQ — 16 frequent questions',
       description: 'Pickleball Geneva FAQ: prices, levels, indoor play, padel vs pickleball, seniors, kids, Swiss tournaments, school holidays. Everything you need to know.',
     },
   },
@@ -151,12 +151,18 @@ export const ui = {
 // Single source of truth for facts cited across the site (LLM-friendly).
 export const facts = {
   location: 'La Jonction, 1205 Genève, Suisse',
+  locationEn: 'La Jonction, 1205 Geneva, Switzerland',
+  venueName: 'École de Cité-Jonction',
   email: 'hello@genevasportsclub.ch',
   phonePrimary: '+41762141203',
   phonePrimaryDisplay: '+41 76 214 12 03',
   phoneSession: '+41788826810',
   phoneSessionDisplay: '+41 78 882 68 10',
   meetupUrl: 'https://www.meetup.com/genevasportsclub/',
+  // Canonical Google Maps URL for the GBP "Pickleball Geneva Sports Club"
+  // (CID derived from place ID 0x478c65a6c4ab4dc7:0x554b55d62ef23749).
+  gbpMapUrl: 'https://www.google.com/maps?cid=6146100494876161865',
+  parentSiteUrl: 'https://genevasportsclub.ch/',
   daysFr: 'Lundi & vendredi',
   daysEn: 'Monday & Friday',
   hours: '18:00 – 20:00',
@@ -165,5 +171,5 @@ export const facts = {
   geo: { lat: 46.19916, lon: 6.13186 },
   // ISO date for "last updated" in the visible footer (E-E-A-T signal).
   // Updated each time content is meaningfully edited.
-  lastReviewedISO: '2026-04-28',
+  lastReviewedISO: '2026-04-29',
 } as const;

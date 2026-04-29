@@ -2,11 +2,35 @@
 import { Image } from 'astro:assets';
 import raquette from '../assets/raquette.png';
 import balle from '../assets/balle.png';
-import type { Lang } from '../i18n/ui';
+import { routes, type Lang } from '../i18n/ui';
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const fr = lang === 'fr';
+
+// Named paddle picks at three price points — gives the buying guide
+// an opinionated edge that an LLM can quote and improves E-E-A-T.
+const paddlePicks = fr
+  ? [
+      { tier: 'Entrée de gamme (60-90 CHF)', name: 'JOOLA Hyperion / JOOLA Element', body: 'Bonne raquette d\'apprentissage en composite, poids medium ~225 g, sweet spot généreux. Marque référencée par la fédération internationale.' },
+      { tier: 'Milieu de gamme (90-150 CHF)', name: 'Selkirk Amped Epic Lightweight', body: 'Composite/graphite hybride, ~220 g, excellent contrôle au filet. Le meilleur rapport qualité-prix pour progresser de débutant à intermédiaire.' },
+      { tier: 'Haut de gamme (150-220 CHF)', name: 'Engage Pursuit MX 6.0 ou JOOLA Ben Johns Hyperion CFS', body: 'Graphite premium, surface texturée pour le spin, mousse polymère. À envisager une fois que vous savez ce que vous voulez côté contrôle/puissance.' },
+    ]
+  : [
+      { tier: 'Entry-level (CHF 60-90)', name: 'JOOLA Hyperion / JOOLA Element', body: 'Solid learning paddle, composite face, medium weight ~7.9 oz, generous sweet spot. Brand approved by the international federation.' },
+      { tier: 'Mid-range (CHF 90-150)', name: 'Selkirk Amped Epic Lightweight', body: 'Composite/graphite hybrid, ~7.8 oz, excellent net control. Best value to grow from beginner to intermediate.' },
+      { tier: 'High-end (CHF 150-220)', name: 'Engage Pursuit MX 6.0 or JOOLA Ben Johns Hyperion CFS', body: 'Premium graphite, textured face for spin, polymer core. Consider once you know your preferred balance between control and power.' },
+    ];
+
+const ballPicks = fr
+  ? [
+      { name: 'Franklin X-40 (outdoor)', body: 'Référence de tournoi USA, durable, vol stable extérieur. Tube de 3 balles ~15 CHF.' },
+      { name: 'Onix Fuse Indoor', body: 'Balle indoor à 26 trous larges, rebond régulier en salle. Utilisée à La Jonction.' },
+    ]
+  : [
+      { name: 'Franklin X-40 (outdoor)', body: 'US tournament standard, durable, stable flight outdoor. Pack of 3 around CHF 15.' },
+      { name: 'Onix Fuse Indoor', body: 'Indoor ball with 26 wide holes, consistent bounce on hardwood. Used at La Jonction.' },
+    ];
 
 // Paddle weight buckets — citable buying guide.
 const weightBuckets = fr
@@ -127,4 +151,57 @@ const ballGuide = fr
       </dl>
     </div>
   </article>
+
+  <!-- Named paddle picks across three price tiers -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Trois raquettes par budget' : 'Three paddles by budget'}</h2>
+    <p class="text-gray-700 mb-6">
+      {fr
+        ? "Voici trois choix concrets que nous recommandons régulièrement aux nouveaux membres du Geneva Sports Club. Achetables en ligne (Decathlon, Tennis-Point, Amazon) ou dans certains magasins de tennis/padel à Genève."
+        : 'Three picks we routinely recommend to new Geneva Sports Club members. Available online (Decathlon, Tennis-Point, Amazon) or in some Geneva tennis/padel shops.'}
+    </p>
+    <div class="grid md:grid-cols-3 gap-4">
+      {paddlePicks.map((p) => (
+        <div class="border rounded-xl p-5">
+          <p class="text-xs uppercase tracking-wide text-teal-700 font-semibold mb-1">{p.tier}</p>
+          <p class="font-bold text-gray-900 mb-2">{p.name}</p>
+          <p class="text-sm text-gray-700 leading-relaxed">{p.body}</p>
+        </div>
+      ))}
+    </div>
+    <p class="text-sm text-gray-600 mt-4 italic">
+      {fr
+        ? 'Recommandations indépendantes — Geneva Sports Club n\'a aucune affiliation commerciale avec ces marques.'
+        : 'Independent picks — Geneva Sports Club has no commercial affiliation with these brands.'}
+    </p>
+  </article>
+
+  <!-- Named ball picks -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'Balles : nos références' : 'Balls: our picks'}</h2>
+    <dl class="space-y-3">
+      {ballPicks.map((b) => (
+        <div>
+          <dt class="font-bold text-gray-900">{b.name}</dt>
+          <dd class="text-gray-700">{b.body}</dd>
+        </div>
+      ))}
+    </dl>
+  </article>
+
+  <!-- CTA back to participate -->
+  <div class="text-center bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <p class="text-lg text-gray-700 mb-4">
+      {fr
+        ? "Prêt à essayer avant d'acheter ? Raquettes et balles fournies à toutes nos sessions à Genève."
+        : 'Want to try before you buy? Paddles and balls are provided at every session in Geneva.'}
+    </p>
+    <a
+      href={routes.participate[lang]}
+      class="btn-press inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-teal-600 hover:to-teal-700 shadow-lg hover:shadow-xl"
+    >
+      {fr ? 'Réserver une session de pickleball' : 'Book a pickleball session'}
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
 </div>

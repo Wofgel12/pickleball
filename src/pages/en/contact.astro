@@ -6,6 +6,8 @@ import { facts } from '../../i18n/ui';
 
 const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
 
+// addressLocality uses the official Swiss postal name "Genève" (not "Geneva")
+// so every schema block on the site resolves to the same Google entity.
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -18,13 +20,15 @@ const localBusiness = {
   priceRange: 'CHF 10',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'La Jonction',
-    addressLocality: 'Geneva',
+    streetAddress: 'École de Cité-Jonction, La Jonction',
+    addressLocality: 'Genève',
     postalCode: '1205',
     addressRegion: 'GE',
     addressCountry: 'CH',
   },
   geo: { '@type': 'GeoCoordinates', latitude: facts.geo.lat, longitude: facts.geo.lon },
+  hasMap: facts.gbpMapUrl,
+  sameAs: [{ '@id': SITE + '/#sportsclub' }],
   openingHoursSpecification: [
     { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '18:00', closes: '20:00' },
     { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '18:00', closes: '20:00' },

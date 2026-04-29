@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import courtImage from '../assets/court.jpg';
-import type { Lang } from '../i18n/ui';
+import { routes, type Lang } from '../i18n/ui';
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -164,5 +164,21 @@ const faults = fr
         : 'Recreational pickleball is almost exclusively doubles (2 vs 2). The server keeps serving until the team loses a rally — then their partner serves. If they lose the second serve too, it is a side-out: the serve passes to the opposing team. At the start of a game, the first serving team gets only one serve (the "0-0-2 starting score" rule) to offset the initial server advantage.'}
     </p>
   </article>
+
+  <!-- CTA: turn rule readers into session attendees -->
+  <div class="text-center bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <p class="text-lg text-gray-700 mb-4">
+      {fr
+        ? "Les règles s'apprennent vraiment sur le terrain. Rejoignez une session du Geneva Sports Club à Genève — un membre vous montre tout en quinze minutes."
+        : 'Rules click fastest on court. Join a Geneva Sports Club session in Geneva — a member walks you through everything in fifteen minutes.'}
+    </p>
+    <a
+      href={routes.participate[lang]}
+      class="btn-press inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-teal-600 hover:to-teal-700 shadow-lg hover:shadow-xl"
+    >
+      {fr ? 'Réserver une session de pickleball' : 'Book a pickleball session'}
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
 
 </div>

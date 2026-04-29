@@ -20,6 +20,8 @@ interface Props {
   jsonLd?: unknown[];
   /** ISO date for content's last meaningful update (E-E-A-T signal) */
   lastReviewedISO?: string;
+  /** Emit <meta name="robots" content="noindex,nofollow"> (legal pages, 404) */
+  noindex?: boolean;
 }
 
 const {
@@ -30,6 +32,7 @@ const {
   ogImage,
   jsonLd = [],
   lastReviewedISO = facts.lastReviewedISO,
+  noindex = false,
 } = Astro.props;
 
 const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
@@ -71,14 +74,26 @@ const breadcrumbSchema = {
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': SITE + '/#website',
   name: 'GSC Pickleball — Geneva Sports Club',
   url: SITE + '/',
   inLanguage: ['fr-CH', 'en-GB'],
-  publisher: {
-    '@type': 'SportsClub',
-    name: 'Geneva Sports Club',
-    url: SITE + '/',
-  },
+  publisher: { '@id': SITE + '/#sportsclub' },
+};
+
+// dateModified surfaced as WebPage schema — gives every page a freshness signal.
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': canonical + '#webpage',
+  url: canonical,
+  name: pageTitle,
+  description: pageDesc,
+  inLanguage: lang === 'fr' ? 'fr-CH' : 'en-GB',
+  isPartOf: { '@id': SITE + '/#website' },
+  about: { '@id': SITE + '/#sportsclub' },
+  dateModified: lastReviewedISO,
+  primaryImageOfPage: { '@type': 'ImageObject', url: ogImageUrl },
 };
 
 const lastReviewedDisplay = lang === 'fr'
@@ -94,14 +109,16 @@ const lastReviewedDisplay = lang === 'fr'
 
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <link rel="canonical" href={canonical} />
 
-    <!-- Hreflang reciprocals -->
+    <!-- Preload LCP background asset to shave ~200 ms on mobile -->
+    <link rel="preload" as="image" href="/bg-tile.webp" type="image/webp" fetchpriority="high" />
+
+    <!-- Hreflang reciprocals — region-specific (Geneva/Switzerland audience) -->
     <link rel="alternate" hreflang="fr-CH" href={altFr} />
-    <link rel="alternate" hreflang="fr" href={altFr} />
     <link rel="alternate" hreflang="en-GB" href={altEn} />
-    <link rel="alternate" hreflang="en" href={altEn} />
     <link rel="alternate" hreflang="x-default" href={altFr} />
 
     <!-- Favicons -->
@@ -149,6 +166,7 @@ const lastReviewedDisplay = lang === 'fr'
     <SchemaSportsClub site={SITE} lang={lang} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} is:inline />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} is:inline />
+    <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} is:inline />
 
     <!-- Page-specific JSON-LD blocks -->
     {jsonLd.map((obj) => (

@@ -14,19 +14,24 @@ const sportsClub = {
   '@type': ['SportsClub', 'LocalBusiness'],
   '@id': site + '/#sportsclub',
   name: 'Geneva Sports Club',
-  alternateName: ['GSC Pickleball', 'GSC'],
+  alternateName: ['GSC Pickleball', 'GSC', 'Pickleball Geneva Sports Club'],
   url: site + '/',
   description: lang === 'fr'
     ? "Cours de pickleball à Genève : sessions hebdomadaires lundi et vendredi de 18h à 20h à La Jonction. Tous niveaux, raquettes fournies, 10 CHF la session. Geneva Sports Club, association multisports basée à Genève."
     : 'Pickleball sessions in Geneva: weekly Monday and Friday 6pm-8pm at La Jonction. All levels, paddles provided, CHF 10 per session. Geneva Sports Club, a multi-sport association based in Geneva.',
   sport: 'Pickleball',
   image: site + '/og-pickleball-geneve.jpg',
-  logo: site + '/logo-img.png',
+  logo: {
+    '@type': 'ImageObject',
+    url: site + '/logo-img.png',
+    width: 512,
+    height: 512,
+  },
   email: facts.email,
   telephone: facts.phonePrimary,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'La Jonction',
+    streetAddress: 'École de Cité-Jonction, La Jonction',
     addressLocality: 'Genève',
     postalCode: '1205',
     addressRegion: 'GE',
@@ -37,6 +42,7 @@ const sportsClub = {
     latitude: facts.geo.lat,
     longitude: facts.geo.lon,
   },
+  hasMap: facts.gbpMapUrl,
   areaServed: [
     { '@type': 'City', name: 'Genève' },
     { '@type': 'City', name: 'Lausanne' },
@@ -45,6 +51,8 @@ const sportsClub = {
   ],
   sameAs: [
     facts.meetupUrl,
+    facts.gbpMapUrl,
+    'https://genevasportsclub.ch/',
   ],
   priceRange: 'CHF 10',
   currenciesAccepted: 'CHF',
@@ -53,7 +61,118 @@ const sportsClub = {
     { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '18:00', closes: '20:00' },
     { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '18:00', closes: '20:00' },
   ],
+  numberOfMembers: {
+    '@type': 'QuantitativeValue',
+    value: 8000,
+    unitText: 'members',
+  },
   knowsLanguage: ['fr', 'en'],
 };
+
+// SportsEvent schema — recurring weekly sessions.
+// Modelled as two SportsEvent entries (Monday, Friday) with eventSchedule.
+// This unlocks Google event surfacing in local search and the knowledge panel.
+const startDate = facts.lastReviewedISO; // Lower bound, refreshed at each build
+const sportsEvents = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SportsEvent',
+    '@id': site + '/#session-monday',
+    name: lang === 'fr' ? 'Session pickleball — Lundi' : 'Pickleball session — Monday',
+    description: lang === 'fr'
+      ? "Session hebdomadaire de pickleball ouverte à tous les niveaux. Raquettes et balles fournies. 10 CHF par session."
+      : 'Weekly pickleball session open to all levels. Paddles and balls provided. CHF 10 per session.',
+    sport: 'Pickleball',
+    startDate,
+    eventSchedule: {
+      '@type': 'Schedule',
+      repeatFrequency: 'P1W',
+      byDay: 'https://schema.org/Monday',
+      startTime: '18:00',
+      endTime: '20:00',
+      duration: 'PT2H',
+      scheduleTimezone: 'Europe/Zurich',
+    },
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: {
+      '@type': 'Place',
+      name: 'École de Cité-Jonction',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'École de Cité-Jonction, La Jonction',
+        addressLocality: 'Genève',
+        postalCode: '1205',
+        addressRegion: 'GE',
+        addressCountry: 'CH',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: facts.geo.lat,
+        longitude: facts.geo.lon,
+      },
+    },
+    organizer: { '@id': site + '/#sportsclub' },
+    offers: {
+      '@type': 'Offer',
+      price: facts.priceCHF,
+      priceCurrency: 'CHF',
+      availability: 'https://schema.org/InStock',
+      url: site + (lang === 'fr' ? '/participer/' : '/en/participate/'),
+    },
+    image: site + '/og-pickleball-geneve.jpg',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SportsEvent',
+    '@id': site + '/#session-friday',
+    name: lang === 'fr' ? 'Session pickleball — Vendredi' : 'Pickleball session — Friday',
+    description: lang === 'fr'
+      ? "Session hebdomadaire de pickleball ouverte à tous les niveaux. Raquettes et balles fournies. 10 CHF par session."
+      : 'Weekly pickleball session open to all levels. Paddles and balls provided. CHF 10 per session.',
+    sport: 'Pickleball',
+    startDate,
+    eventSchedule: {
+      '@type': 'Schedule',
+      repeatFrequency: 'P1W',
+      byDay: 'https://schema.org/Friday',
+      startTime: '18:00',
+      endTime: '20:00',
+      duration: 'PT2H',
+      scheduleTimezone: 'Europe/Zurich',
+    },
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: {
+      '@type': 'Place',
+      name: 'École de Cité-Jonction',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'École de Cité-Jonction, La Jonction',
+        addressLocality: 'Genève',
+        postalCode: '1205',
+        addressRegion: 'GE',
+        addressCountry: 'CH',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: facts.geo.lat,
+        longitude: facts.geo.lon,
+      },
+    },
+    organizer: { '@id': site + '/#sportsclub' },
+    offers: {
+      '@type': 'Offer',
+      price: facts.priceCHF,
+      priceCurrency: 'CHF',
+      availability: 'https://schema.org/InStock',
+      url: site + (lang === 'fr' ? '/participer/' : '/en/participate/'),
+    },
+    image: site + '/og-pickleball-geneve.jpg',
+  },
+];
 ---
 <script type="application/ld+json" set:html={JSON.stringify(sportsClub)} is:inline />
+{sportsEvents.map((ev) => (
+  <script type="application/ld+json" set:html={JSON.stringify(ev)} is:inline />
+))}

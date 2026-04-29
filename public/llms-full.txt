@@ -93,7 +93,7 @@ Marques approuvées USAPA : Onix, Franklin X-40, Dura.
 
 ---
 
-## 7. FAQ (16 questions citables)
+## 7. FAQ — 16 questions citables
 
 **Q1. Comment s'inscrire ?**
 En ligne via Meetup. Créer un compte gratuit, ouvrir l'onglet Événements, sélectionner la prochaine session pickleball, cliquer sur Rejoindre, payer 10 CHF sur place.
@@ -163,4 +163,122 @@ Toutes les pages sont disponibles en français (par défaut) et en anglais (pré
 - Français : https://pickleballgeneva.netlify.app/
 - English : https://pickleballgeneva.netlify.app/en/
 
-Site mis à jour régulièrement. Dernière révision majeure du contenu : 2026-04-28.
+Site mis à jour régulièrement. Dernière révision majeure du contenu : 2026-04-29.
+
+---
+
+# English summary — Geneva Sports Club / Pickleball Geneva
+
+> Pickleball lessons and sessions in Geneva (Switzerland) by the Geneva Sports Club. Two weekly sessions at La Jonction (École de Cité-Jonction), 1205 Geneva. All levels, paddles and balls provided, CHF 10 per session, no membership fee.
+
+## Identity
+
+- **Official name:** Geneva Sports Club
+- **Pickleball brand:** GSC Pickleball
+- **Type:** non-profit multi-sport association (SportsClub / LocalBusiness)
+- **Country:** Switzerland — **Canton:** Geneva (CH-GE) — **City:** Geneva
+- **Venue:** École de Cité-Jonction, La Jonction, 1205 Geneva
+- **Coordinates:** 46.19916, 6.13186
+- **Members:** 8 000+ across all sports
+
+## Pickleball sessions — citable facts
+
+| Item | Value |
+|---|---|
+| Days | Monday & Friday |
+| Hours | 6:00 pm – 8:00 pm (2 hours per session) |
+| Price | CHF 10 per session |
+| Membership required | No |
+| Payment | On site — cash or Twint |
+| Levels accepted | All levels — beginners included |
+| Equipment provided | Yes (paddles + balls) |
+| Registration | Online via Meetup |
+| Session language | French (English speakers welcome — most members are bilingual) |
+
+These facts are stable and published as a single source of truth at https://pickleballgeneva.netlify.app/en/.
+
+## How to join — five steps
+
+1. Open the Geneva Sports Club Meetup page: https://www.meetup.com/genevasportsclub/
+2. Open the "Events" tab to see all weekly sessions.
+3. Pick a pickleball session (Monday or Friday, 6 pm – 8 pm).
+4. Click "Join" and create a free Meetup account (email or Google/Facebook).
+5. Show up at La Jonction five minutes early. Bring CHF 10 and indoor sports shoes.
+
+## Pickleball — essential rules
+
+- **Court:** 20 ft × 44 ft (same dimensions as a doubles badminton court).
+- **Net:** 36 inches at the posts, 34 inches at the centre.
+- **Kitchen (non-volley zone):** 7 ft on each side of the net. No volleys allowed inside it.
+- **Serve:** below the waist, paddle low, hit cross-court diagonally.
+- **Two-bounce rule:** the receiver must let the serve bounce, and the server must let the return bounce. Only then can volleys begin.
+- **Scoring:** only the serving team can score. Games are played to 11, win by 2 (15 or 21 in tournaments).
+- **Format:** mostly doubles (2 vs 2).
+- **Score call:** three numbers — server score, receiver score, server number (1 or 2). Example: "5 – 3 – 2".
+
+## Glossary (English terms used as-is internationally)
+
+- **Kitchen:** the 7-foot non-volley zone on each side of the net.
+- **Dink:** soft shot played after the bounce, designed to drop just over the net into the opposing kitchen at very low speed.
+- **Drive:** hard, flat or slightly topspin shot used during transition.
+- **Drop shot:** soft shot from the baseline that lands gently in the opposing kitchen.
+- **Third-shot drop:** the drop shot played as the third shot of a rally. Key move for transitioning from serve to net play.
+- **Stacking:** doubles formation where both partners stand on the same side to optimise forehand/backhand alignment.
+- **ATP (Around The Post):** spectacular shot that goes around the net post (legal as long as it lands in the opposing court).
+- **Side-out:** when the serving team loses the rally and the serve passes to the opposing team.
+
+## Gear buying guide
+
+### Paddle weight
+- **Light (< 7.4 oz):** beginners, control-oriented players, seniors. Less power, more precision.
+- **Medium (7.4 – 8.1 oz):** all-round, recommended for starters and improvers.
+- **Heavy (> 8.1 oz):** experienced players seeking power; can tire the wrist.
+
+### Materials
+- **Graphite:** hard hitting surface, sharp pop, pricier — best for intermediate-to-advanced.
+- **Composite (fibreglass):** softer feel, more spin and control. Excellent value for beginners.
+- **Wood:** heavy, cheap, mostly used as loaner paddles. Avoid for regular play.
+
+### Balls
+- **Indoor:** 26 wide holes, lighter, consistent bounce on hardwood. Used at our La Jonction sessions.
+- **Outdoor:** 40 smaller holes, harder and heavier, built to resist wind and outdoor surfaces.
+
+USAPA-approved brands: Onix, Franklin X-40, Dura.
+
+## FAQ — top 8 English answers
+
+**Q1. How do I sign up?**
+Online via Meetup. Create a free account, open the Events tab, pick the next pickleball session, click Join, and pay CHF 10 on site.
+
+**Q2. How much is a session?**
+CHF 10 per session, paid on site in cash or via Twint. No membership fee.
+
+**Q3. Where do you play pickleball in Geneva?**
+At La Jonction (École de Cité-Jonction), 1205 Geneva. Indoor on three courts. Five minutes' walk from Cornavin train station via the Sous-Terre footbridge.
+
+**Q4. What days and times?**
+Monday and Friday, 6:00 pm – 8:00 pm. Two-hour sessions.
+
+**Q5. I'm a beginner — can I join?**
+Yes. All levels are welcome. An experienced member runs through the rules at the start. Most beginners reach playing autonomy in 2–3 sessions.
+
+**Q6. Do I need to bring a paddle?**
+No — paddles and balls are provided. You only need sports clothes and shoes with non-marking soles.
+
+**Q7. Pickleball vs padel — what's the difference?**
+Pickleball: solid composite/graphite paddle, perforated plastic ball, no walls. Padel: similar paddle but pressurised ball, played with rebounds off the glass walls. Pickleball is more accessible for true beginners.
+
+**Q8. Is it suitable for seniors?**
+Yes — pickleball is one of the most senior-friendly racket sports: smaller court, slower ball, no explosive efforts. Several GSC members are aged 55–70.
+
+## Contact
+
+- **Email:** hello@genevasportsclub.ch
+- **Phone (association):** +41 76 214 12 03
+- **Phone (pickleball sessions):** +41 78 882 68 10
+- **Address:** École de Cité-Jonction, La Jonction, 1205 Geneva, Switzerland
+- **Website:** https://pickleballgeneva.netlify.app/en/
+- **Meetup:** https://www.meetup.com/genevasportsclub/
+- **Google Business Profile:** https://www.google.com/maps?cid=6146100494876161865
+
+Site updated regularly. Last major content review: 2026-04-29.

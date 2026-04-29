@@ -106,6 +106,30 @@ const steps = fr
     </div>
   </div>
 
+  <!-- First-session narrative (E-E-A-T + word count expansion) -->
+  <article class="bg-white/95 p-8 rounded-2xl border-2" style="border-color:#002b2b">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-900">{fr ? 'À quoi ressemble votre première session ?' : 'What your first session looks like'}</h2>
+    {fr ? (
+      <div class="space-y-4 text-gray-700 leading-relaxed">
+        <p><strong>17h55 — accueil.</strong> Présentez-vous à l'entrée principale de l'École de Cité-Jonction. Un membre du Geneva Sports Club est sur place pour vous accueillir, encaisser les 10 CHF (espèces ou Twint) et vous remettre une raquette de prêt si vous n'en avez pas. Aucun document, aucune licence — juste votre nom et un sourire.</p>
+        <p><strong>18h00 — échauffement &amp; rappel des règles.</strong> Quinze minutes de mise en route avec quelques échanges de dink, un rappel des règles essentielles si des débutants sont présents (cuisine, double rebond, service par-dessous), puis répartition rapide en doublettes de niveau homogène.</p>
+        <p><strong>18h15 — jeu rotatif.</strong> Trois terrains tournent en parallèle, parties courtes (jusqu'à 11 points), rotation toutes les 10-15 minutes pour mélanger les partenaires et les adversaires. Vous jouerez avec et contre des joueurs de tous niveaux — la règle d'or du club, c'est l'inclusion.</p>
+        <p><strong>19h45 — fin du jeu.</strong> On range les filets et les ballons ensemble, on échange les contacts pour les sessions suivantes, et certains continuent souvent autour d'un verre dans le quartier de la Jonction.</p>
+        <p><strong>Que faut-il apporter ?</strong> Des chaussures de salle à semelle non marquante (tennis, padel, squash), une tenue sportive, une bouteille d'eau, et 10 CHF. Raquettes et balles indoor sont fournies. Pas besoin d'arriver en avance si vous êtes seul·e — un membre est toujours là pour vous expliquer l'organisation.</p>
+        <p><strong>Combien de sessions avant d'être autonome ?</strong> En moyenne, deux à trois sessions suffisent pour comprendre le service, le double rebond et la cuisine. Beaucoup de membres deviennent réguliers dès la première soirée.</p>
+      </div>
+    ) : (
+      <div class="space-y-4 text-gray-700 leading-relaxed">
+        <p><strong>5:55 pm — welcome.</strong> Show up at the main entrance of École de Cité-Jonction. A Geneva Sports Club member will greet you, collect the CHF 10 (cash or Twint) and lend you a paddle if you do not have one. No paperwork, no licence — just your name and a smile.</p>
+        <p><strong>6:00 pm — warm-up &amp; rules recap.</strong> Fifteen minutes of warm-up with a few dink exchanges, a quick recap of the essentials if beginners are present (kitchen, two-bounce rule, underhand serve), then a fast pairing into balanced doubles.</p>
+        <p><strong>6:15 pm — rotating play.</strong> Three courts run in parallel, short games to 11, rotations every 10–15 minutes so partners and opponents change. You will play with and against players of all levels — inclusion is the club's golden rule.</p>
+        <p><strong>7:45 pm — wrap-up.</strong> We pack down nets and balls together, swap contacts for the next session, and some members usually carry on for a drink in the Jonction neighbourhood.</p>
+        <p><strong>What to bring.</strong> Indoor shoes with non-marking soles (tennis, padel, squash), sportswear, a water bottle, and CHF 10. Paddles and indoor balls are provided. No need to arrive early if you come alone — a member is always there to walk you through how the evening flows.</p>
+        <p><strong>How many sessions before you feel comfortable?</strong> On average, two to three sessions are enough to internalise the serve, the two-bounce rule and the kitchen. Many members become regulars from their very first evening.</p>
+      </div>
+    )}
+  </article>
+
   <!-- Embedded map -->
   <article class="bg-white/95 rounded-2xl border-2 overflow-hidden" style="border-color:#002b2b">
     <h2 class="text-xl font-semibold text-gray-900 px-6 pt-6 mb-2">{fr ? 'Plan d\'accès à La Jonction' : 'Map to La Jonction'}</h2>

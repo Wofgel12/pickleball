@@ -4,28 +4,55 @@ import PageHero from '../../components/PageHero.astro';
 import ParticipateContent from '../../components/ParticipateContent.astro';
 import { facts } from '../../i18n/ui';
 
-const howTo = {
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+
+// Service schema replaces deprecated HowTo (Google removed HowTo rich results 2023-09).
+const service = {
   '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'How to join a pickleball session in Geneva',
-  description: 'Five-step registration via Meetup to join a Geneva Sports Club session at La Jonction, Geneva.',
-  totalTime: 'PT5M',
-  estimatedCost: { '@type': 'MonetaryAmount', currency: 'CHF', value: facts.priceCHF },
-  supply: [
-    { '@type': 'HowToSupply', name: 'Free Meetup account' },
-    { '@type': 'HowToSupply', name: 'Sportswear and indoor shoes' },
-    { '@type': 'HowToSupply', name: 'CHF 10 in cash or via Twint' },
+  '@type': 'Service',
+  '@id': SITE + '/en/participate/#service',
+  name: 'Pickleball sessions in Geneva — Geneva Sports Club',
+  description: 'Weekly pickleball sessions open to all levels at La Jonction (Geneva). Register via Meetup, CHF 10 per session, paddles and balls provided.',
+  serviceType: 'Pickleball sessions',
+  provider: { '@id': SITE + '/#sportsclub' },
+  areaServed: [
+    { '@type': 'City', name: 'Genève' },
+    { '@type': 'AdministrativeArea', name: 'Canton of Geneva' },
   ],
-  step: [
-    { '@type': 'HowToStep', position: 1, name: 'Access the association page', url: facts.meetupUrl, text: 'Open the Geneva Sports Club Meetup page.' },
-    { '@type': 'HowToStep', position: 2, name: 'Browse events', text: 'Open the Events tab to see all weekly sessions.' },
-    { '@type': 'HowToStep', position: 3, name: 'Choose a pickleball session', text: 'Pick a Monday or Friday 6pm-8pm pickleball session.' },
-    { '@type': 'HowToStep', position: 4, name: 'Create your account and register', text: 'Click Join and create a free Meetup account.' },
-    { '@type': 'HowToStep', position: 5, name: 'Come to the session', text: 'Arrive at La Jonction 5 minutes early, CHF 10 on site.' },
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    serviceUrl: facts.meetupUrl,
+    serviceLocation: {
+      '@type': 'Place',
+      name: facts.venueName,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'École de Cité-Jonction, La Jonction',
+        addressLocality: 'Genève',
+        postalCode: '1205',
+        addressRegion: 'GE',
+        addressCountry: 'CH',
+      },
+    },
+  },
+  offers: {
+    '@type': 'Offer',
+    price: facts.priceCHF,
+    priceCurrency: 'CHF',
+    availability: 'https://schema.org/InStock',
+    url: facts.meetupUrl,
+  },
+  audience: {
+    '@type': 'Audience',
+    audienceType: 'All levels — beginners welcome',
+  },
+  hoursAvailable: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '18:00', closes: '20:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '18:00', closes: '20:00' },
   ],
 };
 ---
-<BaseLayout pageKey="participate" lang="en" jsonLd={[howTo]}>
+<BaseLayout pageKey="participate" lang="en" jsonLd={[service]}>
   <div class="bg-tile">
     <PageHero
       lang="en"
