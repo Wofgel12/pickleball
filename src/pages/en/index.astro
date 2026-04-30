@@ -14,7 +14,7 @@ const courseSchema = {
   '@type': 'Course',
   '@id': SITE + '/#course-en',
   name: 'Pickleball Sessions in Geneva',
-  description: 'Weekly pickleball sessions in Geneva (La Jonction), Monday and Friday 6pm-8pm, CHF 10 per session, equipment provided.',
+  description: 'Weekly pickleball sessions in Geneva (La Jonction), Monday and Friday 8pm-10pm, CHF 10 per session, equipment provided.',
   provider: { '@id': SITE + '/#sportsclub' },
   courseMode: 'onsite',
   inLanguage: 'en',
@@ -40,8 +40,8 @@ const courseSchema = {
       '@type': 'Schedule',
       repeatFrequency: 'P1W',
       byDay: ['https://schema.org/Monday', 'https://schema.org/Friday'],
-      startTime: '18:00',
-      endTime: '20:00',
+      startTime: '20:00',
+      endTime: '22:00',
       duration: 'PT2H',
       scheduleTimezone: 'Europe/Zurich',
     },
@@ -56,7 +56,7 @@ const courseSchema = {
     <section class="pt-6 pb-6 px-4">
       <div class="max-w-4xl mx-auto">
         <p class="text-lg md:text-xl text-gray-800 leading-relaxed bg-white/95 p-6 rounded-2xl border-2 text-center" style="border-color:#002b2b">
-          <strong>Geneva Sports Club</strong> runs two pickleball sessions per week at <strong>La Jonction, Geneva</strong> — Monday and Friday 6pm-8pm, <strong>CHF&nbsp;10 per session</strong>, all levels, paddles provided.
+          <strong>Geneva Sports Club</strong> runs two pickleball sessions per week at <strong>La Jonction, Geneva</strong> — Monday and Friday 8pm-10pm, <strong>CHF&nbsp;10 per session</strong>, all levels, paddles provided.
         </p>
       </div>
     </section>

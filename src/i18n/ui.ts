@@ -44,21 +44,21 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
   home: {
     fr: {
       title: 'Pickleball Genève — Cours & Sessions | GSC Pickleball',
-      description: 'Cours de pickleball à Genève (La Jonction), lundi & vendredi 18h-20h, 10 CHF la session. Tous niveaux, raquettes fournies. Rejoignez le Geneva Sports Club.',
+      description: 'Cours de pickleball à Genève (La Jonction), lundi & vendredi 20h-22h, 10 CHF la session. Tous niveaux, raquettes fournies. Rejoignez le Geneva Sports Club.',
     },
     en: {
       title: 'Pickleball Geneva — Lessons & Sessions | GSC Pickleball',
-      description: 'Pickleball sessions in Geneva (La Jonction), Monday & Friday 6pm-8pm, CHF 10 per session. All levels, paddles provided. Join the Geneva Sports Club.',
+      description: 'Pickleball sessions in Geneva (La Jonction), Monday & Friday 8pm-10pm, CHF 10 per session. All levels, paddles provided. Join the Geneva Sports Club.',
     },
   },
   participate: {
     fr: {
       title: 'Participer à une session de Pickleball à Genève — GSC',
-      description: 'Inscrivez-vous en 5 étapes via Meetup à nos sessions de pickleball à Genève. Lundi & vendredi 18h-20h, 10 CHF, équipement fourni. Tous niveaux bienvenus.',
+      description: 'Inscrivez-vous en 5 étapes via Meetup à nos sessions de pickleball à Genève. Lundi & vendredi 20h-22h, 10 CHF, équipement fourni. Tous niveaux bienvenus.',
     },
     en: {
       title: 'Join a Pickleball Session in Geneva — GSC Pickleball',
-      description: 'Register via Meetup in 5 steps for pickleball sessions in Geneva. Monday & Friday 6pm-8pm, CHF 10, equipment provided. All levels welcome.',
+      description: 'Register via Meetup in 5 steps for pickleball sessions in Geneva. Monday & Friday 8pm-10pm, CHF 10, equipment provided. All levels welcome.',
     },
   },
   learn: {
@@ -94,11 +94,11 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
   contact: {
     fr: {
       title: 'Contact Pickleball Genève — Geneva Sports Club',
-      description: 'Contactez Geneva Sports Club pour le pickleball à Genève : email, téléphone, adresse à La Jonction (1205 Genève). Sessions lundi & vendredi 18h-20h.',
+      description: 'Contactez Geneva Sports Club pour le pickleball à Genève : email, téléphone, adresse à La Jonction (1205 Genève). Sessions lundi & vendredi 20h-22h.',
     },
     en: {
       title: 'Contact — Geneva Sports Club Pickleball',
-      description: 'Contact Geneva Sports Club for pickleball in Geneva: email, phone, address at La Jonction (1205 Geneva). Sessions Monday & Friday 6pm-8pm.',
+      description: 'Contact Geneva Sports Club for pickleball in Geneva: email, phone, address at La Jonction (1205 Geneva). Sessions Monday & Friday 8pm-10pm.',
     },
   },
   legal: {
@@ -165,8 +165,8 @@ export const facts = {
   parentSiteUrl: 'https://genevasportsclub.ch/',
   daysFr: 'Lundi & vendredi',
   daysEn: 'Monday & Friday',
-  hours: '18:00 – 20:00',
-  hoursEn: '6:00pm – 8:00pm',
+  hours: '20:00 – 22:00',
+  hoursEn: '8:00pm – 10:00pm',
   priceCHF: 10,
   geo: { lat: 46.19916, lon: 6.13186 },
   // ISO date for "last updated" in the visible footer (E-E-A-T signal).

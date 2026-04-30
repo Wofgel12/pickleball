@@ -8,7 +8,7 @@ export const faqFR = [
   {
     question: "Comment s'inscrire à une session de pickleball à Genève ?",
     answer:
-      "L'inscription se fait en ligne via Meetup, sur la page du Geneva Sports Club. Créez un compte Meetup gratuit, ouvrez l'onglet « Événements », sélectionnez la prochaine session de pickleball (lundi ou vendredi, 18h-20h) et cliquez sur « Rejoindre ». Vous payez 10 CHF sur place lors de votre venue.",
+      "L'inscription se fait en ligne via Meetup, sur la page du Geneva Sports Club. Créez un compte Meetup gratuit, ouvrez l'onglet « Événements », sélectionnez la prochaine session de pickleball (lundi ou vendredi, 20h-22h) et cliquez sur « Rejoindre ». Vous payez 10 CHF sur place lors de votre venue.",
   },
   {
     question: "Combien coûte une session de pickleball à Genève ?",
@@ -23,7 +23,7 @@ export const faqFR = [
   {
     question: "Quels sont les jours et horaires des sessions ?",
     answer:
-      "Le Geneva Sports Club organise deux sessions de pickleball par semaine : le lundi de 18h à 20h et le vendredi de 18h à 20h. Les sessions sont ouvertes à tous les niveaux et durent deux heures.",
+      "Le Geneva Sports Club organise deux sessions de pickleball par semaine : le lundi de 20h à 22h et le vendredi de 20h à 22h. Les sessions sont ouvertes à tous les niveaux et durent deux heures.",
   },
   {
     question: "Je suis débutant — puis-je rejoindre les sessions ?",
@@ -91,7 +91,7 @@ export const faqEN = [
   {
     question: 'How do I register for a pickleball session in Geneva?',
     answer:
-      "Registration is online via Meetup on the Geneva Sports Club page. Create a free Meetup account, open the 'Events' tab, pick the next pickleball session (Monday or Friday, 6pm-8pm) and click 'Join'. You pay CHF 10 on site when you attend.",
+      "Registration is online via Meetup on the Geneva Sports Club page. Create a free Meetup account, open the 'Events' tab, pick the next pickleball session (Monday or Friday, 8pm-10pm) and click 'Join'. You pay CHF 10 on site when you attend.",
   },
   {
     question: 'How much does a pickleball session cost in Geneva?',
@@ -106,7 +106,7 @@ export const faqEN = [
   {
     question: 'What are the days and times of the sessions?',
     answer:
-      'Geneva Sports Club runs two pickleball sessions per week: Monday from 6pm to 8pm and Friday from 6pm to 8pm. Sessions are open to all levels and last two hours.',
+      'Geneva Sports Club runs two pickleball sessions per week: Monday from 8pm to 10pm and Friday from 8pm to 10pm. Sessions are open to all levels and last two hours.',
   },
   {
     question: "I'm a beginner — can I join?",

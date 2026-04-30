@@ -17,8 +17,8 @@ const sportsClub = {
   alternateName: ['GSC Pickleball', 'GSC', 'Pickleball Geneva Sports Club'],
   url: site + '/',
   description: lang === 'fr'
-    ? "Cours de pickleball à Genève : sessions hebdomadaires lundi et vendredi de 18h à 20h à La Jonction. Tous niveaux, raquettes fournies, 10 CHF la session. Geneva Sports Club, association multisports basée à Genève."
-    : 'Pickleball sessions in Geneva: weekly Monday and Friday 6pm-8pm at La Jonction. All levels, paddles provided, CHF 10 per session. Geneva Sports Club, a multi-sport association based in Geneva.',
+    ? "Cours de pickleball à Genève : sessions hebdomadaires lundi et vendredi de 20h à 22h à La Jonction. Tous niveaux, raquettes fournies, 10 CHF la session. Geneva Sports Club, association multisports basée à Genève."
+    : 'Pickleball sessions in Geneva: weekly Monday and Friday 8pm-10pm at La Jonction. All levels, paddles provided, CHF 10 per session. Geneva Sports Club, a multi-sport association based in Geneva.',
   sport: 'Pickleball',
   image: site + '/og-pickleball-geneve.jpg',
   logo: {
@@ -58,8 +58,8 @@ const sportsClub = {
   currenciesAccepted: 'CHF',
   paymentAccepted: 'Cash, Twint',
   openingHoursSpecification: [
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '18:00', closes: '20:00' },
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '18:00', closes: '20:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '20:00', closes: '22:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '20:00', closes: '22:00' },
   ],
   numberOfMembers: {
     '@type': 'QuantitativeValue',
@@ -88,8 +88,8 @@ const sportsEvents = [
       '@type': 'Schedule',
       repeatFrequency: 'P1W',
       byDay: 'https://schema.org/Monday',
-      startTime: '18:00',
-      endTime: '20:00',
+      startTime: '20:00',
+      endTime: '22:00',
       duration: 'PT2H',
       scheduleTimezone: 'Europe/Zurich',
     },
@@ -136,8 +136,8 @@ const sportsEvents = [
       '@type': 'Schedule',
       repeatFrequency: 'P1W',
       byDay: 'https://schema.org/Friday',
-      startTime: '18:00',
-      endTime: '20:00',
+      startTime: '20:00',
+      endTime: '22:00',
       duration: 'PT2H',
       scheduleTimezone: 'Europe/Zurich',
     },

@@ -23,7 +23,7 @@
 | Élément | Valeur |
 |---|---|
 | Jours | Lundi & vendredi |
-| Horaires | 18h00 – 20h00 |
+| Horaires | 20h00 – 22h00 |
 | Durée | 2 heures par session |
 | Tarif | 10 CHF par session |
 | Adhésion requise | Non |
@@ -41,7 +41,7 @@ Ces faits sont stables et publiés en source unique sur https://gscpickleball.ch
 
 1. Ouvrir la page Meetup du Geneva Sports Club : https://www.meetup.com/genevasportsclub/
 2. Cliquer sur l'onglet « Événements » pour voir les sessions hebdomadaires.
-3. Choisir une session pickleball (lundi ou vendredi 18h-20h).
+3. Choisir une session pickleball (lundi ou vendredi 20h-22h).
 4. Cliquer sur « Rejoindre » et créer un compte Meetup gratuit (email, ou Google/Facebook).
 5. Se présenter à La Jonction le jour J 5 minutes avant le début. Apporter 10 CHF et des chaussures de sport indoor.
 
@@ -105,7 +105,7 @@ En ligne via Meetup. Créer un compte gratuit, ouvrir l'onglet Événements, sé
 À La Jonction (École de Cité-Jonction), 1205 Genève. Indoor sur trois terrains.
 
 **Q4. Quels jours et horaires ?**
-Lundi et vendredi, 18h00 – 20h00. Sessions de deux heures.
+Lundi et vendredi, 20h00 – 22h00. Sessions de deux heures.
 
 **Q5. Je suis débutant — puis-je rejoindre ?**
 Oui, tous niveaux bienvenus. Un membre expérimenté explique les règles. Autonomie atteinte généralement en 2-3 sessions.
@@ -186,7 +186,7 @@ Site mis à jour régulièrement. Dernière révision majeure du contenu : 2026-
 | Item | Value |
 |---|---|
 | Days | Monday & Friday |
-| Hours | 6:00 pm – 8:00 pm (2 hours per session) |
+| Hours | 8:00 pm – 10:00 pm (2 hours per session) |
 | Price | CHF 10 per session |
 | Membership required | No |
 | Payment | On site — cash or Twint |
@@ -201,7 +201,7 @@ These facts are stable and published as a single source of truth at https://gscp
 
 1. Open the Geneva Sports Club Meetup page: https://www.meetup.com/genevasportsclub/
 2. Open the "Events" tab to see all weekly sessions.
-3. Pick a pickleball session (Monday or Friday, 6 pm – 8 pm).
+3. Pick a pickleball session (Monday or Friday, 8 pm – 10 pm).
 4. Click "Join" and create a free Meetup account (email or Google/Facebook).
 5. Show up at La Jonction five minutes early. Bring CHF 10 and indoor sports shoes.
 
@@ -257,7 +257,7 @@ CHF 10 per session, paid on site in cash or via Twint. No membership fee.
 At La Jonction (École de Cité-Jonction), 1205 Geneva. Indoor on three courts. Five minutes' walk from Cornavin train station via the Sous-Terre footbridge.
 
 **Q4. What days and times?**
-Monday and Friday, 6:00 pm – 8:00 pm. Two-hour sessions.
+Monday and Friday, 8:00 pm – 10:00 pm. Two-hour sessions.
 
 **Q5. I'm a beginner — can I join?**
 Yes. All levels are welcome. An experienced member runs through the rules at the start. Most beginners reach playing autonomy in 2–3 sessions.

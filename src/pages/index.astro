@@ -15,7 +15,7 @@ const courseSchema = {
   '@type': 'Course',
   '@id': SITE + '/#course-fr',
   name: 'Cours de Pickleball à Genève',
-  description: "Sessions hebdomadaires de pickleball à Genève (La Jonction), lundi et vendredi 18h-20h, 10 CHF par session, équipement fourni.",
+  description: "Sessions hebdomadaires de pickleball à Genève (La Jonction), lundi et vendredi 20h-22h, 10 CHF par session, équipement fourni.",
   provider: { '@id': SITE + '/#sportsclub' },
   courseMode: 'onsite',
   inLanguage: 'fr',
@@ -41,8 +41,8 @@ const courseSchema = {
       '@type': 'Schedule',
       repeatFrequency: 'P1W',
       byDay: ['https://schema.org/Monday', 'https://schema.org/Friday'],
-      startTime: '18:00',
-      endTime: '20:00',
+      startTime: '20:00',
+      endTime: '22:00',
       duration: 'PT2H',
       scheduleTimezone: 'Europe/Zurich',
     },
@@ -61,7 +61,7 @@ const courseSchema = {
     <section class="pt-6 pb-6 px-4">
       <div class="max-w-4xl mx-auto">
         <p class="text-lg md:text-xl text-gray-800 leading-relaxed bg-white/95 p-6 rounded-2xl border-2 text-center" style="border-color:#002b2b">
-          Le <strong>Geneva Sports Club</strong> organise deux sessions de pickleball par semaine à <strong>La Jonction, Genève</strong> — lundi et vendredi de 18h à 20h, <strong>10&nbsp;CHF par session</strong>, tous niveaux, raquettes fournies.
+          Le <strong>Geneva Sports Club</strong> organise deux sessions de pickleball par semaine à <strong>La Jonction, Genève</strong> — lundi et vendredi de 20h à 22h, <strong>10&nbsp;CHF par session</strong>, tous niveaux, raquettes fournies.
         </p>
       </div>
     </section>
