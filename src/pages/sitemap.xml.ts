@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { routes, type RouteKey } from '../i18n/ui';
 import { facts } from '../i18n/ui';
 
-const SITE = 'https://pickleballgeneva.netlify.app';
+const SITE = 'https://gscpickleball.ch';
 
 // Indexable pages only — legal/privacy carry noindex via BaseLayout and are
 // excluded here so they do not consume crawl budget.

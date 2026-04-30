@@ -18,22 +18,22 @@ L'association Geneva Sports Club regroupe plus de 8 000 membres autour d'activit
 - **Google Business Profile** : https://www.google.com/maps?cid=6146100494876161865
 
 ## Pages principales (français)
-- [Accueil — pickleball à Genève](https://pickleballgeneva.netlify.app/): vue d'ensemble du club et des sessions.
-- [Participer aux sessions](https://pickleballgeneva.netlify.app/participer/): processus d'inscription en 5 étapes via Meetup, plan d'accès, déroulé de la première session.
-- [Apprendre le pickleball](https://pickleballgeneva.netlify.app/apprendre/): règles complètes, lexique technique (cuisine, dink, drive), équipement minimum, fautes à éviter.
-- [Équipement](https://pickleballgeneva.netlify.app/equipement/): guide d'achat raquettes (poids, matériaux) et balles indoor/outdoor.
-- [FAQ](https://pickleballgeneva.netlify.app/faq/): 16 questions fréquentes sur les tarifs, niveaux, indoor, padel vs pickleball, seniors, enfants, tournois, vacances scolaires.
-- [Contact](https://pickleballgeneva.netlify.app/contact/): formulaire, coordonnées, plan d'accès à La Jonction.
+- [Accueil — pickleball à Genève](https://gscpickleball.ch/): vue d'ensemble du club et des sessions.
+- [Participer aux sessions](https://gscpickleball.ch/participer/): processus d'inscription en 5 étapes via Meetup, plan d'accès, déroulé de la première session.
+- [Apprendre le pickleball](https://gscpickleball.ch/apprendre/): règles complètes, lexique technique (cuisine, dink, drive), équipement minimum, fautes à éviter.
+- [Équipement](https://gscpickleball.ch/equipement/): guide d'achat raquettes (poids, matériaux) et balles indoor/outdoor.
+- [FAQ](https://gscpickleball.ch/faq/): 16 questions fréquentes sur les tarifs, niveaux, indoor, padel vs pickleball, seniors, enfants, tournois, vacances scolaires.
+- [Contact](https://gscpickleball.ch/contact/): formulaire, coordonnées, plan d'accès à La Jonction.
 
 ## Main pages (English)
-- [Home — pickleball in Geneva](https://pickleballgeneva.netlify.app/en/): overview of the club and weekly sessions.
-- [Join a session](https://pickleballgeneva.netlify.app/en/participate/): five-step Meetup registration, map, what to expect at your first session.
-- [Learn pickleball](https://pickleballgeneva.netlify.app/en/learn/): full rules, technical glossary (kitchen, dink, drive, third-shot drop), minimum gear, common beginner mistakes.
-- [Gear](https://pickleballgeneva.netlify.app/en/gear/): paddle buying guide (weight, materials) and indoor/outdoor ball recommendations.
-- [FAQ](https://pickleballgeneva.netlify.app/en/faq/): 16 frequent questions covering price, levels, indoor play, padel vs pickleball, seniors, kids, Swiss tournaments, school holidays.
-- [Contact](https://pickleballgeneva.netlify.app/en/contact/): contact form, full NAP, transit and walking directions to La Jonction.
+- [Home — pickleball in Geneva](https://gscpickleball.ch/en/): overview of the club and weekly sessions.
+- [Join a session](https://gscpickleball.ch/en/participate/): five-step Meetup registration, map, what to expect at your first session.
+- [Learn pickleball](https://gscpickleball.ch/en/learn/): full rules, technical glossary (kitchen, dink, drive, third-shot drop), minimum gear, common beginner mistakes.
+- [Gear](https://gscpickleball.ch/en/gear/): paddle buying guide (weight, materials) and indoor/outdoor ball recommendations.
+- [FAQ](https://gscpickleball.ch/en/faq/): 16 frequent questions covering price, levels, indoor play, padel vs pickleball, seniors, kids, Swiss tournaments, school holidays.
+- [Contact](https://gscpickleball.ch/en/contact/): contact form, full NAP, transit and walking directions to La Jonction.
 
 ## Optional
-- [Sitemap XML](https://pickleballgeneva.netlify.app/sitemap.xml)
+- [Sitemap XML](https://gscpickleball.ch/sitemap.xml)
 - [Page Meetup officielle / Official Meetup page](https://www.meetup.com/genevasportsclub/)
 - [Site principal de l'association / Main association website](https://genevasportsclub.ch/)

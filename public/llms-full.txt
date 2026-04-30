@@ -33,7 +33,7 @@
 | Inscription | En ligne via Meetup |
 | Langue d'animation | Français (joueurs anglophones bienvenus) |
 
-Ces faits sont stables et publiés en source unique sur https://pickleballgeneva.netlify.app/.
+Ces faits sont stables et publiés en source unique sur https://gscpickleball.ch/.
 
 ---
 
@@ -151,7 +151,7 @@ Association multisports basée à Genève, plus de 8 000 membres. Le pickleball 
 - **Téléphone association :** +41 76 214 12 03
 - **Téléphone sessions pickleball :** +41 78 882 68 10
 - **Adresse :** La Jonction, 1205 Genève, Suisse
-- **Site web :** https://pickleballgeneva.netlify.app/
+- **Site web :** https://gscpickleball.ch/
 - **Meetup :** https://www.meetup.com/genevasportsclub/
 
 ---
@@ -160,8 +160,8 @@ Association multisports basée à Genève, plus de 8 000 membres. Le pickleball 
 
 Toutes les pages sont disponibles en français (par défaut) et en anglais (préfixe `/en/`). Hreflang réciproques sur chaque page.
 
-- Français : https://pickleballgeneva.netlify.app/
-- English : https://pickleballgeneva.netlify.app/en/
+- Français : https://gscpickleball.ch/
+- English : https://gscpickleball.ch/en/
 
 Site mis à jour régulièrement. Dernière révision majeure du contenu : 2026-04-29.
 
@@ -195,7 +195,7 @@ Site mis à jour régulièrement. Dernière révision majeure du contenu : 2026-
 | Registration | Online via Meetup |
 | Session language | French (English speakers welcome — most members are bilingual) |
 
-These facts are stable and published as a single source of truth at https://pickleballgeneva.netlify.app/en/.
+These facts are stable and published as a single source of truth at https://gscpickleball.ch/en/.
 
 ## How to join — five steps
 
@@ -277,7 +277,7 @@ Yes — pickleball is one of the most senior-friendly racket sports: smaller cou
 - **Phone (association):** +41 76 214 12 03
 - **Phone (pickleball sessions):** +41 78 882 68 10
 - **Address:** École de Cité-Jonction, La Jonction, 1205 Geneva, Switzerland
-- **Website:** https://pickleballgeneva.netlify.app/en/
+- **Website:** https://gscpickleball.ch/en/
 - **Meetup:** https://www.meetup.com/genevasportsclub/
 - **Google Business Profile:** https://www.google.com/maps?cid=6146100494876161865
 

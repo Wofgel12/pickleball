@@ -2,8 +2,20 @@
   command = "npm run build"
   publish = "dist"
 
+# Force the apex domain as the canonical (Netlify will also auto-301
+# the .netlify.app preview URL → gscpickleball.ch when the custom domain
+# is set as Primary Domain in the dashboard).
 [[redirects]]
-  from = "https://www.pickleballgeneva.netlify.app/*"
-  to = "https://pickleballgeneva.netlify.app/:splat"
+  from = "https://www.gscpickleball.ch/*"
+  to = "https://gscpickleball.ch/:splat"
+  status = 301
+  force = true
+
+# Belt-and-braces: explicitly 301 the old Netlify subdomain in case the
+# dashboard primary-domain auto-redirect ever drifts. Page-to-page
+# (uses :splat) so PageRank transfers per-URL, not all to /.
+[[redirects]]
+  from = "https://pickleballgeneva.netlify.app/*"
+  to = "https://gscpickleball.ch/:splat"
   status = 301
   force = true

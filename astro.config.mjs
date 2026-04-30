@@ -3,7 +3,7 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import netlify from '@astrojs/netlify';
 
-const SITE = 'https://pickleballgeneva.netlify.app';
+const SITE = 'https://gscpickleball.ch';
 
 // https://astro.build/config
 export default defineConfig({

@@ -35,7 +35,7 @@ const {
   noindex = false,
 } = Astro.props;
 
-const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://pickleballgeneva.netlify.app';
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://gscpickleball.ch';
 const route = routes[pageKey];
 const canonical = SITE + route[lang];
 const altFr = SITE + route.fr;
