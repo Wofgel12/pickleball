@@ -81,11 +81,11 @@ const endDate = (() => {
   d.setFullYear(d.getFullYear() + 1);
   return d.toISOString().slice(0, 10);
 })();
-const sessionPerformer = {
-  '@type': 'PerformingGroup',
-  name: 'Geneva Sports Club Pickleball',
-  '@id': site + '/#sportsclub',
-};
+// Performer is a pure @id reference to the SportsClub canonical entity.
+// Don't restate name/type here — the @id resolution pulls them from the main
+// definition. Restating with a different name caused a "duplicate name"
+// validator warning on the /#sportsclub @id.
+const sessionPerformer = { '@id': site + '/#sportsclub' };
 const sportsEvents = [
   {
     '@context': 'https://schema.org',
