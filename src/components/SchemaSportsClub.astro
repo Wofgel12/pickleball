@@ -72,7 +72,20 @@ const sportsClub = {
 // SportsEvent schema — recurring weekly sessions.
 // Modelled as two SportsEvent entries (Monday, Friday) with eventSchedule.
 // This unlocks Google event surfacing in local search and the knowledge panel.
+// SportsEvent dates: keep startDate at content review, push endDate one year
+// out so the recurring series stays "active" in Google's eyes. Refreshed each
+// build via the lastReviewedISO bump.
 const startDate = facts.lastReviewedISO;
+const endDate = (() => {
+  const d = new Date(facts.lastReviewedISO);
+  d.setFullYear(d.getFullYear() + 1);
+  return d.toISOString().slice(0, 10);
+})();
+const sessionPerformer = {
+  '@type': 'PerformingGroup',
+  name: 'Geneva Sports Club Pickleball',
+  '@id': site + '/#sportsclub',
+};
 const sportsEvents = [
   {
     '@context': 'https://schema.org',
@@ -84,6 +97,8 @@ const sportsEvents = [
       : 'Weekly pickleball session open to all levels. Paddles and balls provided. CHF 10 per session.',
     sport: 'Pickleball',
     startDate,
+    endDate,
+    performer: sessionPerformer,
     eventSchedule: {
       '@type': 'Schedule',
       repeatFrequency: 'P1W',
@@ -118,6 +133,7 @@ const sportsEvents = [
       price: facts.priceCHF,
       priceCurrency: 'CHF',
       availability: 'https://schema.org/InStock',
+      validFrom: startDate,
       url: site + (lang === 'fr' ? '/participer/' : '/en/participate/'),
     },
     image: site + '/og-pickleball-geneve.jpg',
@@ -132,6 +148,8 @@ const sportsEvents = [
       : 'Weekly pickleball session open to all levels. Paddles and balls provided. CHF 10 per session.',
     sport: 'Pickleball',
     startDate,
+    endDate,
+    performer: sessionPerformer,
     eventSchedule: {
       '@type': 'Schedule',
       repeatFrequency: 'P1W',
@@ -166,6 +184,7 @@ const sportsEvents = [
       price: facts.priceCHF,
       priceCurrency: 'CHF',
       availability: 'https://schema.org/InStock',
+      validFrom: startDate,
       url: site + (lang === 'fr' ? '/participer/' : '/en/participate/'),
     },
     image: site + '/og-pickleball-geneve.jpg',

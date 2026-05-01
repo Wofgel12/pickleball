@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import BackgroundVideo from './islands/BackgroundVideo.tsx';
 import CounterAnimated from './islands/CounterAnimated.tsx';
 import ReviewsBubbles from './islands/ReviewsBubbles.tsx';
 import { fetchGoogleReviews } from '../lib/google-reviews';
 import { type Lang } from '../i18n/ui';
+import meetupLogo from '../assets/Meetup_Logo.png';
 
 interface Props {
   lang: Lang;
@@ -47,11 +49,28 @@ const mapsUri = reviewsData?.mapsUri || 'https://maps.app.goo.gl/xy3RKsiqXPPNkLX
       )}
     </p>
 
-    <div class="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center">
+    <div class="relative inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center">
       <div class="text-4xl font-bold text-white mb-1">
         + <CounterAnimated client:visible to={8000} /> <a href="https://www.meetup.com/genevasportsclub/members/?op=all" target="_blank" rel="noopener noreferrer" class="underline hover:text-white/80 transition-colors">{fr ? 'membres' : 'members'}</a>
       </div>
       <div class="text-sm text-white/80">{fr ? 'tout sport confondu' : 'across all sports'}</div>
+      <a
+        href="https://www.meetup.com/genevasportsclub/members/?op=all"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="absolute top-2 right-2 transition-transform hover:scale-110"
+        aria-label={fr ? 'Voir les membres sur Meetup' : 'View members on Meetup'}
+        title={fr ? 'Voir le nombre exact de membres sur Meetup' : 'See the exact member count on Meetup'}
+      >
+        <Image
+          src={meetupLogo}
+          alt={fr ? 'Logo Meetup — voir les membres' : 'Meetup logo — view members'}
+          widths={[40, 80]}
+          sizes="40px"
+          class="w-8 h-8 object-contain drop-shadow-md"
+          loading="eager"
+        />
+      </a>
     </div>
   </div>
 
