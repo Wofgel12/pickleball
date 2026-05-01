@@ -16,22 +16,17 @@ const sectionLinks = (['participate', 'learn', 'gear', 'faq', 'contact'] as cons
 <footer
   class="relative z-10 bg-gray-900 text-white py-10 px-4"
   aria-label={ui.ariaFooter[lang]}
-  itemscope
-  itemtype="https://schema.org/SportsClub"
 >
   <div class="max-w-6xl mx-auto grid gap-8 md:grid-cols-3 text-sm">
     <div>
-      <p class="font-semibold text-base mb-2" itemprop="name">Geneva Sports Club</p>
+      <p class="font-semibold text-base mb-2">Geneva Sports Club</p>
       <p class="text-gray-400 leading-relaxed">
         {lang === 'fr'
           ? 'Association multisports basée à Genève — sessions hebdomadaires de pickleball ouvertes à tous les niveaux.'
           : 'Multi-sport association based in Geneva — weekly pickleball sessions open to all levels.'}
       </p>
-      <address class="not-italic text-gray-400 mt-3" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">La Jonction</span>,
-        <span itemprop="postalCode">1205</span>
-        <span itemprop="addressLocality">Genève</span>,
-        <span itemprop="addressCountry">Suisse</span>
+      <address class="not-italic text-gray-400 mt-3">
+        La Jonction, 1205 Genève, Suisse
       </address>
     </div>
 
@@ -48,10 +43,10 @@ const sectionLinks = (['participate', 'learn', 'gear', 'faq', 'contact'] as cons
       <p class="font-semibold text-base mb-2">{lang === 'fr' ? 'Nous joindre' : 'Get in touch'}</p>
       <ul class="space-y-1 text-gray-400">
         <li>
-          <a href={`mailto:${facts.email}`} class="hover:text-teal-400 transition-colors" itemprop="email">{facts.email}</a>
+          <a href={`mailto:${facts.email}`} class="hover:text-teal-400 transition-colors">{facts.email}</a>
         </li>
         <li>
-          <a href={`tel:${facts.phonePrimary}`} class="hover:text-teal-400 transition-colors" itemprop="telephone">{facts.phonePrimaryDisplay}</a>
+          <a href={`tel:${facts.phonePrimary}`} class="hover:text-teal-400 transition-colors">{facts.phonePrimaryDisplay}</a>
         </li>
         <li>
           <a href={`tel:${facts.phoneSession}`} class="hover:text-teal-400 transition-colors">{facts.phoneSessionDisplay}</a>
@@ -80,6 +75,4 @@ const sectionLinks = (['participate', 'learn', 'gear', 'faq', 'contact'] as cons
     </ul>
     <p>{lastReviewedDisplay}</p>
   </div>
-  <meta itemprop="url" content="https://gscpickleball.ch/" />
-  <meta itemprop="sport" content="Pickleball" />
 </footer>
