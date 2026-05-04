@@ -53,22 +53,22 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
   },
   participate: {
     fr: {
-      title: 'Participer à une session de Pickleball à Genève — GSC',
-      description: 'Inscrivez-vous en 5 étapes via Meetup à nos sessions de pickleball à Genève. Lundi & vendredi 20h-22h, 10 CHF, équipement fourni. Tous niveaux bienvenus.',
+      title: 'Apprenez le Pickleball à Genève : lundi & vendredi | GSC',
+      description: 'Venez apprendre le pickleball à Genève avec le Geneva Sports Club : lundis & vendredis 20h-22h, 10 CHF, raquettes fournies. Tous niveaux bienvenus.',
     },
     en: {
-      title: 'Join a Pickleball Session in Geneva — GSC Pickleball',
-      description: 'Register via Meetup in 5 steps for pickleball sessions in Geneva. Monday & Friday 8pm-10pm, CHF 10, equipment provided. All levels welcome.',
+      title: 'Learn Pickleball in Geneva: Mondays & Fridays | GSC Pickleball',
+      description: 'Come learn pickleball in Geneva with the Geneva Sports Club: Mondays & Fridays 8pm-10pm, CHF 10, paddles provided. All levels welcome.',
     },
   },
   learn: {
     fr: {
-      title: 'Apprendre le Pickleball — Règles & Technique | Genève',
-      description: 'Apprenez les règles du pickleball : terrain, service, cuisine, scoring en 11 points, technique, lexique. Guide complet pour débuter à Genève avec le GSC.',
+      title: 'Apprendre le Pickleball à Genève — Guide Débutant | GSC',
+      description: 'Apprenez les règles du pickleball : terrain, service, cuisine, scoring en 11 points, technique et lexique. Guide complet pour débutants à Genève — GSC.',
     },
     en: {
-      title: 'Learn Pickleball — Rules & Technique | Geneva',
-      description: 'Learn pickleball rules: court, serve, kitchen, scoring to 11, basic technique, glossary. Complete beginner guide for Geneva — Geneva Sports Club.',
+      title: 'Learn Pickleball in Geneva — Beginner Guide | GSC',
+      description: 'Learn pickleball rules: court, serve, kitchen, 11-point scoring, technique and glossary. Complete beginner guide in Geneva — Geneva Sports Club.',
     },
   },
   gear: {
