@@ -43,12 +43,12 @@ export function alternateUrls(key: RouteKey, site: string) {
 export const meta: Record<RouteKey, Record<Lang, { title: string; description: string }>> = {
   home: {
     fr: {
-      title: 'Pickleball Genève — Cours & Sessions | GSC Pickleball',
-      description: 'Cours de pickleball à Genève (La Jonction), lundi & vendredi 20h-22h, 10 CHF la session. Tous niveaux, raquettes fournies. Rejoignez le Geneva Sports Club.',
+      title: 'Sessions de Pickleball à Genève | Tous niveaux | GSC Pickleball',
+      description: 'Sessions de pickleball à Genève (La Jonction) avec le Geneva Sports Club : lundis & vendredis 20h-22h, 10 CHF, sans adhésion. Tous niveaux bienvenus.',
     },
     en: {
-      title: 'Pickleball Geneva — Lessons & Sessions | GSC Pickleball',
-      description: 'Pickleball sessions in Geneva (La Jonction), Monday & Friday 8pm-10pm, CHF 10 per session. All levels, paddles provided. Join the Geneva Sports Club.',
+      title: 'Pickleball Sessions in Geneva | All Levels | GSC Pickleball',
+      description: 'Pickleball sessions in Geneva (La Jonction) with the Geneva Sports Club: Mondays & Fridays 8pm-10pm, CHF 10, no membership required. All levels welcome.',
     },
   },
   participate: {
