@@ -12,7 +12,7 @@ const PRICE_DOUBLES_MIXED_COMBO_CENTS = 3000;
 const doubles = PRICE_DOUBLES_CENTS / 100;
 const singlesPrice = PRICE_SINGLES_CENTS / 100;
 const combo = PRICE_DOUBLES_MIXED_COMBO_CENTS / 100;
-const menSinglesTotal = (PRICE_DOUBLES_CENTS + PRICE_SINGLES_CENTS) / 100;
+const doublesSinglesTotal = (PRICE_DOUBLES_CENTS + PRICE_SINGLES_CENTS) / 100;
 
 export const tournament = {
   /** Stable id stored with every registration in Supabase. */
@@ -65,6 +65,7 @@ export const tournament = {
     { ids: ['men', 'mixed'],   priceCents: PRICE_DOUBLES_MIXED_COMBO_CENTS },
     { ids: ['women', 'mixed'], priceCents: PRICE_DOUBLES_MIXED_COMBO_CENTS },
     { ids: ['men', 'singles'] },
+    { ids: ['women', 'singles'] },
   ],
 
   partners: [
@@ -184,7 +185,7 @@ export const tournamentCopy = {
     comboSaving: 'Combo',
     comboHint: (draw: string, slot: string, total: string) =>
       `Ajoutez le ${draw.toLowerCase()} (${slot.toLowerCase()}) : ${total} pour les deux tableaux.`,
-    conflictHint: `Horaires précis communiqués ultérieurement. Combinaisons possibles : double hommes ou dames + double mixte (${combo} CHF), double hommes + simple (${menSinglesTotal} CHF).`,
+    conflictHint: `Horaires précis communiqués ultérieurement. Combinaisons possibles : double hommes ou dames + double mixte (${combo} CHF), double hommes ou dames + simple (${doublesSinglesTotal} CHF).`,
     placesLeft: (n: number) => (n === 1 ? '1 place restante' : `${n} places restantes`),
     placesOf: (cap: number) => `sur ${cap}`,
     placesLoading: 'Places limitées',
@@ -235,7 +236,7 @@ export const tournamentCopy = {
       { dt: 'Date', dd: 'Dimanche 15 novembre 2026' },
       { dt: 'Horaires', dd: 'De 9h à 18h' },
       { dt: 'Programme', dd: 'Matin : doubles hommes et dames. Après-midi : double mixte et simple. Horaires précis communiqués ultérieurement.' },
-      { dt: 'Tarif', dd: `Double : ${doubles} CHF. Simple : ${singlesPrice} CHF. Double hommes ou dames + double mixte : ${combo} CHF. Double hommes + simple : ${menSinglesTotal} CHF.` },
+      { dt: 'Tarif', dd: `Double : ${doubles} CHF. Simple : ${singlesPrice} CHF. Double hommes ou dames + double mixte : ${combo} CHF. Double hommes ou dames + simple : ${doublesSinglesTotal} CHF.` },
       { dt: 'Lieu', dd: 'Collège Calvin, Rue Théodore-De-Bèze 2-4, 1206 Genève' },
       { dt: 'Âge', dd: 'Dès 18 ans' },
       { dt: 'Matériel', dd: 'Des raquettes peuvent être prêtées en cas de besoin' },
@@ -280,7 +281,7 @@ export const tournamentCopy = {
     comboSaving: 'Combo',
     comboHint: (draw: string, slot: string, total: string) =>
       `Add ${draw} (${slot.toLowerCase()}): ${total} for both draws.`,
-    conflictHint: `Exact times will be announced later. Possible combinations: men’s or women’s doubles + mixed doubles (CHF ${combo}), men’s doubles + singles (CHF ${menSinglesTotal}).`,
+    conflictHint: `Exact times will be announced later. Possible combinations: men’s or women’s doubles + mixed doubles (CHF ${combo}), men’s or women’s doubles + singles (CHF ${doublesSinglesTotal}).`,
     placesLeft: (n: number) => (n === 1 ? '1 place left' : `${n} places left`),
     placesOf: (cap: number) => `of ${cap}`,
     placesLoading: 'Limited places',
@@ -331,7 +332,7 @@ export const tournamentCopy = {
       { dt: 'Date', dd: 'Sunday 15 November 2026' },
       { dt: 'Hours', dd: '9am to 6pm' },
       { dt: 'Programme', dd: 'Morning: men’s and women’s doubles. Afternoon: mixed doubles and singles. Exact times will be announced later.' },
-      { dt: 'Fee', dd: `Doubles: CHF ${doubles}. Singles: CHF ${singlesPrice}. Men’s or women’s doubles + mixed doubles: CHF ${combo}. Men’s doubles + singles: CHF ${menSinglesTotal}.` },
+      { dt: 'Fee', dd: `Doubles: CHF ${doubles}. Singles: CHF ${singlesPrice}. Men’s or women’s doubles + mixed doubles: CHF ${combo}. Men’s or women’s doubles + singles: CHF ${doublesSinglesTotal}.` },
       { dt: 'Venue', dd: 'Collège Calvin, Rue Théodore-De-Bèze 2-4, 1206 Geneva' },
       { dt: 'Age', dd: '18 and over' },
       { dt: 'Equipment', dd: 'Paddles can be lent if needed' },
