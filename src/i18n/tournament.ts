@@ -34,8 +34,11 @@ export const tournament = {
 
   minAge: 18,
 
-  /** Minutes a place stays reserved while the player is on Stripe Checkout (Stripe minimum: 30). */
-  holdMinutes: 30,
+  /**
+   * Minutes a player has to pay. After that, the scheduled job
+   * (netlify/functions/tournoi-expire-holds) closes their Stripe page and frees the place.
+   */
+  holdMinutes: 15,
 
   /** Meetup member count quoted in the description. */
   meetupMembers: '9 000',
@@ -184,6 +187,7 @@ export const tournamentCopy = {
     submit: (price: string) => `Payer ${price} et m’inscrire`,
     submitting: 'Redirection vers le paiement…',
     secure: 'Paiement sécurisé par Stripe',
+    holdNotice: 'Votre place est réservée 15 minutes : passé ce délai, le paiement n’est plus possible et la place est libérée.',
     testModeBanner: '⚠️ MODE TEST — aucun paiement réel : les inscriptions sont confirmées sans passer par Stripe.',
     errors: {
       required: 'Champ requis',
@@ -277,6 +281,7 @@ export const tournamentCopy = {
     submit: (price: string) => `Pay ${price} and register`,
     submitting: 'Redirecting to payment…',
     secure: 'Secure payment by Stripe',
+    holdNotice: 'Your place is held for 15 minutes: after that, payment is no longer possible and the place is released.',
     testModeBanner: '⚠️ TEST MODE — no real payment: registrations are confirmed without going through Stripe.',
     errors: {
       required: 'Required',

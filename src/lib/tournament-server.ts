@@ -21,7 +21,9 @@ import { facts, type Lang } from '../i18n/ui';
 
 function env(name: string): string | undefined {
   // Astro coerces values like "true" to booleans in import.meta.env: normalise to strings.
-  const value = (import.meta.env as Record<string, unknown>)[name] ?? process.env[name];
+  // import.meta.env is absent in plain Netlify functions (the scheduled job): fall back to process.env.
+  const metaEnv = ((import.meta as { env?: Record<string, unknown> }).env ?? {}) as Record<string, unknown>;
+  const value = metaEnv[name] ?? process.env[name];
   return value === undefined || value === null ? undefined : String(value);
 }
 
@@ -118,9 +120,9 @@ export async function reserveOrder(input: OrderInput, perDrawCents: number[]): P
         partner_name: d.partnerName,
         find_partner: d.findPartner,
       })),
-      // Outlives the Stripe session by 5 min so a last-second payment never
-      // lands on a place that was already released to someone else.
-      p_hold_minutes: tournament.holdMinutes + 5,
+      // The place is only released once the scheduled job has closed the
+      // Stripe page (see expireStaleOrders), so it can never be double-sold.
+      p_hold_minutes: tournament.holdMinutes,
       p_first_name: input.firstName,
       p_last_name: input.lastName,
       p_email: input.email,
@@ -216,8 +218,9 @@ export async function createCheckoutSession(opts: {
     locale: lang,
     customer_email: opts.input.email,
     client_reference_id: opts.orderId,
-    // Stripe accepts 30 min – 24 h; the Supabase hold lasts 5 min longer.
-    expires_at: Math.floor(Date.now() / 1000) + tournament.holdMinutes * 60 + 30,
+    // Stripe's minimum lifetime is 30 min; the scheduled job closes the page
+    // earlier, as soon as the holdMinutes window is over.
+    expires_at: Math.floor(Date.now() / 1000) + 30 * 60 + 30,
     line_items: [{
       quantity: 1,
       price_data: {
@@ -231,6 +234,45 @@ export async function createCheckoutSession(opts: {
     success_url: `${opts.origin}${pagePath}?inscription=ok#inscription`,
     cancel_url: `${opts.origin}${pagePath}?inscription=annulee#inscription`,
   });
+}
+
+/**
+ * Closes the Stripe page of every order whose hold is over, then frees its
+ * places. Run every minute by netlify/functions/tournoi-expire-holds.
+ * A page that was paid in the meantime can't be expired: Stripe refuses, we
+ * skip it and the webhook confirms the order instead.
+ */
+export async function expireStaleOrders(): Promise<{ expired: number; skipped: number }> {
+  const now = new Date().toISOString();
+  const res = await supabase(
+    `tournament_registrations?select=order_id,stripe_session_id&tournament=eq.${tournament.id}` +
+      `&status=eq.pending&hold_expires_at=lt.${encodeURIComponent(now)}`,
+  );
+  if (!res.ok) throw new Error(`list stale holds ${res.status}: ${await res.text()}`);
+  const rows = (await res.json()) as { order_id: string; stripe_session_id: string | null }[];
+
+  const orders = new Map<string, string | null>();
+  for (const r of rows) orders.set(r.order_id, r.stripe_session_id ?? orders.get(r.order_id) ?? null);
+
+  let expired = 0;
+  let skipped = 0;
+  for (const [orderId, sessionId] of orders) {
+    if (sessionId?.startsWith('cs_')) {
+      const stripeRes = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}/expire`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${env('STRIPE_SECRET_KEY')}` },
+      });
+      if (!stripeRes.ok) {
+        // Already paid (or already expired by Stripe): leave it to the webhook.
+        skipped++;
+        continue;
+      }
+    }
+    // No Stripe page (checkout creation failed) or page now closed: free the places.
+    await updateRegistrations(`order_id=eq.${orderId}&status=eq.pending`, { status: 'expired', hold_expires_at: null });
+    expired++;
+  }
+  return { expired, skipped };
 }
 
 /** Verifies the Stripe-Signature header (v1 HMAC-SHA256, 5-minute tolerance). */

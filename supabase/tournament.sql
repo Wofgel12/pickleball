@@ -16,7 +16,7 @@ create table if not exists public.tournament_registrations (
   lang            text not null default 'fr',
   status          text not null default 'pending'
                   check (status in ('pending', 'confirmed', 'expired', 'cancelled')),
-  hold_expires_at timestamptz,                   -- place réservée pendant le paiement
+  hold_expires_at timestamptz,                   -- fin des 15 min accordées pour payer
   amount_cents    integer not null check (amount_cents >= 0),
   stripe_session_id text,                        -- partagé par les tableaux d'un combo
   stripe_payment_intent_id text,
@@ -36,14 +36,20 @@ alter table public.tournament_registrations enable row level security;
 -- Défense en profondeur : aucun droit pour les clés publiques (RLS bloque déjà tout).
 revoke all on public.tournament_registrations from anon, authenticated;
 
--- Places occupées = inscriptions confirmées + paiements en cours non expirés.
+-- Places occupées = inscriptions confirmées + commandes en attente de paiement.
+-- Une commande en attente garde sa place jusqu'à ce que la tâche planifiée
+-- (netlify/functions/tournoi-expire-holds) ferme sa page Stripe après 15 min
+-- (hold_expires_at) et la passe en 'expired'. Les 20 min supplémentaires ne sont
+-- qu'un filet de sécurité si la tâche et le webhook échouent : plus long que la
+-- durée de vie de 30 min d'une page Stripe, donc jamais de place vendue deux fois.
 create or replace function public.tournament_counts(p_tournament text)
 returns table (category text, taken bigint)
 language sql stable security definer set search_path = public as $$
   select category, count(*)
   from tournament_registrations
   where tournament = p_tournament
-    and (status = 'confirmed' or (status = 'pending' and hold_expires_at > now()))
+    and (status = 'confirmed'
+         or (status = 'pending' and hold_expires_at > now() - interval '20 minutes'))
   group by category;
 $$;
 
@@ -69,7 +75,8 @@ begin
     select count(*) into v_taken
     from tournament_registrations
     where tournament = p_tournament and category = v_item->>'category'
-      and (status = 'confirmed' or (status = 'pending' and hold_expires_at > now()));
+      and (status = 'confirmed'
+           or (status = 'pending' and hold_expires_at > now() - interval '20 minutes'));
     if v_taken >= (v_item->>'capacity')::int then
       return null; -- complet
     end if;
