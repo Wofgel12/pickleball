@@ -39,7 +39,7 @@ export function tournamentSchema(site: string, lang: Lang) {
       ...tournament.categories.map((c) => ({
         '@type': 'Offer',
         name: c.name[lang],
-        price: tournament.priceSingleCents / 100,
+        price: c.priceCents / 100,
         priceCurrency: 'CHF',
         availability: 'https://schema.org/LimitedAvailability',
         url: pageUrl + '#inscription',
@@ -47,7 +47,7 @@ export function tournamentSchema(site: string, lang: Lang) {
       {
         '@type': 'Offer',
         name: lang === 'fr' ? 'Combo : double hommes ou dames + double mixte' : 'Combo: men’s or women’s doubles + mixed doubles',
-        price: tournament.priceComboCents / 100,
+        price: (tournament.combos[0].priceCents ?? 0) / 100,
         priceCurrency: 'CHF',
         availability: 'https://schema.org/LimitedAvailability',
         url: pageUrl + '#inscription',

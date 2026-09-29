@@ -3,6 +3,7 @@ import {
   tournament,
   tournamentCopy,
   formatCHF,
+  isValidPhone,
   normalizeSelection,
   priceSelection,
   type CategoryId,
@@ -16,7 +17,7 @@ interface Props {
 
 type Remaining = Partial<Record<CategoryId, number>>;
 type Partner = { name: string; find: boolean };
-type ErrorKey = 'category' | 'firstName' | 'lastName' | 'email' | 'age' | 'noRefund' | `partner-${CategoryId}`;
+type ErrorKey = 'category' | 'firstName' | 'lastName' | 'email' | 'phone' | 'age' | 'noRefund' | `partner-${CategoryId}`;
 type Errors = Partial<Record<ErrorKey, string>>;
 
 const POLL_MS = 20_000;
@@ -85,7 +86,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   const isFull = (id: CategoryId) => remaining?.[id] === 0;
   const draws = normalizeSelection(selected) ?? [];
   const price = draws.length ? priceSelection(draws) : null;
-  const isCombo = draws.length === 2;
+  const isCombo = Boolean(price?.discounted);
   // Draws that would complete the current single choice into a combo:
   // men/women → mixed, mixed → men or women. Full draws aren't suggested.
   const comboSuggestions =
@@ -126,6 +127,8 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
     if (!form.lastName.trim()) e.lastName = t.errors.required;
     if (!form.email.trim()) e.email = t.errors.required;
     else if (!EMAIL_RE.test(form.email.trim())) e.email = t.errors.email;
+    if (!form.phone.trim()) e.phone = t.errors.required;
+    else if (!isValidPhone(form.phone)) e.phone = t.errors.phone;
     for (const d of draws.filter((d) => d.double)) {
       const p = partnerOf(d.id);
       if (!p.find && !p.name.trim()) e[`partner-${d.id}`] = t.errors.partner;
@@ -206,7 +209,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   );
 
   const field = (key: keyof typeof form, label: string, type = 'text', autoComplete?: string) =>
-    textField(`t-${key}`, label, form[key], (v) => setForm((f) => ({ ...f, [key]: v })), key === 'phone' ? undefined : errors[key], type, autoComplete);
+    textField(`t-${key}`, label, form[key], (v) => setForm((f) => ({ ...f, [key]: v })), errors[key], type, autoComplete);
 
   return (
     <div>
@@ -267,7 +270,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
               </p>
               <h3 className="text-xl font-bold text-gray-900 mb-1">{c.name[lang]}</h3>
               <p className="text-gray-700 mb-4">
-                <span className="text-2xl font-bold text-gray-900">{formatCHF(tournament.priceSingleCents, lang)}</span>{' '}
+                <span className="text-2xl font-bold text-gray-900">{formatCHF(c.priceCents, lang)}</span>{' '}
                 <span className="text-sm">{t.perPerson}</span>
               </p>
 
@@ -367,7 +370,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
               onClick={() => toggle(c.id)}
               className="mt-3 w-full rounded-xl border-2 border-dashed border-teal-400 bg-teal-50/60 px-4 py-3 text-left text-teal-900 font-medium hover:bg-teal-50"
             >
-              ➕ {t.comboHint(c.name[lang], t.slots[c.slot])}
+              ➕ {t.comboHint(c.name[lang], t.slots[c.slot], formatCHF(priceSelection([draws[0], c]).totalCents, lang))}
             </button>
           ))}
         </fieldset>
@@ -376,7 +379,15 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           {field('firstName', t.fields.firstName, 'text', 'given-name')}
           {field('lastName', t.fields.lastName, 'text', 'family-name')}
           {field('email', t.fields.email, 'email', 'email')}
-          {field('phone', t.fields.phone, 'tel', 'tel')}
+          <div>
+            {field('phone', t.fields.phone, 'tel', 'tel')}
+            {!errors.phone && (
+              <p className="mt-1.5 flex items-center gap-1.5 text-sm text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.01c0-5.2 4.23-9.43 9.44-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.24 9.43-9.44 9.43m8.03-17.46A11.3 11.3 0 0 0 12.05.7C5.8.7.7 5.79.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.4l5.81-1.52a11.3 11.3 0 0 0 5.63 1.44h.01c6.26 0 11.35-5.09 11.35-11.35 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+                {t.fields.phoneHint}
+              </p>
+            )}
+          </div>
         </div>
 
         {draws.filter((d) => d.double).map((d) => {
@@ -432,7 +443,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
             {draws.map((d) => (
               <div key={d.id} className="flex justify-between text-gray-700 py-0.5">
                 <span>{d.name[lang]} <span className="text-gray-500 text-sm">· {t.slots[d.slot]}</span></span>
-                <span className={isCombo ? 'line-through text-gray-400' : ''}>{formatCHF(tournament.priceSingleCents, lang)}</span>
+                <span className={isCombo ? 'line-through text-gray-400' : ''}>{formatCHF(d.priceCents, lang)}</span>
               </div>
             ))}
             <div className="flex justify-between items-baseline border-t border-gray-200 mt-2 pt-2">

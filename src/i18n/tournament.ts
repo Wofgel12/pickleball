@@ -5,10 +5,14 @@
 import type { Lang } from './ui';
 
 // Prices in CHF cents — single source for the page copy, the API and Stripe.
-const PRICE_SINGLE_CENTS = 2000;
-const PRICE_COMBO_CENTS = 3000;
-const single = PRICE_SINGLE_CENTS / 100;
-const combo = PRICE_COMBO_CENTS / 100;
+const PRICE_DOUBLES_CENTS = 2000;
+const PRICE_SINGLES_CENTS = 1500;
+/** Discounted price for men's or women's doubles + mixed doubles. */
+const PRICE_DOUBLES_MIXED_COMBO_CENTS = 3000;
+const doubles = PRICE_DOUBLES_CENTS / 100;
+const singlesPrice = PRICE_SINGLES_CENTS / 100;
+const combo = PRICE_DOUBLES_MIXED_COMBO_CENTS / 100;
+const menSinglesTotal = (PRICE_DOUBLES_CENTS + PRICE_SINGLES_CENTS) / 100;
 
 export const tournament = {
   /** Stable id stored with every registration in Supabase. */
@@ -47,21 +51,21 @@ export const tournament = {
   // Morning: men's + women's doubles. Afternoon: mixed doubles + singles.
   // Exact times are announced later.
   categories: [
-    { id: 'men',     double: true,  capacity: 30, slot: 'morning',   name: { fr: 'Double hommes', en: "Men's doubles" } },
-    { id: 'women',   double: true,  capacity: 20, slot: 'morning',   name: { fr: 'Double dames',  en: "Women's doubles" } },
-    { id: 'mixed',   double: true,  capacity: 36, slot: 'afternoon', name: { fr: 'Double mixte',  en: 'Mixed doubles' } },
-    { id: 'singles', double: false, capacity: 12, slot: 'afternoon', name: { fr: 'Simple',        en: 'Singles' } },
+    { id: 'men',     double: true,  capacity: 30, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, name: { fr: 'Double hommes', en: "Men's doubles" } },
+    { id: 'women',   double: true,  capacity: 20, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, name: { fr: 'Double dames',  en: "Women's doubles" } },
+    { id: 'mixed',   double: true,  capacity: 36, slot: 'afternoon', priceCents: PRICE_DOUBLES_CENTS, name: { fr: 'Double mixte',  en: 'Mixed doubles' } },
+    { id: 'singles', double: false, capacity: 12, slot: 'afternoon', priceCents: PRICE_SINGLES_CENTS, name: { fr: 'Simple',        en: 'Singles' } },
   ],
 
-  /** The only combos on offer (each at priceComboCents); anything else is one draw. */
+  /**
+   * The only draw pairs a player may book together. `priceCents` is the
+   * discounted total; without it the pair costs the sum of both draws.
+   */
   combos: [
-    ['men', 'mixed'],
-    ['women', 'mixed'],
+    { ids: ['men', 'mixed'],   priceCents: PRICE_DOUBLES_MIXED_COMBO_CENTS },
+    { ids: ['women', 'mixed'], priceCents: PRICE_DOUBLES_MIXED_COMBO_CENTS },
+    { ids: ['men', 'singles'] },
   ],
-
-  /** Price for one draw, and for a combo (men's or women's doubles + mixed). */
-  priceSingleCents: PRICE_SINGLE_CENTS,
-  priceComboCents: PRICE_COMBO_CENTS,
 
   partners: [
     {
@@ -94,30 +98,52 @@ export function findCategory(id: string): TournamentCategory | undefined {
   return tournament.categories.find((c) => c.id === id);
 }
 
+type Combo = { ids: readonly string[]; priceCents?: number };
+
+/** The combo matching exactly this set of draw ids, if any. */
+export function findCombo(ids: readonly string[]): Combo | undefined {
+  const unique = [...new Set(ids)];
+  return (tournament.combos as readonly Combo[]).find(
+    (combo) => combo.ids.length === unique.length && combo.ids.every((id) => unique.includes(id)),
+  );
+}
+
 /**
- * Valid selections: one draw, or one of the `combos` (men + mixed,
- * women + mixed). Returns the draws in programme order, or null when the
- * selection isn't allowed.
+ * Valid selections: one draw, or one of the `combos`. Returns the draws in
+ * programme order, or null when the selection isn't allowed.
  */
 export function normalizeSelection(ids: readonly string[]): TournamentCategory[] | null {
   const unique = [...new Set(ids)];
   const cats = unique.map(findCategory);
   if (cats.length === 0 || cats.some((c) => !c)) return null;
-  if (cats.length > 1 && !tournament.combos.some((combo) =>
-    combo.length === unique.length && combo.every((id) => unique.includes(id)))) {
-    return null;
-  }
+  if (cats.length > 1 && !findCombo(unique)) return null;
   const order = tournament.categories.map((c) => c.id) as string[];
   return (cats as TournamentCategory[]).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 }
 
-/** Total price and per-draw split (stored on each registration row). */
-export function priceSelection(cats: readonly TournamentCategory[]): { totalCents: number; perDrawCents: number[] } {
-  if (cats.length === 2) {
-    const half = Math.floor(tournament.priceComboCents / 2);
-    return { totalCents: tournament.priceComboCents, perDrawCents: [half, tournament.priceComboCents - half] };
+/**
+ * Total price, per-draw split (stored on each registration row) and whether
+ * a combo discount applies.
+ */
+export function priceSelection(cats: readonly TournamentCategory[]): {
+  totalCents: number;
+  perDrawCents: number[];
+  discounted: boolean;
+} {
+  const fullPrices = cats.map((c) => c.priceCents);
+  const comboPrice = cats.length > 1 ? findCombo(cats.map((c) => c.id))?.priceCents : undefined;
+  if (comboPrice === undefined) {
+    return { totalCents: fullPrices.reduce((a, b) => a + b, 0), perDrawCents: fullPrices, discounted: false };
   }
-  return { totalCents: tournament.priceSingleCents, perDrawCents: [tournament.priceSingleCents] };
+  const half = Math.floor(comboPrice / 2);
+  return { totalCents: comboPrice, perDrawCents: [half, comboPrice - half], discounted: true };
+}
+
+/** Loose phone check: 8–15 digits, optional leading +, spaces/dots/dashes/brackets allowed. */
+export function isValidPhone(raw: string): boolean {
+  const v = raw.trim();
+  const digits = (v.match(/\d/g) ?? []).length;
+  return /^\+?[\d\s().-]+$/.test(v) && digits >= 8 && digits <= 15;
 }
 
 export function formatCHF(cents: number, lang: Lang): string {
@@ -151,14 +177,14 @@ export const tournamentCopy = {
     ],
     categoriesTitle: 'Choisissez votre ou vos tableaux',
     categoriesLead: 'Les places restantes se mettent à jour en temps réel. Chacun·e s’inscrit individuellement : indiquez votre partenaire ou laissez-nous vous en trouver un·e.',
-    comboBanner: `Combo : double hommes ou dames le matin + double mixte l’après-midi = ${combo} CHF au lieu de ${single * 2} CHF`,
+    comboBanner: `Combo : double hommes ou dames le matin + double mixte l’après-midi = ${combo} CHF au lieu de ${doubles * 2} CHF`,
     slots: { morning: 'Matin', afternoon: 'Après-midi' },
-    pricing: { single: `${single} CHF le tableau`, combo: `${combo} CHF les deux` },
+    pricing: { single: `${doubles} CHF le tableau`, combo: `${combo} CHF les deux` },
     total: 'Total',
     comboSaving: 'Combo',
-    comboHint: (draw: string, slot: string) =>
-      `Ajoutez le ${draw.toLowerCase()} (${slot.toLowerCase()}) : ${combo} CHF pour les deux tableaux.`,
-    conflictHint: 'Horaires précis communiqués ultérieurement. Combo possible : double hommes ou dames + double mixte.',
+    comboHint: (draw: string, slot: string, total: string) =>
+      `Ajoutez le ${draw.toLowerCase()} (${slot.toLowerCase()}) : ${total} pour les deux tableaux.`,
+    conflictHint: `Horaires précis communiqués ultérieurement. Combinaisons possibles : double hommes ou dames + double mixte (${combo} CHF), double hommes + simple (${menSinglesTotal} CHF).`,
     placesLeft: (n: number) => (n === 1 ? '1 place restante' : `${n} places restantes`),
     placesOf: (cap: number) => `sur ${cap}`,
     placesLoading: 'Places limitées',
@@ -175,7 +201,8 @@ export const tournamentCopy = {
       firstName: 'Prénom',
       lastName: 'Nom',
       email: 'E-mail',
-      phone: 'Téléphone (facultatif)',
+      phone: 'Téléphone mobile (WhatsApp)',
+      phoneHint: 'Nous vous ajouterons au groupe WhatsApp du tournoi avec ce numéro.',
       partner: (draw: string) => `Votre partenaire — ${draw}`,
       partnerName: 'Nom et prénom de votre partenaire',
       partnerHint: 'Votre partenaire doit aussi s’inscrire de son côté.',
@@ -192,6 +219,7 @@ export const tournamentCopy = {
     errors: {
       required: 'Champ requis',
       email: 'E-mail invalide',
+      phone: 'Numéro invalide (ex. +41 79 123 45 67)',
       category: 'Choisissez au moins un tableau',
       partner: 'Indiquez votre partenaire ou choisissez « Trouvez-moi un·e partenaire »',
       checkbox: 'Merci de cocher cette case',
@@ -207,7 +235,7 @@ export const tournamentCopy = {
       { dt: 'Date', dd: 'Dimanche 15 novembre 2026' },
       { dt: 'Horaires', dd: 'De 9h à 18h' },
       { dt: 'Programme', dd: 'Matin : doubles hommes et dames. Après-midi : double mixte et simple. Horaires précis communiqués ultérieurement.' },
-      { dt: 'Tarif', dd: `${single} CHF par tableau, ${combo} CHF pour double hommes ou dames + double mixte` },
+      { dt: 'Tarif', dd: `Double : ${doubles} CHF. Simple : ${singlesPrice} CHF. Double hommes ou dames + double mixte : ${combo} CHF. Double hommes + simple : ${menSinglesTotal} CHF.` },
       { dt: 'Lieu', dd: 'Collège Calvin, Rue Théodore-De-Bèze 2-4, 1206 Genève' },
       { dt: 'Âge', dd: 'Dès 18 ans' },
       { dt: 'Matériel', dd: 'Des raquettes peuvent être prêtées en cas de besoin' },
@@ -245,14 +273,14 @@ export const tournamentCopy = {
     ],
     categoriesTitle: 'Choose your draw(s)',
     categoriesLead: 'Remaining places update in real time. Everyone registers individually: name your partner or let us find one for you.',
-    comboBanner: `Combo: men’s or women’s doubles in the morning + mixed doubles in the afternoon = CHF ${combo} instead of CHF ${single * 2}`,
+    comboBanner: `Combo: men’s or women’s doubles in the morning + mixed doubles in the afternoon = CHF ${combo} instead of CHF ${doubles * 2}`,
     slots: { morning: 'Morning', afternoon: 'Afternoon' },
-    pricing: { single: `CHF ${single} per draw`, combo: `CHF ${combo} for both` },
+    pricing: { single: `CHF ${doubles} per draw`, combo: `CHF ${combo} for both` },
     total: 'Total',
     comboSaving: 'Combo',
-    comboHint: (draw: string, slot: string) =>
-      `Add ${draw} (${slot.toLowerCase()}): CHF ${combo} for both draws.`,
-    conflictHint: 'Exact times will be announced later. Combo available: men’s or women’s doubles + mixed doubles.',
+    comboHint: (draw: string, slot: string, total: string) =>
+      `Add ${draw} (${slot.toLowerCase()}): ${total} for both draws.`,
+    conflictHint: `Exact times will be announced later. Possible combinations: men’s or women’s doubles + mixed doubles (CHF ${combo}), men’s doubles + singles (CHF ${menSinglesTotal}).`,
     placesLeft: (n: number) => (n === 1 ? '1 place left' : `${n} places left`),
     placesOf: (cap: number) => `of ${cap}`,
     placesLoading: 'Limited places',
@@ -269,7 +297,8 @@ export const tournamentCopy = {
       firstName: 'First name',
       lastName: 'Last name',
       email: 'E-mail',
-      phone: 'Phone (optional)',
+      phone: 'Mobile phone (WhatsApp)',
+      phoneHint: 'We’ll use this number to add you to the tournament WhatsApp group.',
       partner: (draw: string) => `Your partner — ${draw}`,
       partnerName: 'Your partner’s full name',
       partnerHint: 'Your partner must register separately too.',
@@ -286,6 +315,7 @@ export const tournamentCopy = {
     errors: {
       required: 'Required',
       email: 'Invalid e-mail',
+      phone: 'Invalid number (e.g. +41 79 123 45 67)',
       category: 'Choose at least one draw',
       partner: 'Name your partner or choose “Find me a partner”',
       checkbox: 'Please tick this box',
@@ -301,7 +331,7 @@ export const tournamentCopy = {
       { dt: 'Date', dd: 'Sunday 15 November 2026' },
       { dt: 'Hours', dd: '9am to 6pm' },
       { dt: 'Programme', dd: 'Morning: men’s and women’s doubles. Afternoon: mixed doubles and singles. Exact times will be announced later.' },
-      { dt: 'Fee', dd: `CHF ${single} per draw, CHF ${combo} for men’s or women’s doubles + mixed doubles` },
+      { dt: 'Fee', dd: `Doubles: CHF ${doubles}. Singles: CHF ${singlesPrice}. Men’s or women’s doubles + mixed doubles: CHF ${combo}. Men’s doubles + singles: CHF ${menSinglesTotal}.` },
       { dt: 'Venue', dd: 'Collège Calvin, Rue Théodore-De-Bèze 2-4, 1206 Geneva' },
       { dt: 'Age', dd: '18 and over' },
       { dt: 'Equipment', dd: 'Paddles can be lent if needed' },

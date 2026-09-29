@@ -141,6 +141,7 @@ export interface RegistrationRow {
   first_name: string;
   last_name: string;
   email: string;
+  phone: string | null;
   partner_name: string | null;
   find_partner: boolean;
   lang: Lang;
@@ -336,11 +337,13 @@ export async function sendConfirmationEmail(order: RegistrationRow[]): Promise<b
     [fr ? 'Montant payé' : 'Amount paid', formatCHF(totalCents, lang)],
   ];
 
+  const whatsappNumber = reg.phone ? ` ${fr ? 'au' : 'on'} <strong>${escapeHtml(reg.phone)}</strong>` : '';
+
   const subject = fr
     ? `Inscription confirmée — Tournoi GSC Pickleball (${drawNames})`
     : `Registration confirmed — GSC Pickleball Tournament (${drawNames})`;
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f4f7f6;font-family:Arial,Helvetica,sans-serif;color:#1f2937">
+  const html = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0;background:#f4f7f6;font-family:Arial,Helvetica,sans-serif;color:#1f2937">
 <div style="max-width:560px;margin:0 auto;padding:24px">
   <div style="background:#002b2b;color:#fff;border-radius:16px 16px 0 0;padding:28px 24px">
     <p style="margin:0 0 6px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#5eead4">${escapeHtml(t.kicker)}</p>
@@ -350,6 +353,19 @@ export async function sendConfirmationEmail(order: RegistrationRow[]): Promise<b
     <p style="margin:0 0 16px;line-height:1.55">${fr
       ? 'Merci pour votre inscription au tournoi de pickleball du Geneva Sports Club. Voici le récapitulatif :'
       : 'Thank you for registering for the Geneva Sports Club pickleball tournament. Here’s your summary:'}</p>
+    <table role="presentation" style="width:100%;border-collapse:separate;margin:0 0 20px;background:#e8f8ee;border:2px solid #25D366;border-radius:12px">
+      <tr>
+        <td style="padding:16px 0 16px 16px;width:56px;vertical-align:top">
+          <img src="https://gscpickleball.ch/email/whatsapp.png" width="48" height="48" alt="WhatsApp" style="display:block;border:0">
+        </td>
+        <td style="padding:16px;vertical-align:top">
+          <p style="margin:0 0 4px;font-size:16px;font-weight:bold;color:#075e54">${fr ? 'Groupe WhatsApp du tournoi' : 'Tournament WhatsApp group'}</p>
+          <p style="margin:0;line-height:1.5;color:#1f2937">${fr
+            ? `Vous allez recevoir un message WhatsApp${whatsappNumber} pour être ajouté·e au groupe du tournoi. C’est là que nous partagerons les horaires précis de votre tableau et toutes les infos pratiques.`
+            : `You’ll receive a WhatsApp message${whatsappNumber} to be added to the tournament group. That’s where we’ll share the exact times for your draw and all the practical info.`}</p>
+        </td>
+      </tr>
+    </table>
     <table style="width:100%;border-collapse:collapse;font-size:15px">
       ${rows.map(([k, v]) => `<tr><td style="padding:8px 0;color:#0f766e;font-weight:bold;width:40%;vertical-align:top">${escapeHtml(k)}</td><td style="padding:8px 0">${escapeHtml(v)}</td></tr>`).join('')}
     </table>

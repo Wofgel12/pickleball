@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { normalizeSelection, priceSelection } from '../../../i18n/tournament';
+import { isValidPhone, normalizeSelection, priceSelection } from '../../../i18n/tournament';
 import {
   confirmOrder,
   createCheckoutSession,
@@ -61,6 +61,8 @@ export const POST: APIRoute = async ({ request, url }) => {
     !input.firstName ||
     !input.lastName ||
     !EMAIL_RE.test(input.email) ||
+    !input.phone ||
+    !isValidPhone(input.phone) ||
     draws.some((d) => d.category.double && !d.findPartner && !d.partnerName) ||
     body.age !== true ||
     body.noRefund !== true
