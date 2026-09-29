@@ -16,6 +16,8 @@ export const routes = {
   contact: { fr: '/contact/', en: '/en/contact/' },
   legal: { fr: '/mentions-legales/', en: '/en/legal-notice/' },
   privacy: { fr: '/politique-confidentialite/', en: '/en/privacy-policy/' },
+  // Landing page, deliberately absent from the menu and footer.
+  tournament: { fr: '/tournoi/', en: '/en/tournament/' },
 } as const;
 export type RouteKey = keyof typeof routes;
 
@@ -121,6 +123,16 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
       description: 'Privacy policy for the Geneva Sports Club Pickleball website: data collected, cookies, retention, your rights, contact details.',
     },
   },
+  tournament: {
+    fr: {
+      title: 'Tournoi de Pickleball à Genève — 15 novembre 2026 | GSC',
+      description: 'Tournoi de pickleball du Geneva Sports Club le 15 novembre 2026 au Collège Calvin, Genève : double mixte, hommes, dames et simple. Places limitées.',
+    },
+    en: {
+      title: 'Pickleball Tournament in Geneva — 15 Nov 2026 | GSC',
+      description: 'Geneva Sports Club pickleball tournament on 15 November 2026 at Collège Calvin, Geneva: mixed, men’s, women’s doubles and singles. Limited places.',
+    },
+  },
 };
 
 // Navigation links (visible labels per language)
@@ -133,6 +145,7 @@ export const navLabels: Record<RouteKey, Record<Lang, string>> = {
   contact:     { fr: 'Contact',                       en: 'Contact' },
   legal:       { fr: 'Mentions légales',              en: 'Legal Notice' },
   privacy:     { fr: 'Politique de confidentialité',  en: 'Privacy Policy' },
+  tournament:  { fr: 'Tournoi',                       en: 'Tournament' },
 };
 
 // Common UI strings used across components

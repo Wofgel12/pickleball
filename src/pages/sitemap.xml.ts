@@ -1,12 +1,15 @@
 import type { APIRoute } from 'astro';
 import { routes, type RouteKey } from '../i18n/ui';
 import { facts } from '../i18n/ui';
+import { tournament } from '../i18n/tournament';
 
 const SITE = 'https://gscpickleball.ch';
 
 // Indexable pages only — legal/privacy carry noindex via BaseLayout and are
 // excluded here so they do not consume crawl budget.
 const indexableKeys: RouteKey[] = ['home', 'participate', 'learn', 'gear', 'faq', 'contact'];
+// The tournament landing page joins the sitemap once it is published.
+if (tournament.published) indexableKeys.push('tournament');
 
 export const GET: APIRoute = ({ site }) => {
   const baseUrl = (site?.toString() ?? SITE).replace(/\/$/, '');
