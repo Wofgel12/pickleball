@@ -9,7 +9,7 @@
 //   SUPABASE_SERVICE_ROLE_KEY  service role key (Supabase → Project settings → API)
 // Optional (custom confirmation e-mail; otherwise only Stripe's receipt is sent):
 //   RESEND_API_KEY             re_…
-//   TOURNAMENT_EMAIL_FROM      e.g. "GSC Pickleball <tournoi@genevasportsclub.ch>"
+//   TOURNAMENT_EMAIL_FROM      e.g. "GSC Pickleball <tournoi@gscpickleball.ch>" (domain verified in Resend)
 // Testing only:
 //   TOURNAMENT_FAKE_PAYMENT=true  skips Stripe: orders are confirmed immediately
 //                                 (no Stripe keys needed). Ignored once the page

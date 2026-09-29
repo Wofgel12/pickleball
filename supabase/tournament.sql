@@ -33,6 +33,8 @@ create index if not exists tournament_registrations_session_idx
   on public.tournament_registrations (stripe_session_id);
 
 alter table public.tournament_registrations enable row level security;
+-- Défense en profondeur : aucun droit pour les clés publiques (RLS bloque déjà tout).
+revoke all on public.tournament_registrations from anon, authenticated;
 
 -- Places occupées = inscriptions confirmées + paiements en cours non expirés.
 create or replace function public.tournament_counts(p_tournament text)
