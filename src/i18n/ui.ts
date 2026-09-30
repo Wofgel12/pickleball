@@ -172,6 +172,9 @@ export const facts = {
   phoneSession: '+41788826810',
   phoneSessionDisplay: '+41 78 882 68 10',
   meetupUrl: 'https://www.meetup.com/genevasportsclub/',
+  meetupUrlFr: 'https://www.meetup.com/fr-FR/genevasportsclub/',
+  // Meetup member count (all sports), shown in the hero, FAQ and schema.
+  meetupMembers: 9400,
   // Canonical Google Maps URL for the GBP "Pickleball Geneva Sports Club"
   // (CID derived from place ID 0x478c65a6c4ab4dc7:0x554b55d62ef23749).
   gbpMapUrl: 'https://www.google.com/maps?cid=6146100494876161865',

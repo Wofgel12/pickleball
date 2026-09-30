@@ -83,7 +83,7 @@ export const faqFR = [
   {
     question: "Qu'est-ce que le Geneva Sports Club ?",
     answer:
-      "Le Geneva Sports Club (GSC) est une association multisports basée à Genève qui regroupe plus de 8 000 membres autour d'activités sportives variées. Le pickleball est l'une des activités proposées, aux côtés d'autres sports indoor et outdoor.",
+      "Le Geneva Sports Club (GSC) est une association multisports basée à Genève qui regroupe plus de 9'400 membres autour d'activités sportives variées. Le pickleball est l'une des activités proposées, aux côtés d'autres sports indoor et outdoor.",
   },
 ] as const;
 
@@ -166,7 +166,7 @@ export const faqEN = [
   {
     question: 'What is the Geneva Sports Club?',
     answer:
-      'Geneva Sports Club (GSC) is a multi-sport association based in Geneva that brings together over 8,000 members around a variety of sports. Pickleball is one of the activities offered, alongside other indoor and outdoor sports.',
+      'Geneva Sports Club (GSC) is a multi-sport association based in Geneva that brings together over 9,400 members around a variety of sports. Pickleball is one of the activities offered, alongside other indoor and outdoor sports.',
   },
 ] as const;
 

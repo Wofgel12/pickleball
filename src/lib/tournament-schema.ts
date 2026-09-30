@@ -10,7 +10,7 @@ export function tournamentSchema(site: string, lang: Lang) {
     '@type': 'SportsEvent',
     '@id': site + '/tournoi/#event',
     name: lang === 'fr' ? 'Tournoi de pickleball du Geneva Sports Club 2026' : 'Geneva Sports Club Pickleball Tournament 2026',
-    description: t.about[0].replace('{members}', tournament.meetupMembers),
+    description: t.about[0].replace('{members}', tournament.meetupMembers[lang]).replace(/\[|\]/g, ''),
     sport: 'Pickleball',
     startDate: tournament.startISO,
     endDate: tournament.endISO,

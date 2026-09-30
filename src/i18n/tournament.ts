@@ -44,8 +44,8 @@ export const tournament = {
    */
   holdMinutes: 15,
 
-  /** Meetup member count quoted in the description. */
-  meetupMembers: '9 000',
+  /** Meetup member count quoted in the description (linked to the Meetup page). */
+  meetupMembers: { fr: "10'000", en: '10,000' },
 
   // Capacity counts players (each person registers individually).
   // Morning: men's + women's doubles. Afternoon: mixed doubles + singles.
@@ -167,7 +167,7 @@ export const tournamentCopy = {
     countdownOver: 'Merci à toutes et à tous ! Rendez-vous à la prochaine édition.',
     aboutTitle: 'Une journée de pickleball comme on n’en a jamais vu à Genève',
     about: [
-      'Le Geneva Sports Club, avec ses près de {members} membres sur Meetup, organise le plus grand tournoi de pickleball de Suisse romande. Venez vous amuser et rencontrer des joueuses et des joueurs d’horizons différents qui partagent la même passion que vous. Une journée unique, on vous le promet, avec plein de cadeaux à la clé — et de nouvelles amitiés à tisser.',
+      'Le Geneva Sports Club, avec ses [près de {members} membres sur Meetup], organise le plus grand tournoi de pickleball de Suisse romande. Venez vous amuser et rencontrer des joueuses et des joueurs d’horizons différents qui partagent la même passion que vous. Une journée unique, on vous le promet, avec plein de cadeaux à la clé — et de nouvelles amitiés à tisser.',
       'Inscrivez-vous le plus tôt possible : malgré tous nos efforts, le nombre de places est limité et nous appliquons la règle du premier arrivé, premier servi. Nos membres bénéficient toutefois d’inscriptions en avant-première : c’est quand même à eux qu’on doit cette idée !',
       'Nous espérons que vous êtes prêts à beaucoup jouer, car ce sera LE jour pour ça :)',
     ],
@@ -265,7 +265,7 @@ export const tournamentCopy = {
     countdownOver: 'Thank you all! See you at the next edition.',
     aboutTitle: 'A pickleball day like Geneva has never seen',
     about: [
-      'The Geneva Sports Club, with nearly {members} members on Meetup, is organising the biggest pickleball tournament in French-speaking Switzerland. Come have fun and meet players from all walks of life who share your passion. A unique day, we promise — with plenty of prizes up for grabs, and new friendships to make.',
+      'The Geneva Sports Club, with [nearly {members} members on Meetup], is organising the biggest pickleball tournament in French-speaking Switzerland. Come have fun and meet players from all walks of life who share your passion. A unique day, we promise — with plenty of prizes up for grabs, and new friendships to make.',
       'Register as early as you can: despite all our efforts, places are limited and it’s first come, first served. Our members do get early-bird registration — after all, it was their idea!',
       'We hope you’re ready to play a lot, because this will be THE day for it :)',
     ],

@@ -4,7 +4,7 @@ import BackgroundVideo from './islands/BackgroundVideo.tsx';
 import CounterAnimated from './islands/CounterAnimated.tsx';
 import ReviewsBubbles from './islands/ReviewsBubbles.tsx';
 import { fetchGoogleReviews } from '../lib/google-reviews';
-import { type Lang } from '../i18n/ui';
+import { facts, type Lang } from '../i18n/ui';
 import meetupLogo from '../assets/Meetup_Logo.png';
 
 interface Props {
@@ -13,6 +13,9 @@ interface Props {
 const { lang } = Astro.props;
 
 const fr = lang === 'fr';
+const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
+// Counter locale: de-CH gives the Swiss apostrophe (9'400) used in the French copy;
+// browsers format fr-CH with a space instead.
 
 // Build-time fetch — runs once per Netlify build, returns null if env vars
 // missing (graceful: bubbles just don't render).
@@ -51,11 +54,11 @@ const mapsUri = reviewsData?.mapsUri || 'https://maps.app.goo.gl/xy3RKsiqXPPNkLX
 
     <div class="relative inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-6 text-center">
       <div class="text-4xl font-bold text-white mb-1">
-        + <CounterAnimated client:visible to={8000} /> <a href="https://www.meetup.com/genevasportsclub/members/?op=all" target="_blank" rel="noopener noreferrer" class="underline hover:text-white/80 transition-colors">{fr ? 'membres' : 'members'}</a>
+        {fr ? '+ de ' : '+ '}<CounterAnimated client:visible to={facts.meetupMembers} locale={fr ? 'de-CH' : 'en-GB'} /> <a href={meetupUrl} target="_blank" rel="noopener noreferrer" class="underline hover:text-white/80 transition-colors">{fr ? 'membres' : 'members'}</a>
       </div>
       <div class="text-sm text-white/80">{fr ? 'tout sport confondu' : 'across all sports'}</div>
       <a
-        href="https://www.meetup.com/genevasportsclub/members/?op=all"
+        href={meetupUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="absolute top-2 right-2 transition-transform hover:scale-110"
