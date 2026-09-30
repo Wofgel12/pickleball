@@ -8,7 +8,7 @@ import {
   priceSelection,
   type CategoryId,
 } from '../../i18n/tournament';
-import type { Lang } from '../../i18n/ui';
+import { routes, type Lang } from '../../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -502,6 +502,10 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           {t.secure}
         </p>
         <p className="mt-1 text-center text-xs text-gray-500">{t.holdNotice}</p>
+        <p className="mt-1 text-center text-xs text-gray-500">
+          {t.privacyNotice}{' '}
+          <a href={routes.privacy[lang]} className="underline hover:text-teal-700">{t.privacyLink}</a>
+        </p>
       </form>
     </div>
   );

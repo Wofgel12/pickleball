@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { AlertCircle, CheckCircle } from 'lucide-react';
-import type { Lang } from '../../i18n/ui';
+import { routes, type Lang } from '../../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -93,6 +93,12 @@ export default function ContactForm({ lang, contactEmail }: Props) {
       >
         {labelSubmit}
       </button>
+      <p className="text-xs text-gray-500 text-center">
+        {fr ? 'Vos données servent uniquement à vous répondre. ' : 'Your data is only used to reply to you. '}
+        <a href={routes.privacy[lang]} className="underline hover:text-teal-700">
+          {fr ? 'Politique de confidentialité' : 'Privacy policy'}
+        </a>
+      </p>
       {status === 'success' && (
         <div className="flex items-center gap-2 p-4 bg-green-50 border-2 rounded-lg text-green-800" style={{ borderColor: '#002b2b' }}>
           <CheckCircle size={20} />

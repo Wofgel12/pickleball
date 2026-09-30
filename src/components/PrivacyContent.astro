@@ -1,0 +1,275 @@
+---
+// Privacy policy (FR/EN) for gscpickleball.ch — Swiss Federal Act on Data
+// Protection (nLPD / revFADP). Describes what the site actually does:
+// Netlify hosting, mailto contact form, tournament registration (Supabase,
+// Stripe, Resend, WhatsApp) and embedded third-party content.
+// Update `updated` whenever a processing activity changes.
+import { facts, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+
+const updated = fr ? '30 septembre 2026' : '30 September 2026';
+const link = 'text-teal-700 underline';
+const h2 = 'text-2xl font-semibold mb-3 mt-10 text-gray-900';
+const h3 = 'text-xl font-semibold mb-2 mt-6 text-gray-900';
+
+const processors = [
+  {
+    name: 'Netlify, Inc.',
+    role: fr ? 'Hébergement du site et des fonctions serveur' : 'Website and server function hosting',
+    where: fr ? 'États-Unis (réseau mondial)' : 'United States (global network)',
+    url: 'https://www.netlify.com/privacy/',
+  },
+  {
+    name: 'Supabase, Inc.',
+    role: fr ? 'Base de données des inscriptions au tournoi' : 'Tournament registration database',
+    where: fr ? 'Serveurs dans l’Union européenne (Irlande)' : 'Servers in the European Union (Ireland)',
+    url: 'https://supabase.com/privacy',
+  },
+  {
+    name: 'Stripe',
+    role: fr ? 'Paiement en ligne des inscriptions' : 'Online payment of registrations',
+    where: fr ? 'Irlande et États-Unis' : 'Ireland and United States',
+    url: 'https://stripe.com/ch/privacy',
+  },
+  {
+    name: 'Resend, Inc.',
+    role: fr ? 'Envoi des e-mails de confirmation' : 'Sending confirmation e-mails',
+    where: fr ? 'États-Unis' : 'United States',
+    url: 'https://resend.com/legal/privacy-policy',
+  },
+  {
+    name: 'Infomaniak Network SA',
+    role: fr ? 'Messagerie e-mail de l’association' : 'The association’s e-mail service',
+    where: fr ? 'Suisse' : 'Switzerland',
+    url: 'https://www.infomaniak.com/fr/cgv/politique-de-confidentialite',
+  },
+  {
+    name: 'WhatsApp (Meta)',
+    role: fr ? 'Groupe de discussion des participants au tournoi' : 'Tournament participants’ group chat',
+    where: fr ? 'Irlande et États-Unis' : 'Ireland and United States',
+    url: 'https://www.whatsapp.com/legal/privacy-policy-eea',
+  },
+  {
+    name: 'Google',
+    role: fr ? 'Cartes Google Maps, vidéo YouTube, photos des avis Google' : 'Google Maps, YouTube video, Google review photos',
+    where: fr ? 'Irlande et États-Unis' : 'Ireland and United States',
+    url: 'https://policies.google.com/privacy',
+  },
+  {
+    name: 'LottieFiles',
+    role: fr ? 'Animations affichées sur certaines pages' : 'Animations shown on some pages',
+    where: fr ? 'États-Unis' : 'United States',
+    url: 'https://lottiefiles.com/page/privacy-policy',
+  },
+];
+---
+<p class="text-sm text-gray-500 mb-8">{fr ? `Dernière mise à jour : ${updated}` : `Last updated: ${updated}`}</p>
+
+{fr ? (
+  <p class="mb-6">
+    La protection de vos données nous tient à cœur. Cette politique explique quelles données personnelles nous
+    traitons lorsque vous utilisez le site <strong>gscpickleball.ch</strong>, notamment lorsque vous nous contactez
+    ou vous inscrivez à un tournoi, pourquoi nous les traitons et quels sont vos droits. Elle est établie
+    conformément à la loi fédérale sur la protection des données (LPD, en vigueur depuis le 1<sup>er</sup> septembre 2023)
+    et, lorsqu’il s’applique, au Règlement général sur la protection des données de l’Union européenne (RGPD).
+  </p>
+) : (
+  <p class="mb-6">
+    We care about protecting your data. This policy explains which personal data we process when you use
+    <strong>gscpickleball.ch</strong>, in particular when you contact us or register for a tournament, why we process
+    it and what your rights are. It follows the Swiss Federal Act on Data Protection (FADP, in force since
+    1 September 2023) and, where applicable, the EU General Data Protection Regulation (GDPR).
+  </p>
+)}
+
+<!-- 1. Controller -->
+<h2 class={h2}>{fr ? '1. Qui est responsable de vos données' : '1. Who is responsible for your data'}</h2>
+<p class="mb-2">
+  {fr
+    ? 'Le responsable du traitement est l’association :'
+    : 'The data controller is the association:'}
+</p>
+<address class="not-italic mb-6 pl-4 border-l-4 border-teal-500">
+  <strong>Geneva Sports Club</strong><br />
+  {fr ? facts.location : facts.locationEn}<br />
+  {fr ? 'E-mail' : 'E-mail'} : <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a><br />
+  {fr ? 'Téléphone' : 'Phone'} : <a href={`tel:${facts.phonePrimary}`} class={link}>{facts.phonePrimaryDisplay}</a>
+</address>
+
+<!-- 2. Data & purposes -->
+<h2 class={h2}>{fr ? '2. Quelles données nous traitons et pourquoi' : '2. What data we process and why'}</h2>
+
+<h3 class={h3}>{fr ? '2.1 Visite du site' : '2.1 Visiting the website'}</h3>
+<p class="mb-4">
+  {fr
+    ? 'Lorsque vous consultez le site, notre hébergeur Netlify enregistre automatiquement des données techniques : adresse IP, date et heure, page consultée, navigateur et système d’exploitation. Ces données servent uniquement à faire fonctionner le site, à le sécuriser et à corriger les erreurs.'
+    : 'When you visit the site, our host Netlify automatically records technical data: IP address, date and time, page visited, browser and operating system. This data is used only to run and secure the site and fix errors.'}
+</p>
+<p class="mb-4">
+  <strong>{fr ? 'Pas de statistiques ni de publicité.' : 'No analytics, no advertising.'}</strong>{' '}
+  {fr
+    ? 'Le site n’utilise aucun outil de mesure d’audience, aucun pixel publicitaire et ne dépose lui-même aucun cookie dans votre navigateur.'
+    : 'The site uses no audience-measurement tool, no advertising pixel, and sets no cookies in your browser itself.'}
+</p>
+
+<h3 class={h3}>{fr ? '2.2 Formulaire de contact' : '2.2 Contact form'}</h3>
+<p class="mb-4">
+  {fr
+    ? 'Le formulaire de contact n’envoie rien à notre site : il ouvre votre propre logiciel de messagerie avec un e-mail pré-rempli. Si vous l’envoyez, nous recevons votre nom, votre adresse e-mail et votre message dans la messagerie de l’association (hébergée en Suisse par Infomaniak). Nous les utilisons uniquement pour vous répondre.'
+    : 'The contact form sends nothing to our website: it opens your own e-mail program with a pre-filled message. If you send it, we receive your name, e-mail address and message in the association’s mailbox (hosted in Switzerland by Infomaniak). We use them only to reply to you.'}
+</p>
+
+<h3 class={h3}>{fr ? '2.3 Inscription à un tournoi' : '2.3 Tournament registration'}</h3>
+<p class="mb-2">{fr ? 'Lorsque vous vous inscrivez, nous traitons :' : 'When you register, we process:'}</p>
+<ul class="list-disc pl-6 space-y-1 mb-4">
+  <li>{fr ? 'vos prénom, nom, adresse e-mail et numéro de téléphone mobile ;' : 'your first name, last name, e-mail address and mobile number;'}</li>
+  <li>{fr ? 'le ou les tableaux choisis, le nom de votre partenaire ou votre demande qu’on vous en trouve un·e ;' : 'the draw(s) you chose, your partner’s name or your request that we find you one;'}</li>
+  <li>{fr ? 'votre langue, votre confirmation d’avoir 18 ans ou plus et d’accepter l’absence de remboursement ;' : 'your language, your confirmation that you are 18 or older and accept that registration is non-refundable;'}</li>
+  <li>{fr ? 'le montant payé, le statut du paiement et sa référence Stripe.' : 'the amount paid, the payment status and its Stripe reference.'}</li>
+</ul>
+<p class="mb-4">
+  {fr
+    ? 'Ces données servent à organiser le tournoi (tableaux, équipes, horaires), à confirmer votre inscription par e-mail, à vous contacter au sujet du tournoi et à tenir la comptabilité de l’association. Le traitement est nécessaire à l’exécution de votre inscription.'
+    : 'We use this data to organise the tournament (draws, teams, schedule), confirm your registration by e-mail, contact you about the tournament and keep the association’s accounts. Processing is necessary to carry out your registration.'}
+</p>
+<p class="mb-4">
+  <strong>{fr ? 'Paiement.' : 'Payment.'}</strong>{' '}
+  {fr
+    ? 'Le paiement a lieu sur la page sécurisée de Stripe. Vos données de paiement (carte bancaire, TWINT…) sont saisies directement chez Stripe : nous n’y avons jamais accès.'
+    : 'Payment takes place on Stripe’s secure page. Your payment details (card, TWINT…) are entered directly with Stripe: we never have access to them.'}
+</p>
+<p class="mb-4">
+  <strong>{fr ? 'Votre partenaire.' : 'Your partner.'}</strong>{' '}
+  {fr
+    ? 'Si vous indiquez le nom de votre partenaire, merci de l’en informer. Nous l’utilisons uniquement pour former votre équipe.'
+    : 'If you give your partner’s name, please let them know. We use it only to form your team.'}
+</p>
+
+<h3 class={h3}>{fr ? '2.4 Groupe WhatsApp du tournoi' : '2.4 Tournament WhatsApp group'}</h3>
+<p class="mb-6">
+  {fr
+    ? 'Nous utilisons votre numéro de mobile pour vous ajouter au groupe WhatsApp du tournoi, où nous partageons les horaires et les informations pratiques. Les autres membres du groupe voient votre numéro et votre nom WhatsApp. Vous pouvez quitter le groupe à tout moment ; si vous ne souhaitez pas y être ajouté·e, écrivez-nous. WhatsApp traite ces données selon ses propres conditions. Le groupe est fermé au plus tard trois mois après le tournoi.'
+    : 'We use your mobile number to add you to the tournament WhatsApp group, where we share the schedule and practical information. Other group members see your number and WhatsApp name. You can leave the group at any time; if you don’t want to be added, write to us. WhatsApp processes this data under its own terms. The group is closed no later than three months after the tournament.'}
+</p>
+
+<!-- 3. Third-party content -->
+<h2 class={h2}>{fr ? '3. Contenus de tiers intégrés au site' : '3. Third-party content embedded in the site'}</h2>
+<p class="mb-2">
+  {fr
+    ? 'Certaines pages affichent des contenus fournis par des tiers. Pour les afficher, votre navigateur se connecte à leurs serveurs, qui reçoivent alors votre adresse IP et peuvent déposer leurs propres cookies :'
+    : 'Some pages display content provided by third parties. To show it, your browser connects to their servers, which then receive your IP address and may set their own cookies:'}
+</p>
+<ul class="list-disc pl-6 space-y-1 mb-4">
+  <li>{fr ? 'cartes Google Maps (pages Participer, Contact et Tournoi) ;' : 'Google Maps (Participate, Contact and Tournament pages);'}</li>
+  <li>{fr ? 'vidéo YouTube (page Apprendre) ;' : 'YouTube video (Learn page);'}</li>
+  <li>{fr ? 'photos de profil des avis Google (page d’accueil) ;' : 'profile photos of Google reviews (home page);'}</li>
+  <li>{fr ? 'animations LottieFiles (pages d’accueil et Participer).' : 'LottieFiles animations (home and Participate pages).'}</li>
+</ul>
+<p class="mb-6">
+  {fr
+    ? 'Les liens vers Meetup, nos partenaires ou d’autres sites mènent vers des services dont nous ne sommes pas responsables : leurs propres politiques de confidentialité s’appliquent.'
+    : 'Links to Meetup, our partners or other websites lead to services we are not responsible for: their own privacy policies apply.'}
+</p>
+
+<!-- 4. Processors -->
+<h2 class={h2}>{fr ? '4. Prestataires et communication à l’étranger' : '4. Service providers and transfers abroad'}</h2>
+<p class="mb-4">
+  {fr
+    ? 'Nous ne vendons ni ne louons vos données. Nous les confions uniquement aux prestataires nécessaires au fonctionnement du site et du tournoi :'
+    : 'We never sell or rent your data. We share it only with the providers needed to run the site and the tournament:'}
+</p>
+<div class="overflow-x-auto mb-4">
+  <table class="w-full text-sm border-collapse">
+    <thead>
+      <tr class="text-left border-b-2 border-gray-200">
+        <th class="py-2 pr-4 font-semibold">{fr ? 'Prestataire' : 'Provider'}</th>
+        <th class="py-2 pr-4 font-semibold">{fr ? 'Rôle' : 'Role'}</th>
+        <th class="py-2 font-semibold">{fr ? 'Lieu' : 'Location'}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {processors.map((p) => (
+        <tr class="border-b border-gray-100 align-top">
+          <td class="py-2 pr-4"><a href={p.url} target="_blank" rel="noopener noreferrer" class={link}>{p.name}</a></td>
+          <td class="py-2 pr-4">{p.role}</td>
+          <td class="py-2">{p.where}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<p class="mb-6">
+  {fr
+    ? 'Certains de ces prestataires traitent des données aux États-Unis. Ces transferts reposent sur le Swiss-U.S. Data Privacy Framework lorsque le prestataire y est certifié, ou sur les clauses contractuelles types reconnues par le Préposé fédéral à la protection des données et à la transparence (PFPDT). Les pays de l’Union européenne offrent un niveau de protection adéquat selon le droit suisse.'
+    : 'Some of these providers process data in the United States. Such transfers rely on the Swiss-U.S. Data Privacy Framework where the provider is certified, or on standard contractual clauses recognised by the Federal Data Protection and Information Commissioner (FDPIC). European Union countries offer an adequate level of protection under Swiss law.'}
+</p>
+
+<!-- 5. Retention -->
+<h2 class={h2}>{fr ? '5. Combien de temps nous conservons vos données' : '5. How long we keep your data'}</h2>
+<ul class="list-disc pl-6 space-y-1 mb-6">
+  <li>
+    {fr
+      ? 'Inscriptions au tournoi : jusqu’à la fin du tournoi, puis supprimées au plus tard 12 mois après. Les informations de paiement nécessaires à la comptabilité sont conservées 10 ans, comme l’exige le Code des obligations.'
+      : 'Tournament registrations: until the end of the tournament, then deleted no later than 12 months afterwards. Payment information needed for accounting is kept for 10 years, as required by the Swiss Code of Obligations.'}
+  </li>
+  <li>
+    {fr
+      ? 'Réservations non payées : la place est libérée après 15 minutes ; les données sont supprimées avec les autres inscriptions.'
+      : 'Unpaid bookings: the place is released after 15 minutes; the data is deleted together with the other registrations.'}
+  </li>
+  <li>
+    {fr
+      ? 'Messages reçus par e-mail : le temps de traiter votre demande, au maximum 2 ans.'
+      : 'Messages received by e-mail: as long as needed to handle your request, at most 2 years.'}
+  </li>
+  <li>
+    {fr
+      ? 'Données techniques de visite : selon la durée de conservation de notre hébergeur, limitée à ce qui est nécessaire à la sécurité.'
+      : 'Technical visit data: according to our host’s retention period, limited to what security requires.'}
+  </li>
+</ul>
+
+<!-- 6. Security -->
+<h2 class={h2}>{fr ? '6. Sécurité' : '6. Security'}</h2>
+<p class="mb-6">
+  {fr
+    ? 'Le site est accessible uniquement en HTTPS (connexion chiffrée). Les données des inscriptions sont stockées dans une base de données inaccessible depuis le site public et consultable seulement par les organisateurs. Les paiements sont traités par Stripe, certifié PCI-DSS.'
+    : 'The site is only available over HTTPS (encrypted connection). Registration data is stored in a database that cannot be accessed from the public site and can only be viewed by the organisers. Payments are processed by Stripe, which is PCI-DSS certified.'}
+</p>
+
+<!-- 7. Rights -->
+<h2 class={h2}>{fr ? '7. Vos droits' : '7. Your rights'}</h2>
+<p class="mb-2">{fr ? 'Vous pouvez à tout moment :' : 'You may at any time:'}</p>
+<ul class="list-disc pl-6 space-y-1 mb-4">
+  <li>{fr ? 'savoir quelles données nous avons sur vous et en obtenir une copie ;' : 'find out what data we hold about you and get a copy;'}</li>
+  <li>{fr ? 'faire corriger des données inexactes ;' : 'have inaccurate data corrected;'}</li>
+  <li>{fr ? 'demander leur effacement, sous réserve de nos obligations légales (comptabilité) ;' : 'ask for it to be deleted, subject to our legal obligations (accounting);'}</li>
+  <li>{fr ? 'vous opposer à un traitement ou retirer votre accord ;' : 'object to processing or withdraw your consent;'}</li>
+  <li>{fr ? 'recevoir vos données dans un format courant pour les transmettre à un autre service.' : 'receive your data in a common format to pass it on to another service.'}</li>
+</ul>
+<p class="mb-4">
+  {fr
+    ? <>Écrivez-nous à <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a>. Nous répondons dans un délai de 30 jours et pouvons vous demander de justifier de votre identité.</>
+    : <>Write to us at <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a>. We reply within 30 days and may ask you to prove your identity.</>}
+</p>
+<p class="mb-6">
+  {fr
+    ? <>Si vous estimez que vos données ne sont pas traitées correctement, vous pouvez vous adresser au Préposé fédéral à la protection des données et à la transparence (PFPDT) : <a href="https://www.edoeb.admin.ch" target="_blank" rel="noopener noreferrer" class={link}>www.edoeb.admin.ch</a>.</>
+    : <>If you believe your data is not handled correctly, you can contact the Federal Data Protection and Information Commissioner (FDPIC): <a href="https://www.edoeb.admin.ch" target="_blank" rel="noopener noreferrer" class={link}>www.edoeb.admin.ch</a>.</>}
+</p>
+
+<!-- 8. Misc -->
+<h2 class={h2}>{fr ? '8. Autres informations' : '8. Other information'}</h2>
+<p class="mb-4">
+  {fr
+    ? 'Nous ne prenons aucune décision automatisée à votre sujet et ne faisons pas de profilage. Les tournois sont réservés aux personnes de 18 ans et plus.'
+    : 'We make no automated decisions about you and do no profiling. Tournaments are open to people aged 18 and over only.'}
+</p>
+<p class="mb-2">
+  {fr
+    ? 'Nous pouvons adapter cette politique, par exemple si nous ajoutons un service au site. La date de dernière mise à jour figure en haut de la page.'
+    : 'We may update this policy, for instance if we add a service to the site. The date of the latest update is shown at the top of the page.'}
+</p>
