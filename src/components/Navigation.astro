@@ -11,8 +11,8 @@ const { lang, pageKey } = Astro.props;
 // Top-level menu order. The "Le Pickleball" group is rendered separately
 // because it contains sub-routes (learn + gear).
 const topLevel: RouteKey[] = ['home', 'participate'];
-const trailing: RouteKey[] = ['faq', 'contact'];
-const pickleballChildren: RouteKey[] = ['learn', 'gear'];
+const trailing: RouteKey[] = ['news', 'contact'];
+const pickleballChildren: RouteKey[] = ['learn', 'gear', 'faq'];
 const isPickleballActive = pickleballChildren.includes(pageKey);
 ---
 <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50" aria-label={lang === 'fr' ? 'Navigation principale' : 'Main navigation'}>

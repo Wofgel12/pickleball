@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import NewsContent from '../components/NewsContent.astro';
+import { newsSchema } from '../lib/news-schema';
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://gscpickleball.ch';
+---
+<BaseLayout pageKey="news" lang="fr" jsonLd={newsSchema(SITE, 'fr')}>
+  <div class="bg-tile">
+    <PageHero lang="fr" title="Actualités du pickleball au Geneva Sports Club" lead="Tournois, événements et nouveautés de nos sessions de pickleball à Genève." />
+    <section class="py-12 px-4">
+      <div class="max-w-4xl mx-auto">
+        <NewsContent lang="fr" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

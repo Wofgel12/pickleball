@@ -8,15 +8,18 @@ const { lang } = Astro.props;
 const items: readonly FaqEntry[] = lang === 'fr' ? faqFR : faqEN;
 const fr = lang === 'fr';
 ---
-<div class="space-y-12">
+<div class="space-y-6">
   <p class="text-lg leading-relaxed text-gray-700 bg-white/95 p-6 rounded-2xl border-2" style="border-color:#002b2b">
     {fr
       ? "Toutes les réponses aux questions fréquentes sur le pickleball à Genève : tarifs, horaires, niveaux, équipement, comparaison avec le padel, sessions pour seniors et plus encore. Si une question manque, écrivez-nous à hello@genevasportsclub.ch."
       : 'All the answers to frequent questions about pickleball in Geneva: prices, schedule, levels, gear, comparison with padel, senior-friendly sessions and more. If a question is missing, write to us at hello@genevasportsclub.ch.'}
   </p>
 
-  <!-- Interactive accordion (hydrated) -->
-  <FaqAccordion client:visible items={items as any} defaultOpen={0} />
+  <!-- Interactive accordion (hydrated). Wrapped because <astro-island> is
+       display:contents and would not receive the space-y margin. -->
+  <div>
+    <FaqAccordion client:visible items={items as any} defaultOpen={0} />
+  </div>
 
   <!-- Server-rendered fallback (always in DOM, even without JS) -->
   <noscript>

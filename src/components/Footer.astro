@@ -8,7 +8,7 @@ interface Props {
 const { lang, lastReviewedDisplay } = Astro.props;
 const year = new Date().getFullYear();
 
-const sectionLinks = (['participate', 'learn', 'gear', 'faq', 'contact'] as const).map((key) => ({
+const sectionLinks = (['participate', 'learn', 'gear', 'faq', 'news', 'contact'] as const).map((key) => ({
   href: routes[key][lang],
   label: navLabels[key][lang],
 }));

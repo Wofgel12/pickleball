@@ -7,7 +7,7 @@ const SITE = 'https://gscpickleball.ch';
 
 // Indexable pages only — legal/privacy carry noindex via BaseLayout and are
 // excluded here so they do not consume crawl budget.
-const indexableKeys: RouteKey[] = ['home', 'participate', 'learn', 'gear', 'faq', 'contact'];
+const indexableKeys: RouteKey[] = ['home', 'participate', 'learn', 'gear', 'faq', 'news', 'contact'];
 // The tournament landing page joins the sitemap once it is published.
 if (tournament.published) indexableKeys.push('tournament');
 

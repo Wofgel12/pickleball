@@ -13,6 +13,7 @@ export const routes = {
   learn: { fr: '/apprendre/', en: '/en/learn/' },
   gear: { fr: '/equipement/', en: '/en/gear/' },
   faq: { fr: '/faq/', en: '/en/faq/' },
+  news: { fr: '/actualites/', en: '/en/news/' },
   contact: { fr: '/contact/', en: '/en/contact/' },
   legal: { fr: '/mentions-legales/', en: '/en/legal-notice/' },
   privacy: { fr: '/politique-confidentialite/', en: '/en/privacy-policy/' },
@@ -93,6 +94,16 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
       description: 'Pickleball Geneva FAQ: prices, levels, indoor play, padel vs pickleball, seniors, kids, Swiss tournaments, school holidays. Everything you need to know.',
     },
   },
+  news: {
+    fr: {
+      title: 'Actualités Pickleball Genève — Geneva Sports Club',
+      description: 'Les dernières nouvelles du pickleball au Geneva Sports Club : tournois, événements, nouveautés des sessions à Genève et vie du club.',
+    },
+    en: {
+      title: 'Pickleball Geneva News — Geneva Sports Club',
+      description: 'The latest pickleball news from the Geneva Sports Club: tournaments, events, session updates in Geneva and club life.',
+    },
+  },
   contact: {
     fr: {
       title: 'Contact Pickleball Genève — Geneva Sports Club',
@@ -142,6 +153,7 @@ export const navLabels: Record<RouteKey, Record<Lang, string>> = {
   learn:       { fr: 'Apprendre',                     en: 'Learn' },
   gear:        { fr: 'Équipement',                    en: 'Gear' },
   faq:         { fr: 'FAQ',                           en: 'FAQ' },
+  news:        { fr: 'Actualités',                    en: 'News' },
   contact:     { fr: 'Contact',                       en: 'Contact' },
   legal:       { fr: 'Mentions légales',              en: 'Legal Notice' },
   privacy:     { fr: 'Politique de confidentialité',  en: 'Privacy Policy' },

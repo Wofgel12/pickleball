@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import NewsContent from '../../components/NewsContent.astro';
+import { newsSchema } from '../../lib/news-schema';
+
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://gscpickleball.ch';
+---
+<BaseLayout pageKey="news" lang="en" jsonLd={newsSchema(SITE, 'en')}>
+  <div class="bg-tile">
+    <PageHero lang="en" title="Pickleball news from the Geneva Sports Club" lead="Tournaments, events and updates from our pickleball sessions in Geneva." />
+    <section class="py-12 px-4">
+      <div class="max-w-4xl mx-auto">
+        <NewsContent lang="en" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>
