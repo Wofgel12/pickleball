@@ -1,0 +1,57 @@
+---
+// Google Maps embed loaded on click only: until the visitor asks for the map,
+// the browser never contacts Google, so no third-party cookie can be set.
+// (See the privacy policy, section "Contenus de tiers".)
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Google Maps embed URL (iframe src). */
+  src: string;
+  /** Accessible title of the map. */
+  title: string;
+  /** Link opened in a new tab for people who prefer Google Maps directly. */
+  mapsLink: string;
+  /** Height / sizing classes for both the placeholder and the map. */
+  class?: string;
+}
+const { lang, src, title, mapsLink, class: className = 'h-[300px]' } = Astro.props;
+const fr = lang === 'fr';
+---
+<div data-map-embed data-src={src} data-title={title} class:list={['relative w-full bg-teal-50', className]}>
+  <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
+    <span class="w-12 h-12 rounded-full bg-teal-500 text-white flex items-center justify-center" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    </span>
+    <button
+      type="button"
+      data-map-load
+      class="btn-press rounded-xl bg-[#002b2b] hover:bg-[#003d3d] text-white font-semibold px-5 py-2.5"
+    >
+      {fr ? 'Afficher la carte' : 'Show the map'}
+    </button>
+    <p class="text-xs text-gray-600 max-w-xs">
+      {fr
+        ? 'La carte est fournie par Google, qui peut déposer des cookies une fois affichée.'
+        : 'The map is provided by Google, which may set cookies once it is displayed.'}
+      {' '}
+      <a href={mapsLink} target="_blank" rel="noopener noreferrer" class="underline text-teal-700 hover:text-teal-900">
+        {fr ? 'Ouvrir dans Google Maps ↗' : 'Open in Google Maps ↗'}
+      </a>
+    </p>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-map-embed]').forEach((wrapper) => {
+    wrapper.querySelector('[data-map-load]')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = wrapper.dataset.src ?? '';
+      iframe.title = wrapper.dataset.title ?? '';
+      iframe.className = 'absolute inset-0 w-full h-full border-0';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.allowFullscreen = true;
+      wrapper.replaceChildren(iframe);
+    });
+  });
+</script>

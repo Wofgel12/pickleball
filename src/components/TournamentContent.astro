@@ -1,6 +1,7 @@
 ---
 import Countdown from './islands/Countdown.tsx';
 import TournamentRegistration from './islands/TournamentRegistration.tsx';
+import MapEmbed from './MapEmbed.astro';
 import { tournament, tournamentCopy } from '../i18n/tournament';
 import { facts, routes, type Lang } from '../i18n/ui';
 import fluffyLogo from '../assets/partners/fluffypuffy.webp';
@@ -180,14 +181,13 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       </dl>
     </div>
     <div class="flex flex-col overflow-hidden rounded-2xl border-2 border-[#002b2b] bg-white/95">
-      <iframe
+      <MapEmbed
+        lang={lang}
         src={tournament.mapsEmbedUrl + (fr ? 'fr' : 'en')}
+        mapsLink={tournament.mapsUrl}
+        class="flex-1 min-h-[300px]"
         title={fr ? `Carte : ${tournament.venueName}, Genève` : `Map: ${tournament.venueName}, Geneva`}
-        class="w-full flex-1 min-h-[300px] border-0 block"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        allowfullscreen
-      ></iframe>
+      />
       <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t-2 border-[#002b2b]">
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-teal-700">{fr ? 'Lieu' : 'Venue'}</p>

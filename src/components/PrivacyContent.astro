@@ -93,8 +93,7 @@ const processors = [
     : 'The data controller is the association:'}
 </p>
 <address class="not-italic mb-6 pl-4 border-l-4 border-teal-500">
-  <strong>Geneva Sports Club</strong><br />
-  {fr ? facts.location : facts.locationEn}<br />
+  <strong>Geneva Sports Club</strong>, {fr ? 'association à Genève' : 'association in Geneva'}<br />
   {fr ? 'E-mail' : 'E-mail'} : <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a><br />
   {fr ? 'Téléphone' : 'Phone'} : <a href={`tel:${facts.phonePrimary}`} class={link}>{facts.phonePrimaryDisplay}</a>
 </address>
@@ -111,8 +110,8 @@ const processors = [
 <p class="mb-4">
   <strong>{fr ? 'Pas de statistiques ni de publicité.' : 'No analytics, no advertising.'}</strong>{' '}
   {fr
-    ? 'Le site n’utilise aucun outil de mesure d’audience, aucun pixel publicitaire et ne dépose lui-même aucun cookie dans votre navigateur.'
-    : 'The site uses no audience-measurement tool, no advertising pixel, and sets no cookies in your browser itself.'}
+    ? 'Le site n’utilise aucun outil de mesure d’audience ni aucun pixel publicitaire. Il ne dépose aucun cookie et n’enregistre rien dans votre navigateur (ni cookie, ni stockage local). Aucun bandeau de consentement n’est donc nécessaire.'
+    : 'The site uses no audience-measurement tool and no advertising pixel. It sets no cookies and stores nothing in your browser (no cookies, no local storage). No consent banner is therefore needed.'}
 </p>
 
 <h3 class={h3}>{fr ? '2.2 Formulaire de contact' : '2.2 Contact form'}</h3>
@@ -138,8 +137,8 @@ const processors = [
 <p class="mb-4">
   <strong>{fr ? 'Paiement.' : 'Payment.'}</strong>{' '}
   {fr
-    ? 'Le paiement a lieu sur la page sécurisée de Stripe. Vos données de paiement (carte bancaire, TWINT…) sont saisies directement chez Stripe : nous n’y avons jamais accès.'
-    : 'Payment takes place on Stripe’s secure page. Your payment details (card, TWINT…) are entered directly with Stripe: we never have access to them.'}
+    ? 'Le paiement a lieu sur la page sécurisée de Stripe, en dehors de notre site. Vos données de paiement (carte bancaire, TWINT…) sont saisies directement chez Stripe : nous n’y avons jamais accès. Stripe utilise sur sa propre page des cookies nécessaires à la sécurité du paiement et à la prévention de la fraude.'
+    : 'Payment takes place on Stripe’s secure page, outside our site. Your payment details (card, TWINT…) are entered directly with Stripe: we never have access to them. On its own page, Stripe uses cookies needed for payment security and fraud prevention.'}
 </p>
 <p class="mb-4">
   <strong>{fr ? 'Votre partenaire.' : 'Your partner.'}</strong>{' '}
@@ -159,14 +158,28 @@ const processors = [
 <h2 class={h2}>{fr ? '3. Contenus de tiers intégrés au site' : '3. Third-party content embedded in the site'}</h2>
 <p class="mb-2">
   {fr
-    ? 'Certaines pages affichent des contenus fournis par des tiers. Pour les afficher, votre navigateur se connecte à leurs serveurs, qui reçoivent alors votre adresse IP et peuvent déposer leurs propres cookies :'
-    : 'Some pages display content provided by third parties. To show it, your browser connects to their servers, which then receive your IP address and may set their own cookies:'}
+    ? 'Certaines pages affichent des contenus fournis par des tiers. Nous les avons configurés pour qu’aucun cookie ne soit déposé sans action de votre part :'
+    : 'Some pages display content provided by third parties. We have set them up so that no cookie is set without you taking action:'}
 </p>
-<ul class="list-disc pl-6 space-y-1 mb-4">
-  <li>{fr ? 'cartes Google Maps (pages Participer, Contact et Tournoi) ;' : 'Google Maps (Participate, Contact and Tournament pages);'}</li>
-  <li>{fr ? 'vidéo YouTube (page Apprendre) ;' : 'YouTube video (Learn page);'}</li>
-  <li>{fr ? 'photos de profil des avis Google (page d’accueil) ;' : 'profile photos of Google reviews (home page);'}</li>
-  <li>{fr ? 'animations LottieFiles (pages d’accueil et Participer).' : 'LottieFiles animations (home and Participate pages).'}</li>
+<ul class="list-disc pl-6 space-y-2 mb-4">
+  <li>
+    <strong>Google Maps</strong>{' '}
+    {fr
+      ? '(pages Participer, Contact et Tournoi) : la carte ne se charge que si vous cliquez sur « Afficher la carte ». Avant ce clic, votre navigateur ne contacte pas Google. Une fois la carte affichée, Google peut déposer des cookies.'
+      : '(Participate, Contact and Tournament pages): the map only loads if you click “Show the map”. Before that, your browser does not contact Google. Once the map is displayed, Google may set cookies.'}
+  </li>
+  <li>
+    <strong>YouTube</strong>{' '}
+    {fr
+      ? '(page Apprendre) : la vidéo est intégrée en mode « confidentialité renforcée » (youtube-nocookie.com), qui ne dépose pas de cookie à l’affichage de la page. Si vous lancez la vidéo, YouTube peut enregistrer des données.'
+      : '(Learn page): the video is embedded in “privacy-enhanced mode” (youtube-nocookie.com), which sets no cookie when the page is displayed. If you play the video, YouTube may store data.'}
+  </li>
+  <li>
+    <strong>{fr ? 'Photos des avis Google et animations LottieFiles' : 'Google review photos and LottieFiles animations'}</strong>{' '}
+    {fr
+      ? '(pages d’accueil et Participer) : ces images et animations sont chargées depuis les serveurs de Google et de LottieFiles, qui reçoivent votre adresse IP, mais ne déposent pas de cookie.'
+      : '(home and Participate pages): these images and animations are loaded from Google’s and LottieFiles’ servers, which receive your IP address but set no cookies.'}
+  </li>
 </ul>
 <p class="mb-6">
   {fr

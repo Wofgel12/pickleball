@@ -1,6 +1,7 @@
 ---
 import LottiePlayer from './islands/LottiePlayer.tsx';
 import KeyFacts from './KeyFacts.astro';
+import MapEmbed from './MapEmbed.astro';
 import { facts, type Lang } from '../i18n/ui';
 
 interface Props { lang: Lang; }
@@ -138,16 +139,13 @@ const steps = fr
         ? 'Le lieu des sessions est l\'École de Cité-Jonction à Genève (1205).'
         : 'Sessions take place at École de Cité-Jonction in Geneva (1205).'}
     </p>
-    <iframe
+    <MapEmbed
+      lang={lang}
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d972.9041837863234!2d6.1314766!3d46.199053!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478c65a6c4ab4dc7%3A0x554b55d62ef23749!2sPickleball%20Geneva%20Sports%20Club!5e0!3m2!1sfr!2sch!4v1773674166278!5m2!1sfr!2sch"
-      width="100%"
-      height="320"
-      style="border:0;display:block"
-      allowfullscreen
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
+      mapsLink={facts.gbpMapUrl}
+      class="h-[320px]"
       title={fr ? 'Carte Pickleball Geneva Sports Club — La Jonction, Genève' : 'Pickleball Geneva Sports Club map — La Jonction, Geneva'}
-    ></iframe>
+    />
   </article>
 
   <!-- Key facts at the bottom of the page -->
