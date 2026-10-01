@@ -1,0 +1,20 @@
+---
+// Renders copy written with the markup of src/lib/rich-text.ts.
+import { parseRichText } from '../lib/rich-text';
+
+interface Props {
+  text: string;
+  /** Target of the "[…]" link, if the text contains one. */
+  href?: string;
+}
+const { text, href } = Astro.props;
+const segments = parseRichText(text);
+---
+{segments.map((s) => {
+  const content = s.bold ? <strong class="font-bold">{s.text}</strong> : s.text;
+  return s.link && href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" class="font-semibold text-teal-700 underline hover:text-teal-900">{content}</a>
+  ) : (
+    content
+  );
+})}

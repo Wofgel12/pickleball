@@ -11,7 +11,7 @@ export interface NewsItem {
   /** Publication date (YYYY-MM-DD). */
   date: string;
   title: Record<Lang, string>;
-  /** One string per paragraph. */
+  /** One string per paragraph. **text** = bold (see src/lib/rich-text.ts). */
   body: Record<Lang, string[]>;
   /** Optional call-to-action button. */
   cta?: { label: Record<Lang, string>; href: Record<Lang, string> };

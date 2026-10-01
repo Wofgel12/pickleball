@@ -1,5 +1,6 @@
 import { visibleNews } from '../i18n/news';
 import { routes, type Lang } from '../i18n/ui';
+import { plainText } from './rich-text';
 
 /** NewsArticle JSON-LD for every visible news item on the News page. */
 export function newsSchema(site: string, lang: Lang) {
@@ -10,7 +11,7 @@ export function newsSchema(site: string, lang: Lang) {
     '@id': `${pageUrl}#${item.id}`,
     url: `${pageUrl}#${item.id}`,
     headline: item.title[lang],
-    articleBody: item.body[lang].join('\n\n'),
+    articleBody: item.body[lang].map(plainText).join('\n\n'),
     datePublished: item.date,
     inLanguage: lang === 'fr' ? 'fr-CH' : 'en',
     image: site + '/og-pickleball-geneve.jpg',

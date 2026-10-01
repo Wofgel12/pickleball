@@ -166,6 +166,7 @@ export const tournamentCopy = {
     countdownToday: 'C’est aujourd’hui ! Rendez-vous au Collège Calvin.',
     countdownOver: 'Merci à toutes et à tous ! Rendez-vous à la prochaine édition.',
     aboutTitle: 'Une journée de pickleball comme on n’en a jamais vu à Genève',
+    // Mise en forme : **texte en gras**, [texte du lien vers Meetup].
     about: [
       'Le Geneva Sports Club, avec ses [près de {members} membres sur Meetup], organise le plus grand tournoi de pickleball de Suisse romande. Venez vous amuser et rencontrer des joueuses et des joueurs d’horizons différents qui partagent la même passion que vous. Une journée unique, on vous le promet, avec plein de cadeaux à la clé — et de nouvelles amitiés à tisser.',
       'Inscrivez-vous le plus tôt possible : malgré tous nos efforts, le nombre de places est limité et nous appliquons la règle du premier arrivé, premier servi. Nos membres bénéficient toutefois d’inscriptions en avant-première : c’est quand même à eux qu’on doit cette idée !',

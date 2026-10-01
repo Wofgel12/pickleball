@@ -2,6 +2,7 @@
 import Countdown from './islands/Countdown.tsx';
 import TournamentRegistration from './islands/TournamentRegistration.tsx';
 import MapEmbed from './MapEmbed.astro';
+import RichText from './RichText.astro';
 import { tournament, tournamentCopy } from '../i18n/tournament';
 import { facts, routes, type Lang } from '../i18n/ui';
 import fluffyLogo from '../assets/partners/fluffypuffy.webp';
@@ -19,11 +20,8 @@ const fr = lang === 'fr';
 
 // Rendered server-side so crawlers and no-JS visitors still see the countdown.
 const initialDays = Math.max(0, Math.ceil((new Date(tournament.startISO).getTime() - Date.now()) / 86_400_000));
-// "[…]" in the copy marks the text linked to the Meetup page.
-const about = t.about.map((p) => {
-  const [before, linked = '', after = ''] = p.replace('{members}', tournament.meetupMembers[lang]).split(/\[|\]/);
-  return { before, linked, after };
-});
+// Copy markup (see src/lib/rich-text.ts): **bold**, [link to the Meetup page].
+const about = t.about.map((p) => p.replace('{members}', tournament.meetupMembers[lang]));
 const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
 ---
 <!-- ============ HERO ============ -->
@@ -102,9 +100,7 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-5 text-balance">{t.aboutTitle}</h2>
       {about.map((p, i) => (
         <p class:list={['text-gray-800 text-lg mb-4 last:mb-0', i === about.length - 1 && 'font-semibold text-teal-800']}>
-          {p.before}{p.linked && (
-            <a href={meetupUrl} target="_blank" rel="noopener noreferrer" class="font-semibold text-teal-700 underline hover:text-teal-900">{p.linked}</a>
-          )}{p.after}
+          <RichText text={p} href={meetupUrl} />
         </p>
       ))}
     </div>
