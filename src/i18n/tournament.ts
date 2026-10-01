@@ -168,13 +168,13 @@ export const tournamentCopy = {
     aboutTitle: 'Une journée de pickleball comme on n’en a jamais vu à Genève',
     // Mise en forme : **texte en gras**, [texte du lien vers Meetup].
     about: [
-      'Le Geneva Sports Club, avec ses [près de {members} membres sur Meetup], organise le plus grand tournoi de pickleball de Suisse romande. Venez vous amuser et rencontrer des joueuses et des joueurs d’horizons différents qui partagent la même passion que vous. Une journée unique, on vous le promet, avec plein de cadeaux à la clé — et de nouvelles amitiés à tisser.',
+      'Le Geneva Sports Club, avec ses [près de {members} membres sur Meetup], organise le plus grand tournoi de pickleball de Suisse romande. Il est oouvert à **tous les niveaux !** Venez vous amuser et rencontrer des joueuses et des joueurs d’horizons différents qui partagent la même passion que vous. Une journée unique, on vous le promet, avec plein de cadeaux à la clé — et de nouvelles amitiés à tisser.',
       'Inscrivez-vous le plus tôt possible : malgré tous nos efforts, le nombre de places est limité et nous appliquons la règle du premier arrivé, premier servi. Nos membres bénéficient toutefois d’inscriptions en avant-première : c’est quand même à eux qu’on doit cette idée !',
       'Nous espérons que vous êtes prêts à beaucoup jouer, car ce sera LE jour pour ça :)',
     ],
     highlights: [
       { title: '4 tableaux', text: 'Doubles hommes et dames le matin, double mixte et simple l’après-midi.' },
-      { title: 'Des cadeaux', text: 'On garde la surprise… mais il y en aura plein.' },
+      { title: 'Des cadeaux', text: 'On garde la surprise… mais il y en aura plein. Et pour tout le monde.' },
       { title: 'Toute la journée', text: 'De 9h à 18h, pour jouer, encore et encore.' },
     ],
     categoriesTitle: 'Choisissez votre ou vos tableaux',
@@ -276,7 +276,7 @@ export const tournamentCopy = {
     ],
     highlights: [
       { title: '4 draws', text: 'Men’s and women’s doubles in the morning, mixed doubles and singles in the afternoon.' },
-      { title: 'Prizes', text: 'We’re keeping it a surprise… but there will be plenty.' },
+      { title: 'Prizes', text: 'We’re keeping it a surprise… but there will be plenty. And for everyone.' },
       { title: 'All day long', text: 'From 9am to 6pm — play, and play again.' },
     ],
     categoriesTitle: 'Choose your draw(s)',
