@@ -55,6 +55,7 @@ export const POST: APIRoute = async ({ request, url }) => {
     email: clean(body.email, 200).toLowerCase(),
     phone: clean(body.phone, 40) || null,
     lang: body.lang === 'en' ? 'en' : 'fr',
+    needsPaddle: body.needsPaddle === true,
   };
 
   if (
@@ -65,7 +66,8 @@ export const POST: APIRoute = async ({ request, url }) => {
     !isValidPhone(input.phone) ||
     draws.some((d) => d.category.double && !d.findPartner && !d.partnerName) ||
     body.age !== true ||
-    body.noRefund !== true
+    body.noRefund !== true ||
+    typeof body.needsPaddle !== 'boolean'
   ) {
     return json({ error: 'invalid' }, 400);
   }

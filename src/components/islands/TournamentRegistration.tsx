@@ -17,7 +17,7 @@ interface Props {
 
 type Remaining = Partial<Record<CategoryId, number>>;
 type Partner = { name: string; find: boolean };
-type ErrorKey = 'category' | 'firstName' | 'lastName' | 'email' | 'phone' | 'age' | 'noRefund' | `partner-${CategoryId}`;
+type ErrorKey = 'category' | 'firstName' | 'lastName' | 'email' | 'phone' | 'paddle' | 'age' | 'noRefund' | `partner-${CategoryId}`;
 type Errors = Partial<Record<ErrorKey, string>>;
 
 const POLL_MS = 20_000;
@@ -32,6 +32,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '' });
   const [age, setAge] = useState(false);
   const [noRefund, setNoRefund] = useState(false);
+  const [needsPaddle, setNeedsPaddle] = useState<boolean | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -134,6 +135,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
       if (!p.find && !p.name.trim()) e[`partner-${d.id}`] = t.errors.partner;
     }
     if (!age) e.age = t.errors.checkbox;
+    if (needsPaddle === null) e.paddle = t.errors.choice;
     if (!noRefund) e.noRefund = t.errors.checkbox;
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -157,6 +159,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           ...form,
           age,
           noRefund,
+          needsPaddle,
           lang,
         }),
       });
@@ -437,6 +440,37 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
             </fieldset>
           );
         })}
+
+        <fieldset className="mb-6">
+          <legend className="block text-sm font-semibold text-gray-800 mb-2">{t.fields.paddle}</legend>
+          <div className="flex flex-col sm:flex-row gap-3">
+            {[
+              { value: true, label: t.fields.paddleYes },
+              { value: false, label: t.fields.paddleNo },
+            ].map((opt) => (
+              <label
+                key={String(opt.value)}
+                className={
+                  'flex-1 flex items-center gap-2 cursor-pointer rounded-xl border-2 px-4 py-3 bg-white ' +
+                  (needsPaddle === opt.value ? 'border-teal-500' : errors.paddle ? 'border-red-400' : 'border-gray-200')
+                }
+              >
+                <input
+                  type="radio"
+                  name="needs-paddle"
+                  checked={needsPaddle === opt.value}
+                  onChange={() => {
+                    setNeedsPaddle(opt.value);
+                    setErrors((er) => ({ ...er, paddle: undefined }));
+                  }}
+                  className="accent-teal-600"
+                />
+                <span className="font-medium text-gray-900">{opt.label}</span>
+              </label>
+            ))}
+          </div>
+          {errors.paddle && <p className="mt-1 text-sm text-red-600">{errors.paddle}</p>}
+        </fieldset>
 
         {price && (
           <div className="mb-6 rounded-xl border-2 border-gray-200 px-5 py-4">

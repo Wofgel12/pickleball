@@ -13,6 +13,7 @@ create table if not exists public.tournament_registrations (
   phone           text,
   partner_name    text,                          -- null si simple ou "trouvez-moi un partenaire"
   find_partner    boolean not null default false,
+  needs_paddle    boolean not null default false, -- raquette de prêt demandée
   lang            text not null default 'fr',
   status          text not null default 'pending'
                   check (status in ('pending', 'confirmed', 'expired', 'cancelled')),
@@ -57,9 +58,12 @@ $$;
 -- si un seul des tableaux est complet, rien n'est réservé. Verrous pris dans
 -- l'ordre alphabétique des tableaux pour éviter les interblocages.
 -- p_items : [{"category","capacity","amount_cents","partner_name","find_partner"}]
+-- p_needs_paddle a une valeur par défaut : les anciens appels restent valides.
+drop function if exists public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text);
 create or replace function public.tournament_reserve_order(
   p_tournament text, p_items jsonb, p_hold_minutes integer,
-  p_first_name text, p_last_name text, p_email text, p_phone text, p_lang text
+  p_first_name text, p_last_name text, p_email text, p_phone text, p_lang text,
+  p_needs_paddle boolean default false
 ) returns uuid
 language plpgsql security definer set search_path = public as $$
 declare
@@ -84,11 +88,12 @@ begin
 
   insert into tournament_registrations (
     order_id, tournament, category, first_name, last_name, email, phone,
-    partner_name, find_partner, lang, amount_cents, hold_expires_at
+    partner_name, find_partner, lang, amount_cents, hold_expires_at, needs_paddle
   )
   select v_order, p_tournament, value->>'category', p_first_name, p_last_name, p_email, p_phone,
          nullif(value->>'partner_name', ''), coalesce((value->>'find_partner')::boolean, false),
-         p_lang, (value->>'amount_cents')::int, now() + make_interval(mins => p_hold_minutes)
+         p_lang, (value->>'amount_cents')::int, now() + make_interval(mins => p_hold_minutes),
+         coalesce(p_needs_paddle, false)
   from jsonb_array_elements(p_items);
 
   return v_order;
@@ -97,9 +102,9 @@ $$;
 
 -- Fonctions réservées au serveur (clé service role), pas au public.
 revoke all on function public.tournament_counts(text) from public, anon, authenticated;
-revoke all on function public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text) from public, anon, authenticated;
+revoke all on function public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text, boolean) from public, anon, authenticated;
 grant execute on function public.tournament_counts(text) to service_role;
-grant execute on function public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text) to service_role;
+grant execute on function public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text, boolean) to service_role;
 
 -- Liste des participants (inscriptions payées uniquement), lisible dans
 -- Supabase → Table Editor → tournoi_participants, exportable en CSV.
@@ -125,6 +130,7 @@ select
     when r.find_partner then 'À TROUVER'
     else r.partner_name
   end                                             as partenaire,
+  case when r.needs_paddle then 'Oui' else 'Non' end as raquette_pret,
   coalesce((
     select string_agg(case o.category
              when 'men' then 'Double hommes' when 'women' then 'Double dames'

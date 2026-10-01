@@ -102,6 +102,7 @@ export interface OrderInput {
   email: string;
   phone: string | null;
   lang: Lang;
+  needsPaddle: boolean;
 }
 
 /**
@@ -128,6 +129,7 @@ export async function reserveOrder(input: OrderInput, perDrawCents: number[]): P
       p_email: input.email,
       p_phone: input.phone,
       p_lang: input.lang,
+      p_needs_paddle: input.needsPaddle,
     }),
   });
   if (!res.ok) throw new Error(`tournament_reserve_order ${res.status}: ${await res.text()}`);
@@ -144,6 +146,7 @@ export interface RegistrationRow {
   phone: string | null;
   partner_name: string | null;
   find_partner: boolean;
+  needs_paddle: boolean;
   lang: Lang;
   status: string;
   amount_cents: number;
@@ -331,6 +334,9 @@ export async function sendConfirmationEmail(order: RegistrationRow[]): Promise<b
           : `${fr ? 'Partenaire' : 'Partner'} : ${row.partner_name ?? ''}`,
       ],
     ]),
+    [fr ? 'Raquette de prêt' : 'Loan paddle', reg.needs_paddle
+      ? (fr ? 'Oui, une raquette vous sera prêtée sur place' : 'Yes, a paddle will be lent to you on site')
+      : (fr ? 'Non, vous venez avec la vôtre' : 'No, you’re bringing your own')],
     ['Date', t.dateLong],
     [fr ? 'Horaires' : 'Hours', fr ? 'De 9h à 18h (horaires précis de votre tableau communiqués ultérieurement)' : '9am to 6pm (exact times for your draw will be announced later)'],
     [fr ? 'Lieu' : 'Venue', `${tournament.venueName}, ${fr ? 'Genève' : 'Geneva'}`],
