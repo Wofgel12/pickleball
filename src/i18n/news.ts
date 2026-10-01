@@ -31,11 +31,11 @@ export const news: NewsItem[] = [
     body: {
       fr: [
         'Le Geneva Sports Club organise son premier grand tournoi de pickleball, le dimanche 15 novembre 2026 de 9h à 18h au Collège Calvin, à Genève.',
-        'Au programme : doubles hommes et dames le matin, double mixte et simple l’après-midi. Les places sont limitées dans chaque tableau et attribuées selon la règle du premier arrivé, premier servi.',
+        'Au programme : doubles hommes et dames le matin, double mixte l’après-midi. Les places sont limitées dans chaque tableau et attribuées selon la règle du premier arrivé, premier servi.',
       ],
       en: [
         'The Geneva Sports Club is organising its first big pickleball tournament on Sunday 15 November 2026, from 9am to 6pm at Collège Calvin, Geneva.',
-        'On the programme: men’s and women’s doubles in the morning, mixed doubles and singles in the afternoon. Places are limited in every draw and allocated on a first come, first served basis.',
+        'On the programme: men’s and women’s doubles in the morning, mixed doubles in the afternoon. Places are limited in every draw and allocated on a first come, first served basis.',
       ],
     },
     cta: {

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { json, promoPercent } from '../../../lib/tournament-server';
+import { json, validPromoCode } from '../../../lib/tournament-server';
 
 export const prerender = false;
 
@@ -14,8 +14,6 @@ export const POST: APIRoute = async ({ request }) => {
   } catch {
     return json({ valid: false }, 400);
   }
-  const percent = promoPercent(code);
-  return percent === null
-    ? json({ valid: false })
-    : json({ valid: true, code: String(code).trim().toUpperCase(), percent });
+  const valid = validPromoCode(code);
+  return valid ? json({ valid: true, code: valid }) : json({ valid: false });
 };

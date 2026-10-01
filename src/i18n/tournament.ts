@@ -5,14 +5,16 @@
 import type { Lang } from './ui';
 
 // Prices in CHF cents — single source for the page copy, the API and Stripe.
-const PRICE_DOUBLES_CENTS = 2000;
-const PRICE_SINGLES_CENTS = 1500;
-/** Discounted price for men's or women's doubles + mixed doubles. */
-const PRICE_DOUBLES_MIXED_COMBO_CENTS = 3000;
+const PRICE_DOUBLES_CENTS = 2500;
+/** Men's or women's doubles + mixed doubles. */
+const PRICE_COMBO_CENTS = 4500;
+// Member prices, unlocked by the discount code (TOURNAMENT_PROMO_CODE on Netlify).
+const MEMBER_PRICE_DOUBLES_CENTS = 2000;
+const MEMBER_PRICE_COMBO_CENTS = 3500;
 const doubles = PRICE_DOUBLES_CENTS / 100;
-const singlesPrice = PRICE_SINGLES_CENTS / 100;
-const combo = PRICE_DOUBLES_MIXED_COMBO_CENTS / 100;
-const doublesSinglesTotal = (PRICE_DOUBLES_CENTS + PRICE_SINGLES_CENTS) / 100;
+const combo = PRICE_COMBO_CENTS / 100;
+const memberDoubles = MEMBER_PRICE_DOUBLES_CENTS / 100;
+const memberCombo = MEMBER_PRICE_COMBO_CENTS / 100;
 
 export const tournament = {
   /** Stable id stored with every registration in Supabase. */
@@ -48,24 +50,21 @@ export const tournament = {
   meetupMembers: { fr: "10'000", en: '10,000' },
 
   // Capacity counts players (each person registers individually).
-  // Morning: men's + women's doubles. Afternoon: mixed doubles + singles.
-  // Exact times are announced later.
+  // Morning: men's + women's doubles. Afternoon: mixed doubles.
+  // Exact times are announced later. memberPriceCents applies with the code.
   categories: [
-    { id: 'men',     double: true,  capacity: 30, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, name: { fr: 'Double hommes', en: "Men's doubles" } },
-    { id: 'women',   double: true,  capacity: 20, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, name: { fr: 'Double dames',  en: "Women's doubles" } },
-    { id: 'mixed',   double: true,  capacity: 36, slot: 'afternoon', priceCents: PRICE_DOUBLES_CENTS, name: { fr: 'Double mixte',  en: 'Mixed doubles' } },
-    { id: 'singles', double: false, capacity: 12, slot: 'afternoon', priceCents: PRICE_SINGLES_CENTS, name: { fr: 'Simple',        en: 'Singles' } },
+    { id: 'men',   double: true, capacity: 30, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, memberPriceCents: MEMBER_PRICE_DOUBLES_CENTS, name: { fr: 'Double hommes', en: "Men's doubles" } },
+    { id: 'women', double: true, capacity: 20, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, memberPriceCents: MEMBER_PRICE_DOUBLES_CENTS, name: { fr: 'Double dames',  en: "Women's doubles" } },
+    { id: 'mixed', double: true, capacity: 36, slot: 'afternoon', priceCents: PRICE_DOUBLES_CENTS, memberPriceCents: MEMBER_PRICE_DOUBLES_CENTS, name: { fr: 'Double mixte',  en: 'Mixed doubles' } },
   ],
 
   /**
-   * The only draw pairs a player may book together. `priceCents` is the
-   * discounted total; without it the pair costs the sum of both draws.
+   * The only draw pairs a player may book together, with their total price
+   * (public and member). Without a price, a pair would cost the sum of both draws.
    */
   combos: [
-    { ids: ['men', 'mixed'],   priceCents: PRICE_DOUBLES_MIXED_COMBO_CENTS },
-    { ids: ['women', 'mixed'], priceCents: PRICE_DOUBLES_MIXED_COMBO_CENTS },
-    { ids: ['men', 'singles'] },
-    { ids: ['women', 'singles'] },
+    { ids: ['men', 'mixed'],   priceCents: PRICE_COMBO_CENTS, memberPriceCents: MEMBER_PRICE_COMBO_CENTS },
+    { ids: ['women', 'mixed'], priceCents: PRICE_COMBO_CENTS, memberPriceCents: MEMBER_PRICE_COMBO_CENTS },
   ],
 
   partners: [
@@ -99,7 +98,7 @@ export function findCategory(id: string): TournamentCategory | undefined {
   return tournament.categories.find((c) => c.id === id);
 }
 
-type Combo = { ids: readonly string[]; priceCents?: number };
+type Combo = { ids: readonly string[]; priceCents?: number; memberPriceCents?: number };
 
 /** The combo matching exactly this set of draw ids, if any. */
 export function findCombo(ids: readonly string[]): Combo | undefined {
@@ -124,40 +123,21 @@ export function normalizeSelection(ids: readonly string[]): TournamentCategory[]
 
 /**
  * Total price, per-draw split (stored on each registration row) and whether
- * a combo discount applies.
+ * a combo discount applies. `member` selects the prices unlocked by the code.
  */
-export function priceSelection(cats: readonly TournamentCategory[]): {
+export function priceSelection(cats: readonly TournamentCategory[], member = false): {
   totalCents: number;
   perDrawCents: number[];
   discounted: boolean;
 } {
-  const fullPrices = cats.map((c) => c.priceCents);
-  const comboPrice = cats.length > 1 ? findCombo(cats.map((c) => c.id))?.priceCents : undefined;
+  const fullPrices = cats.map((c) => (member ? c.memberPriceCents : c.priceCents));
+  const found = cats.length > 1 ? findCombo(cats.map((c) => c.id)) : undefined;
+  const comboPrice = member ? found?.memberPriceCents : found?.priceCents;
   if (comboPrice === undefined) {
     return { totalCents: fullPrices.reduce((a, b) => a + b, 0), perDrawCents: fullPrices, discounted: false };
   }
   const half = Math.floor(comboPrice / 2);
   return { totalCents: comboPrice, perDrawCents: [half, comboPrice - half], discounted: true };
-}
-
-/**
- * Applies a percentage discount to each draw (rounded to the cent) so the
- * per-draw amounts stored in Supabase always add up to what Stripe charges.
- */
-export function applyDiscount(perDrawCents: readonly number[], percent: number): {
-  perDrawCents: number[];
-  discountPerDrawCents: number[];
-  totalCents: number;
-  discountCents: number;
-} {
-  const discountPerDrawCents = perDrawCents.map((c) => Math.round((c * percent) / 100));
-  const discounted = perDrawCents.map((c, i) => c - discountPerDrawCents[i]);
-  return {
-    perDrawCents: discounted,
-    discountPerDrawCents,
-    totalCents: discounted.reduce((a, b) => a + b, 0),
-    discountCents: discountPerDrawCents.reduce((a, b) => a + b, 0),
-  };
 }
 
 /** Loose phone check: 8–15 digits, optional leading +, spaces/dots/dashes/brackets allowed. */
@@ -193,20 +173,21 @@ export const tournamentCopy = {
       'Nous espérons que vous êtes prêts à beaucoup jouer, car ce sera LE jour pour ça :)',
     ],
     highlights: [
-      { title: '4 tableaux', text: 'Doubles hommes et dames le matin, double mixte et simple l’après-midi.' },
+      { title: '3 tableaux', text: 'Doubles hommes et dames le matin, double mixte l’après-midi.' },
       { title: 'Des cadeaux', text: 'On garde la surprise… mais il y en aura plein. Et pour tout le monde.' },
       { title: 'Toute la journée', text: 'De 9h à 18h, pour jouer, encore et encore.' },
     ],
     categoriesTitle: 'Choisissez votre ou vos tableaux',
     categoriesLead: 'Les places restantes se mettent à jour en temps réel. Chacun·e s’inscrit individuellement : indiquez votre partenaire ou laissez-nous vous en trouver un·e.',
     comboBanner: `Combo : double hommes ou dames le matin + double mixte l’après-midi = ${combo} CHF au lieu de ${doubles * 2} CHF`,
+    memberBanner: `Membres du GSC : ${memberDoubles} CHF le double et ${memberCombo} CHF le combo avec votre code de réduction.`,
     slots: { morning: 'Matin', afternoon: 'Après-midi' },
     pricing: { single: `${doubles} CHF le tableau`, combo: `${combo} CHF les deux` },
     total: 'Total',
     comboSaving: 'Combo',
     comboHint: (draw: string, slot: string, total: string) =>
       `Ajoutez le ${draw.toLowerCase()} (${slot.toLowerCase()}) : ${total} pour les deux tableaux.`,
-    conflictHint: `Horaires précis communiqués ultérieurement. Combinaisons possibles : double hommes ou dames + double mixte (${combo} CHF), double hommes ou dames + simple (${doublesSinglesTotal} CHF).`,
+    conflictHint: `Horaires précis communiqués ultérieurement. Combinaison possible : double hommes ou dames + double mixte (${combo} CHF).`,
     placesLeft: (n: number) => (n === 1 ? '1 place restante' : `${n} places restantes`),
     placesOf: (cap: number) => `sur ${cap}`,
     placesLoading: 'Places limitées',
@@ -235,10 +216,10 @@ export const tournamentCopy = {
       paddle: 'Avez-vous besoin d’une raquette de prêt ?',
       promo: 'Code de réduction (facultatif)',
       promoApply: 'Appliquer',
-      promoApplied: (code: string, percent: number) => `Code ${code} appliqué : −${percent} %`,
+      promoApplied: (code: string) => `Code ${code} appliqué : tarif membre`,
       promoRemove: 'Retirer',
       comboPrice: 'Prix combo',
-      discount: (percent: number) => `Réduction (−${percent} %)`,
+      discount: 'Réduction membre',
       paddleYes: 'Oui',
       paddleNo: 'Non, j’ai ma raquette',
     },
@@ -269,8 +250,8 @@ export const tournamentCopy = {
     info: [
       { dt: 'Date', dd: 'Dimanche 15 novembre 2026' },
       { dt: 'Horaires', dd: 'De 9h à 18h' },
-      { dt: 'Programme', dd: 'Matin : doubles hommes et dames. Après-midi : double mixte et simple. Horaires précis communiqués ultérieurement.' },
-      { dt: 'Tarif', dd: `Double : ${doubles} CHF. Simple : ${singlesPrice} CHF. Double hommes ou dames + double mixte : ${combo} CHF. Double hommes ou dames + simple : ${doublesSinglesTotal} CHF.` },
+      { dt: 'Programme', dd: 'Matin : doubles hommes et dames. Après-midi : double mixte. Horaires précis communiqués ultérieurement.' },
+      { dt: 'Tarif', dd: `Double : ${doubles} CHF. Double hommes ou dames + double mixte : ${combo} CHF. Membres du GSC (avec code de réduction) : ${memberDoubles} CHF / ${memberCombo} CHF.` },
       { dt: 'Lieu', dd: 'Collège Calvin, Rue Théodore-De-Bèze 2-4, 1206 Genève' },
       { dt: 'Âge', dd: 'Dès 18 ans' },
       { dt: 'Matériel', dd: 'Des raquettes peuvent être prêtées en cas de besoin' },
@@ -303,20 +284,21 @@ export const tournamentCopy = {
       'We hope you’re ready to play a lot, because this will be THE day for it :)',
     ],
     highlights: [
-      { title: '4 draws', text: 'Men’s and women’s doubles in the morning, mixed doubles and singles in the afternoon.' },
+      { title: '3 draws', text: 'Men’s and women’s doubles in the morning, mixed doubles in the afternoon.' },
       { title: 'Prizes', text: 'We’re keeping it a surprise… but there will be plenty. And for everyone.' },
       { title: 'All day long', text: 'From 9am to 6pm — play, and play again.' },
     ],
     categoriesTitle: 'Choose your draw(s)',
     categoriesLead: 'Remaining places update in real time. Everyone registers individually: name your partner or let us find one for you.',
     comboBanner: `Combo: men’s or women’s doubles in the morning + mixed doubles in the afternoon = CHF ${combo} instead of CHF ${doubles * 2}`,
+    memberBanner: `GSC members: CHF ${memberDoubles} per doubles draw and CHF ${memberCombo} for the combo with your discount code.`,
     slots: { morning: 'Morning', afternoon: 'Afternoon' },
     pricing: { single: `CHF ${doubles} per draw`, combo: `CHF ${combo} for both` },
     total: 'Total',
     comboSaving: 'Combo',
     comboHint: (draw: string, slot: string, total: string) =>
       `Add ${draw} (${slot.toLowerCase()}): ${total} for both draws.`,
-    conflictHint: `Exact times will be announced later. Possible combinations: men’s or women’s doubles + mixed doubles (CHF ${combo}), men’s or women’s doubles + singles (CHF ${doublesSinglesTotal}).`,
+    conflictHint: `Exact times will be announced later. Possible combination: men’s or women’s doubles + mixed doubles (CHF ${combo}).`,
     placesLeft: (n: number) => (n === 1 ? '1 place left' : `${n} places left`),
     placesOf: (cap: number) => `of ${cap}`,
     placesLoading: 'Limited places',
@@ -345,10 +327,10 @@ export const tournamentCopy = {
       paddle: 'Do you need to borrow a paddle?',
       promo: 'Discount code (optional)',
       promoApply: 'Apply',
-      promoApplied: (code: string, percent: number) => `Code ${code} applied: −${percent}%`,
+      promoApplied: (code: string) => `Code ${code} applied: member price`,
       promoRemove: 'Remove',
       comboPrice: 'Combo price',
-      discount: (percent: number) => `Discount (−${percent}%)`,
+      discount: 'Member discount',
       paddleYes: 'Yes',
       paddleNo: 'No, I have my own',
     },
@@ -379,8 +361,8 @@ export const tournamentCopy = {
     info: [
       { dt: 'Date', dd: 'Sunday 15 November 2026' },
       { dt: 'Hours', dd: '9am to 6pm' },
-      { dt: 'Programme', dd: 'Morning: men’s and women’s doubles. Afternoon: mixed doubles and singles. Exact times will be announced later.' },
-      { dt: 'Fee', dd: `Doubles: CHF ${doubles}. Singles: CHF ${singlesPrice}. Men’s or women’s doubles + mixed doubles: CHF ${combo}. Men’s or women’s doubles + singles: CHF ${doublesSinglesTotal}.` },
+      { dt: 'Programme', dd: 'Morning: men’s and women’s doubles. Afternoon: mixed doubles. Exact times will be announced later.' },
+      { dt: 'Fee', dd: `Doubles: CHF ${doubles}. Men’s or women’s doubles + mixed doubles: CHF ${combo}. GSC members (with discount code): CHF ${memberDoubles} / CHF ${memberCombo}.` },
       { dt: 'Venue', dd: 'Collège Calvin, Rue Théodore-De-Bèze 2-4, 1206 Geneva' },
       { dt: 'Age', dd: '18 and over' },
       { dt: 'Equipment', dd: 'Paddles can be lent if needed' },

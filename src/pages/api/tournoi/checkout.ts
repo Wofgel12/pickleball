@@ -1,11 +1,11 @@
 import type { APIRoute } from 'astro';
-import { applyDiscount, isValidPhone, normalizeSelection, priceSelection } from '../../../i18n/tournament';
+import { isValidPhone, normalizeSelection, priceSelection } from '../../../i18n/tournament';
 import {
   confirmOrder,
   createCheckoutSession,
   isConfigured,
   isFakePayment,
-  promoPercent,
+  validPromoCode,
   json,
   reserveOrder,
   updateRegistrations,
@@ -76,16 +76,16 @@ export const POST: APIRoute = async ({ request, url }) => {
 
   // Optional discount code: re-checked here, whatever the form displayed.
   const rawPromo = typeof body.promoCode === 'string' ? body.promoCode.trim() : '';
-  const percent = rawPromo ? promoPercent(rawPromo) : null;
-  if (rawPromo && percent === null) return json({ error: 'promo' }, 400);
-  if (percent !== null) input.discountCode = rawPromo.toUpperCase();
+  const promoCode = rawPromo ? validPromoCode(rawPromo) : null;
+  if (rawPromo && !promoCode) return json({ error: 'promo' }, 400);
+  input.discountCode = promoCode;
 
   try {
+    // The members code unlocks the member prices; the difference is stored per draw.
     const base = priceSelection(categories);
-    const priced = percent !== null
-      ? applyDiscount(base.perDrawCents, percent)
-      : { perDrawCents: base.perDrawCents, discountPerDrawCents: [], totalCents: base.totalCents };
-    const { totalCents, perDrawCents, discountPerDrawCents } = priced;
+    const paid = promoCode ? priceSelection(categories, true) : base;
+    const { totalCents, perDrawCents } = paid;
+    const discountPerDrawCents = base.perDrawCents.map((c, i) => c - paid.perDrawCents[i]);
     const orderId = await reserveOrder(input, perDrawCents, discountPerDrawCents);
     if (!orderId) return json({ error: 'full' }, 409);
 

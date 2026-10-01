@@ -11,8 +11,8 @@
 //   RESEND_API_KEY             re_…
 //   TOURNAMENT_EMAIL_FROM      e.g. "GSC Pickleball <tournoi@gscpickleball.ch>" (domain verified in Resend)
 // Discount code (optional, never written in the public repo):
-//   TOURNAMENT_PROMO_CODE        the members code, set in Netlify only (case-insensitive)
-//   TOURNAMENT_PROMO_PERCENT     e.g. 10 (default 10)
+//   TOURNAMENT_PROMO_CODE        the members code, set in Netlify only (case-insensitive);
+//                                unlocks the member prices defined in src/i18n/tournament.ts
 // Testing only:
 //   TOURNAMENT_FAKE_PAYMENT=true  skips Stripe: orders are confirmed immediately
 //                                 (no Stripe keys needed). Ignored once the page
@@ -30,13 +30,11 @@ function env(name: string): string | undefined {
   return value === undefined || value === null ? undefined : String(value);
 }
 
-/** Percentage granted by a discount code, or null when the code isn't valid. */
-export function promoPercent(raw: unknown): number | null {
+/** Normalised members code when `raw` matches TOURNAMENT_PROMO_CODE, otherwise null. */
+export function validPromoCode(raw: unknown): string | null {
   const expected = env('TOURNAMENT_PROMO_CODE')?.trim().toUpperCase();
   const code = typeof raw === 'string' ? raw.trim().toUpperCase() : '';
-  if (!expected || !code || code !== expected) return null;
-  const percent = Number(env('TOURNAMENT_PROMO_PERCENT') ?? '10');
-  return Number.isFinite(percent) && percent > 0 && percent < 100 ? percent : null;
+  return expected && code && code === expected ? code : null;
 }
 
 /** Fake-payment test mode: on only when explicitly enabled AND the page isn't published yet. */

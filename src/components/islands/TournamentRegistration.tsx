@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   tournament,
   tournamentCopy,
-  applyDiscount,
   formatCHF,
   isValidPhone,
   normalizeSelection,
@@ -35,7 +34,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   const [noRefund, setNoRefund] = useState(false);
   const [needsPaddle, setNeedsPaddle] = useState<boolean | null>(null);
   const [promoInput, setPromoInput] = useState('');
-  const [promo, setPromo] = useState<{ code: string; percent: number } | null>(null);
+  const [promo, setPromo] = useState<{ code: string } | null>(null);
   const [promoError, setPromoError] = useState(false);
   const [promoChecking, setPromoChecking] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
@@ -94,7 +93,10 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   const basePrice = draws.length ? priceSelection(draws) : null;
   const isCombo = Boolean(basePrice?.discounted);
   // Display only: the server re-checks the code and recomputes the amount.
-  const promoPrice = basePrice && promo ? applyDiscount(basePrice.perDrawCents, promo.percent) : null;
+  const memberPrice = draws.length && promo ? priceSelection(draws, true) : null;
+  const promoPrice = basePrice && memberPrice
+    ? { totalCents: memberPrice.totalCents, discountCents: basePrice.totalCents - memberPrice.totalCents }
+    : null;
   const price = basePrice && { totalCents: promoPrice ? promoPrice.totalCents : basePrice.totalCents };
 
   async function checkPromo() {
@@ -109,7 +111,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
         body: JSON.stringify({ code }),
       });
       const data = await res.json().catch(() => ({}));
-      if (data.valid) setPromo({ code: data.code, percent: data.percent });
+      if (data.valid) setPromo({ code: data.code });
       else {
         setPromo(null);
         setPromoError(true);
@@ -284,9 +286,10 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
         </span>
         <p className="font-semibold">{t.comboBanner}</p>
       </div>
+      <p className="-mt-3 mb-6 text-center text-sm text-gray-700">{t.memberBanner}</p>
 
       {/* Draws with live counters */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+      <div className="grid md:grid-cols-3 gap-4 md:gap-5">
         {tournament.categories.map((c) => {
           const left = remaining?.[c.id];
           const full = left === 0;
@@ -368,7 +371,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
 
         <fieldset className="mb-6">
           <legend className="block text-sm font-semibold text-gray-800 mb-2">{t.fields.category}</legend>
-          <div className="grid sm:grid-cols-2 gap-2">
+          <div className="grid sm:grid-cols-3 gap-2">
             {tournament.categories.map((c) => {
               const checked = selected.includes(c.id);
               const full = isFull(c.id);
@@ -512,7 +515,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           <label htmlFor="t-promo" className="block text-sm font-semibold text-gray-800 mb-1.5">{t.fields.promo}</label>
           {promo ? (
             <div className="flex items-center justify-between gap-3 rounded-xl border-2 border-teal-500 bg-teal-50/60 px-4 py-3">
-              <span className="font-semibold text-teal-900">✓ {t.fields.promoApplied(promo.code, promo.percent)}</span>
+              <span className="font-semibold text-teal-900">✓ {t.fields.promoApplied(promo.code)}</span>
               <button
                 type="button"
                 onClick={() => {
@@ -575,7 +578,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
             )}
             {promo && promoPrice && (
               <div className="flex justify-between text-teal-800 font-semibold py-0.5">
-                <span>{t.fields.discount(promo.percent)}</span>
+                <span>{t.fields.discount}</span>
                 <span>−{formatCHF(promoPrice.discountCents, lang)}</span>
               </div>
             )}
