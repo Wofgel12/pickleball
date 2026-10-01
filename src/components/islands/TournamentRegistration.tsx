@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   tournament,
   tournamentCopy,
+  applyDiscount,
   formatCHF,
   isValidPhone,
   normalizeSelection,
@@ -33,6 +34,10 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   const [age, setAge] = useState(false);
   const [noRefund, setNoRefund] = useState(false);
   const [needsPaddle, setNeedsPaddle] = useState<boolean | null>(null);
+  const [promoInput, setPromoInput] = useState('');
+  const [promo, setPromo] = useState<{ code: string; percent: number } | null>(null);
+  const [promoError, setPromoError] = useState(false);
+  const [promoChecking, setPromoChecking] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -86,8 +91,34 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
 
   const isFull = (id: CategoryId) => remaining?.[id] === 0;
   const draws = normalizeSelection(selected) ?? [];
-  const price = draws.length ? priceSelection(draws) : null;
-  const isCombo = Boolean(price?.discounted);
+  const basePrice = draws.length ? priceSelection(draws) : null;
+  const isCombo = Boolean(basePrice?.discounted);
+  // Display only: the server re-checks the code and recomputes the amount.
+  const promoPrice = basePrice && promo ? applyDiscount(basePrice.perDrawCents, promo.percent) : null;
+  const price = basePrice && { totalCents: promoPrice ? promoPrice.totalCents : basePrice.totalCents };
+
+  async function checkPromo() {
+    const code = promoInput.trim();
+    if (!code) return;
+    setPromoChecking(true);
+    setPromoError(false);
+    try {
+      const res = await fetch('/api/tournoi/promo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (data.valid) setPromo({ code: data.code, percent: data.percent });
+      else {
+        setPromo(null);
+        setPromoError(true);
+      }
+    } catch {
+      setPromoError(true);
+    }
+    setPromoChecking(false);
+  }
   // Draws that would complete the current single choice into a combo:
   // men/women → mixed, mixed → men or women. Full draws aren't suggested.
   const comboSuggestions =
@@ -160,6 +191,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           age,
           noRefund,
           needsPaddle,
+          promoCode: promo?.code ?? '',
           lang,
         }),
       });
@@ -171,6 +203,10 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
       if (data.error === 'full') {
         setServerError(t.errors.full);
         refresh();
+      } else if (data.error === 'promo') {
+        setPromo(null);
+        setPromoError(true);
+        setServerError(t.errors.promo);
       } else if (data.error === 'unavailable') {
         setServerError(t.errors.unavailable);
       } else {
@@ -472,7 +508,58 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           {errors.paddle && <p className="mt-1 text-sm text-red-600">{errors.paddle}</p>}
         </fieldset>
 
-        {price && (
+        <div className="mb-6">
+          <label htmlFor="t-promo" className="block text-sm font-semibold text-gray-800 mb-1.5">{t.fields.promo}</label>
+          {promo ? (
+            <div className="flex items-center justify-between gap-3 rounded-xl border-2 border-teal-500 bg-teal-50/60 px-4 py-3">
+              <span className="font-semibold text-teal-900">✓ {t.fields.promoApplied(promo.code, promo.percent)}</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setPromo(null);
+                  setPromoInput('');
+                }}
+                className="text-sm text-teal-800 underline hover:text-teal-950"
+              >
+                {t.fields.promoRemove}
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <input
+                id="t-promo"
+                type="text"
+                autoComplete="off"
+                autoCapitalize="characters"
+                value={promoInput}
+                onChange={(e) => {
+                  setPromoInput(e.target.value);
+                  setPromoError(false);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    checkPromo();
+                  }
+                }}
+                aria-invalid={promoError}
+                aria-describedby={promoError ? 't-promo-err' : undefined}
+                className={inputCls(promoError ? 'x' : undefined) + ' uppercase'}
+              />
+              <button
+                type="button"
+                onClick={checkPromo}
+                disabled={promoChecking || !promoInput.trim()}
+                className="btn-press shrink-0 rounded-xl bg-[#002b2b] hover:bg-[#003d3d] disabled:opacity-50 text-white font-semibold px-5"
+              >
+                {t.fields.promoApply}
+              </button>
+            </div>
+          )}
+          {promoError && <p id="t-promo-err" className="mt-1 text-sm text-red-600">{t.errors.promo}</p>}
+        </div>
+
+        {basePrice && price && (
           <div className="mb-6 rounded-xl border-2 border-gray-200 px-5 py-4">
             {draws.map((d) => (
               <div key={d.id} className="flex justify-between text-gray-700 py-0.5">
@@ -480,6 +567,18 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
                 <span className={isCombo ? 'line-through text-gray-400' : ''}>{formatCHF(d.priceCents, lang)}</span>
               </div>
             ))}
+            {promo && promoPrice && isCombo && (
+              <div className="flex justify-between text-gray-700 py-0.5">
+                <span>{t.fields.comboPrice}</span>
+                <span>{formatCHF(basePrice.totalCents, lang)}</span>
+              </div>
+            )}
+            {promo && promoPrice && (
+              <div className="flex justify-between text-teal-800 font-semibold py-0.5">
+                <span>{t.fields.discount(promo.percent)}</span>
+                <span>−{formatCHF(promoPrice.discountCents, lang)}</span>
+              </div>
+            )}
             <div className="flex justify-between items-baseline border-t border-gray-200 mt-2 pt-2">
               <span className="font-bold text-gray-900">
                 {t.total}

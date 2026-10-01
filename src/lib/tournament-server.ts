@@ -10,6 +10,9 @@
 // Optional (custom confirmation e-mail; otherwise only Stripe's receipt is sent):
 //   RESEND_API_KEY             re_…
 //   TOURNAMENT_EMAIL_FROM      e.g. "GSC Pickleball <tournoi@gscpickleball.ch>" (domain verified in Resend)
+// Discount code (optional, never written in the public repo):
+//   TOURNAMENT_PROMO_CODE        the members code, set in Netlify only (case-insensitive)
+//   TOURNAMENT_PROMO_PERCENT     e.g. 10 (default 10)
 // Testing only:
 //   TOURNAMENT_FAKE_PAYMENT=true  skips Stripe: orders are confirmed immediately
 //                                 (no Stripe keys needed). Ignored once the page
@@ -25,6 +28,15 @@ function env(name: string): string | undefined {
   const metaEnv = ((import.meta as { env?: Record<string, unknown> }).env ?? {}) as Record<string, unknown>;
   const value = metaEnv[name] ?? process.env[name];
   return value === undefined || value === null ? undefined : String(value);
+}
+
+/** Percentage granted by a discount code, or null when the code isn't valid. */
+export function promoPercent(raw: unknown): number | null {
+  const expected = env('TOURNAMENT_PROMO_CODE')?.trim().toUpperCase();
+  const code = typeof raw === 'string' ? raw.trim().toUpperCase() : '';
+  if (!expected || !code || code !== expected) return null;
+  const percent = Number(env('TOURNAMENT_PROMO_PERCENT') ?? '10');
+  return Number.isFinite(percent) && percent > 0 && percent < 100 ? percent : null;
 }
 
 /** Fake-payment test mode: on only when explicitly enabled AND the page isn't published yet. */
@@ -103,13 +115,19 @@ export interface OrderInput {
   phone: string | null;
   lang: Lang;
   needsPaddle: boolean;
+  /** Normalised discount code when one was applied. */
+  discountCode: string | null;
 }
 
 /**
  * Atomically reserves every draw of the order (all or nothing).
  * Returns the order id, or null when one of the draws is full.
  */
-export async function reserveOrder(input: OrderInput, perDrawCents: number[]): Promise<string | null> {
+export async function reserveOrder(
+  input: OrderInput,
+  perDrawCents: number[],
+  discountPerDrawCents: number[] = [],
+): Promise<string | null> {
   const res = await supabase('rpc/tournament_reserve_order', {
     method: 'POST',
     body: JSON.stringify({
@@ -118,6 +136,7 @@ export async function reserveOrder(input: OrderInput, perDrawCents: number[]): P
         category: d.category.id,
         capacity: d.category.capacity,
         amount_cents: perDrawCents[i],
+        discount_cents: discountPerDrawCents[i] ?? 0,
         partner_name: d.partnerName,
         find_partner: d.findPartner,
       })),
@@ -130,6 +149,7 @@ export async function reserveOrder(input: OrderInput, perDrawCents: number[]): P
       p_phone: input.phone,
       p_lang: input.lang,
       p_needs_paddle: input.needsPaddle,
+      p_discount_code: input.discountCode,
     }),
   });
   if (!res.ok) throw new Error(`tournament_reserve_order ${res.status}: ${await res.text()}`);
@@ -147,6 +167,8 @@ export interface RegistrationRow {
   partner_name: string | null;
   find_partner: boolean;
   needs_paddle: boolean;
+  discount_code: string | null;
+  discount_cents: number;
   lang: Lang;
   status: string;
   amount_cents: number;
@@ -205,9 +227,10 @@ export async function createCheckoutSession(opts: {
   const pagePath = lang === 'fr' ? '/tournoi/' : '/en/tournament/';
   const drawNames = opts.input.draws.map((d) => d.category.name[lang]).join(' + ');
   const isCombo = opts.input.draws.length > 1;
+  const promo = opts.input.discountCode ? ` (code ${opts.input.discountCode})` : '';
   const productName = lang === 'fr'
-    ? `Tournoi GSC Pickleball — ${isCombo ? 'Combo ' : ''}${drawNames}`
-    : `GSC Pickleball Tournament — ${isCombo ? 'Combo ' : ''}${drawNames}`;
+    ? `Tournoi GSC Pickleball — ${isCombo ? 'Combo ' : ''}${drawNames}${promo}`
+    : `GSC Pickleball Tournament — ${isCombo ? 'Combo ' : ''}${drawNames}${promo}`;
   const productDesc = lang === 'fr'
     ? 'Dimanche 15 novembre 2026, 9h–18h, Collège Calvin, Genève. Non remboursable.'
     : 'Sunday 15 November 2026, 9am–6pm, Collège Calvin, Geneva. Non-refundable.';
@@ -340,6 +363,12 @@ export async function sendConfirmationEmail(order: RegistrationRow[]): Promise<b
     ['Date', t.dateLong],
     [fr ? 'Horaires' : 'Hours', fr ? 'De 9h à 18h (horaires précis de votre tableau communiqués ultérieurement)' : '9am to 6pm (exact times for your draw will be announced later)'],
     [fr ? 'Lieu' : 'Venue', `${tournament.venueName}, ${fr ? 'Genève' : 'Geneva'}`],
+    ...(reg.discount_code
+      ? [[
+          fr ? 'Réduction' : 'Discount',
+          `−${formatCHF(order.reduce((n, r) => n + (r.discount_cents ?? 0), 0), lang)} (code ${reg.discount_code})`,
+        ] as [string, string]]
+      : []),
     [fr ? 'Montant payé' : 'Amount paid', formatCHF(totalCents, lang)],
   ];
 

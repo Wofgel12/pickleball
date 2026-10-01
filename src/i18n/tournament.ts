@@ -85,8 +85,8 @@ export const tournament = {
       url: 'https://pickleballcorner.ch/fr',
       role: { fr: 'Partenaire matériel', en: 'Equipment partner' },
       text: {
-        fr: 'Le spécialiste suisse du pickleball sera présent sur place : raquettes, balles et conseils de pro.',
-        en: 'Switzerland’s pickleball specialist will be on site: paddles, balls and expert advice.',
+        fr: 'Le spécialiste suisse du pickleball propose des réductions à nos membres sur son site web pour s’équiper le jour J.',
+        en: 'Switzerland’s pickleball specialist offers our members discounts on its website to gear up for the big day.',
       },
     },
   ],
@@ -138,6 +138,26 @@ export function priceSelection(cats: readonly TournamentCategory[]): {
   }
   const half = Math.floor(comboPrice / 2);
   return { totalCents: comboPrice, perDrawCents: [half, comboPrice - half], discounted: true };
+}
+
+/**
+ * Applies a percentage discount to each draw (rounded to the cent) so the
+ * per-draw amounts stored in Supabase always add up to what Stripe charges.
+ */
+export function applyDiscount(perDrawCents: readonly number[], percent: number): {
+  perDrawCents: number[];
+  discountPerDrawCents: number[];
+  totalCents: number;
+  discountCents: number;
+} {
+  const discountPerDrawCents = perDrawCents.map((c) => Math.round((c * percent) / 100));
+  const discounted = perDrawCents.map((c, i) => c - discountPerDrawCents[i]);
+  return {
+    perDrawCents: discounted,
+    discountPerDrawCents,
+    totalCents: discounted.reduce((a, b) => a + b, 0),
+    discountCents: discountPerDrawCents.reduce((a, b) => a + b, 0),
+  };
 }
 
 /** Loose phone check: 8–15 digits, optional leading +, spaces/dots/dashes/brackets allowed. */
@@ -213,6 +233,12 @@ export const tournamentCopy = {
       age: 'J’ai 18 ans ou plus.',
       noRefund: 'Je comprends que l’inscription n’est pas remboursable.',
       paddle: 'Avez-vous besoin d’une raquette de prêt ?',
+      promo: 'Code de réduction (facultatif)',
+      promoApply: 'Appliquer',
+      promoApplied: (code: string, percent: number) => `Code ${code} appliqué : −${percent} %`,
+      promoRemove: 'Retirer',
+      comboPrice: 'Prix combo',
+      discount: (percent: number) => `Réduction (−${percent} %)`,
       paddleYes: 'Oui',
       paddleNo: 'Non, j’ai ma raquette',
     },
@@ -231,6 +257,7 @@ export const tournamentCopy = {
       partner: 'Indiquez votre partenaire ou choisissez « Trouvez-moi un·e partenaire »',
       checkbox: 'Merci de cocher cette case',
       choice: 'Merci de choisir une réponse',
+      promo: 'Ce code de réduction n’est pas valable.',
       full: 'Un des tableaux choisis vient d’être complet. Contactez les organisateurs si vous avez des questions.',
       generic: 'Une erreur est survenue. Réessayez ou contactez-nous.',
       unavailable: 'Les inscriptions ouvrent très bientôt. Revenez un peu plus tard !',
@@ -316,6 +343,12 @@ export const tournamentCopy = {
       age: 'I am 18 or older.',
       noRefund: 'I understand registration is non-refundable.',
       paddle: 'Do you need to borrow a paddle?',
+      promo: 'Discount code (optional)',
+      promoApply: 'Apply',
+      promoApplied: (code: string, percent: number) => `Code ${code} applied: −${percent}%`,
+      promoRemove: 'Remove',
+      comboPrice: 'Combo price',
+      discount: (percent: number) => `Discount (−${percent}%)`,
       paddleYes: 'Yes',
       paddleNo: 'No, I have my own',
     },
@@ -334,6 +367,7 @@ export const tournamentCopy = {
       partner: 'Name your partner or choose “Find me a partner”',
       checkbox: 'Please tick this box',
       choice: 'Please choose an answer',
+      promo: 'This discount code is not valid.',
       full: 'One of your draws just filled up. Contact the organisers if you have any questions.',
       generic: 'Something went wrong. Please try again or contact us.',
       unavailable: 'Registration opens very soon. Please check back a little later!',

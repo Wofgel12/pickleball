@@ -14,6 +14,8 @@ create table if not exists public.tournament_registrations (
   partner_name    text,                          -- null si simple ou "trouvez-moi un partenaire"
   find_partner    boolean not null default false,
   needs_paddle    boolean not null default false, -- raquette de prêt demandée
+  discount_code   text,                          -- code de réduction appliqué
+  discount_cents  integer not null default 0 check (discount_cents >= 0),
   lang            text not null default 'fr',
   status          text not null default 'pending'
                   check (status in ('pending', 'confirmed', 'expired', 'cancelled')),
@@ -58,12 +60,15 @@ $$;
 -- si un seul des tableaux est complet, rien n'est réservé. Verrous pris dans
 -- l'ordre alphabétique des tableaux pour éviter les interblocages.
 -- p_items : [{"category","capacity","amount_cents","partner_name","find_partner"}]
--- p_needs_paddle a une valeur par défaut : les anciens appels restent valides.
+-- p_needs_paddle et p_discount_code ont une valeur par défaut : les anciens appels restent valides.
+-- Chaque élément peut porter "discount_cents" (réduction calculée par le serveur).
 drop function if exists public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text);
+drop function if exists public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text, boolean);
 create or replace function public.tournament_reserve_order(
   p_tournament text, p_items jsonb, p_hold_minutes integer,
   p_first_name text, p_last_name text, p_email text, p_phone text, p_lang text,
-  p_needs_paddle boolean default false
+  p_needs_paddle boolean default false,
+  p_discount_code text default null
 ) returns uuid
 language plpgsql security definer set search_path = public as $$
 declare
@@ -88,12 +93,14 @@ begin
 
   insert into tournament_registrations (
     order_id, tournament, category, first_name, last_name, email, phone,
-    partner_name, find_partner, lang, amount_cents, hold_expires_at, needs_paddle
+    partner_name, find_partner, lang, amount_cents, hold_expires_at, needs_paddle,
+    discount_code, discount_cents
   )
   select v_order, p_tournament, value->>'category', p_first_name, p_last_name, p_email, p_phone,
          nullif(value->>'partner_name', ''), coalesce((value->>'find_partner')::boolean, false),
          p_lang, (value->>'amount_cents')::int, now() + make_interval(mins => p_hold_minutes),
-         coalesce(p_needs_paddle, false)
+         coalesce(p_needs_paddle, false),
+         nullif(p_discount_code, ''), coalesce((value->>'discount_cents')::int, 0)
   from jsonb_array_elements(p_items);
 
   return v_order;
@@ -102,9 +109,9 @@ $$;
 
 -- Fonctions réservées au serveur (clé service role), pas au public.
 revoke all on function public.tournament_counts(text) from public, anon, authenticated;
-revoke all on function public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text, boolean) from public, anon, authenticated;
+revoke all on function public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text, boolean, text) from public, anon, authenticated;
 grant execute on function public.tournament_counts(text) to service_role;
-grant execute on function public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text, boolean) to service_role;
+grant execute on function public.tournament_reserve_order(text, jsonb, integer, text, text, text, text, text, boolean, text) to service_role;
 
 -- Liste des participants (inscriptions payées uniquement), lisible dans
 -- Supabase → Table Editor → tournoi_participants, exportable en CSV.
@@ -139,6 +146,8 @@ select
     where o.order_id = r.order_id and o.id <> r.id
   ), '')                                          as combo_avec,
   (r.amount_cents / 100.0)::numeric(10, 2)        as montant_chf,
+  coalesce(r.discount_code, '')                   as code_reduction,
+  (r.discount_cents / 100.0)::numeric(10, 2)      as reduction_chf,
   r.lang                                          as langue,
   (r.created_at at time zone 'Europe/Zurich')     as inscrit_le,
   r.order_id                                      as commande

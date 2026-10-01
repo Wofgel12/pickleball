@@ -1,10 +1,11 @@
 import type { APIRoute } from 'astro';
-import { isValidPhone, normalizeSelection, priceSelection } from '../../../i18n/tournament';
+import { applyDiscount, isValidPhone, normalizeSelection, priceSelection } from '../../../i18n/tournament';
 import {
   confirmOrder,
   createCheckoutSession,
   isConfigured,
   isFakePayment,
+  promoPercent,
   json,
   reserveOrder,
   updateRegistrations,
@@ -56,6 +57,7 @@ export const POST: APIRoute = async ({ request, url }) => {
     phone: clean(body.phone, 40) || null,
     lang: body.lang === 'en' ? 'en' : 'fr',
     needsPaddle: body.needsPaddle === true,
+    discountCode: null,
   };
 
   if (
@@ -72,9 +74,19 @@ export const POST: APIRoute = async ({ request, url }) => {
     return json({ error: 'invalid' }, 400);
   }
 
+  // Optional discount code: re-checked here, whatever the form displayed.
+  const rawPromo = typeof body.promoCode === 'string' ? body.promoCode.trim() : '';
+  const percent = rawPromo ? promoPercent(rawPromo) : null;
+  if (rawPromo && percent === null) return json({ error: 'promo' }, 400);
+  if (percent !== null) input.discountCode = rawPromo.toUpperCase();
+
   try {
-    const { totalCents, perDrawCents } = priceSelection(categories);
-    const orderId = await reserveOrder(input, perDrawCents);
+    const base = priceSelection(categories);
+    const priced = percent !== null
+      ? applyDiscount(base.perDrawCents, percent)
+      : { perDrawCents: base.perDrawCents, discountPerDrawCents: [], totalCents: base.totalCents };
+    const { totalCents, perDrawCents, discountPerDrawCents } = priced;
+    const orderId = await reserveOrder(input, perDrawCents, discountPerDrawCents);
     if (!orderId) return json({ error: 'full' }, 409);
 
     if (isFakePayment()) {
