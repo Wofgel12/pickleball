@@ -164,9 +164,20 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
 
 <!-- ============ PRACTICAL INFO ============ -->
 <section class="px-4 pb-20">
-  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-stretch">
-    <div class="bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 md:p-9">
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">{t.infoTitle}</h2>
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
+    <!-- Collapsed by default (saves room on mobile); native <details>: works
+         without JS, with the keyboard and screen readers. -->
+    <details class="group bg-white/95 rounded-2xl border-2 border-[#002b2b]">
+      <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-4 p-7 md:p-9">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{t.infoTitle}</h2>
+        <span
+          class="shrink-0 w-10 h-10 rounded-full bg-[#002b2b] text-white flex items-center justify-center transition-transform duration-200 group-open:rotate-45"
+          aria-hidden="true"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </summary>
+      <div class="px-7 md:px-9 pb-7 md:pb-9 -mt-2">
       <dl class="grid grid-cols-[auto,1fr] gap-x-6 gap-y-3">
         {t.info.map((row) => (
           <>
@@ -178,7 +189,8 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       <a href={routes.tournamentRules[lang]} class="mt-6 inline-block font-semibold text-teal-700 underline hover:text-teal-900">
         {fr ? 'Lire le règlement du tournoi →' : 'Read the tournament rules →'}
       </a>
-    </div>
+      </div>
+    </details>
     <div class="flex flex-col overflow-hidden rounded-2xl border-2 border-[#002b2b] bg-white/95">
       <MapEmbed
         lang={lang}

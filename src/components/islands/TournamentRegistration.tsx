@@ -357,7 +357,6 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           );
         })}
       </div>
-      <p className="mt-4 text-center text-sm text-gray-600">{t.conflictHint}</p>
 
       {/* Registration form */}
       <form

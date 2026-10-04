@@ -201,7 +201,6 @@ export const tournamentCopy = {
     comboSaving: 'Combo',
     comboHint: (draw: string, slot: string, total: string) =>
       `Ajoutez le ${draw.toLowerCase()} (${slot.toLowerCase()}) : ${total} pour les deux tableaux.`,
-    conflictHint: `Horaires précis communiqués ultérieurement. Combinaison possible : double hommes ou dames + double mixte (${combo} CHF).`,
     placesLeft: (n: number) => (n === 1 ? '1 place restante' : `${n} places restantes`),
     placesOf: (cap: number) => `sur ${cap}`,
     placesLoading: 'Places limitées',
@@ -272,7 +271,6 @@ export const tournamentCopy = {
       { dt: 'Matériel', dd: 'Des raquettes peuvent être prêtées en cas de besoin' },
       { dt: 'Tenue', dd: 'Chaussures de salle à semelle non marquante' },
       { dt: 'Restauration', dd: 'Restauration sur place disponible' },
-      { dt: 'Annulation', dd: `Possible jusqu’au ${cancellationDeadlineLabel('fr')} (3 jours avant), avec remboursement` },
       { dt: 'Cadeaux', dd: 'Surprise !' },
     ],
     partnersTitle: 'Nos partenaires',
@@ -313,7 +311,6 @@ export const tournamentCopy = {
     comboSaving: 'Combo',
     comboHint: (draw: string, slot: string, total: string) =>
       `Add ${draw} (${slot.toLowerCase()}): ${total} for both draws.`,
-    conflictHint: `Exact times will be announced later. Possible combination: men’s or women’s doubles + mixed doubles (CHF ${combo}).`,
     placesLeft: (n: number) => (n === 1 ? '1 place left' : `${n} places left`),
     placesOf: (cap: number) => `of ${cap}`,
     placesLoading: 'Limited places',
@@ -384,7 +381,6 @@ export const tournamentCopy = {
       { dt: 'Equipment', dd: 'Paddles can be lent if needed' },
       { dt: 'Shoes', dd: 'Non-marking indoor shoes' },
       { dt: 'Food', dd: 'Food and drinks available on site' },
-      { dt: 'Cancellation', dd: `Possible until ${cancellationDeadlineLabel('en')} (3 days before), with a refund` },
       { dt: 'Prizes', dd: 'Surprise!' },
     ],
     partnersTitle: 'Our partners',
