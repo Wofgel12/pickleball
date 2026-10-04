@@ -175,6 +175,9 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
           </>
         ))}
       </dl>
+      <a href={routes.tournamentRules[lang]} class="mt-6 inline-block font-semibold text-teal-700 underline hover:text-teal-900">
+        {fr ? 'Lire le règlement du tournoi →' : 'Read the tournament rules →'}
+      </a>
     </div>
     <div class="flex flex-col overflow-hidden rounded-2xl border-2 border-[#002b2b] bg-white/95">
       <MapEmbed

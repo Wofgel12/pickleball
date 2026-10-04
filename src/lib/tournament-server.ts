@@ -19,8 +19,8 @@
 //                                 is published, so it can never leak into launch.
 
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { tournament, findCategory, formatCHF, tournamentCopy, type TournamentCategory } from '../i18n/tournament';
-import { facts, type Lang } from '../i18n/ui';
+import { tournament, findCategory, formatCHF, tournamentCopy, cancellationDeadlineLabel, type TournamentCategory } from '../i18n/tournament';
+import { facts, routes, type Lang } from '../i18n/ui';
 
 function env(name: string): string | undefined {
   // Astro coerces values like "true" to booleans in import.meta.env: normalise to strings.
@@ -230,8 +230,8 @@ export async function createCheckoutSession(opts: {
     ? `Tournoi GSC Pickleball — ${isCombo ? 'Combo ' : ''}${drawNames}${promo}`
     : `GSC Pickleball Tournament — ${isCombo ? 'Combo ' : ''}${drawNames}${promo}`;
   const productDesc = lang === 'fr'
-    ? 'Dimanche 15 novembre 2026, 9h–18h, Collège Calvin, Genève. Non remboursable.'
-    : 'Sunday 15 November 2026, 9am–6pm, Collège Calvin, Geneva. Non-refundable.';
+    ? `Dimanche 15 novembre 2026, 9h–18h, Collège Calvin, Genève. Annulation possible jusqu’au ${cancellationDeadlineLabel('fr')}.`
+    : `Sunday 15 November 2026, 9am–6pm, Collège Calvin, Geneva. Cancellation possible until ${cancellationDeadlineLabel('en')}.`;
   const metadata = {
     order_id: opts.orderId,
     tournament: tournament.id,
@@ -406,8 +406,8 @@ export async function sendConfirmationEmail(order: RegistrationRow[]): Promise<b
       ? 'Pensez à vos chaussures de salle à semelle non marquante. Des raquettes peuvent être prêtées en cas de besoin.'
       : 'Remember your non-marking indoor shoes. Paddles can be lent if needed.'}</p>
     <p style="margin:0 0 20px;line-height:1.55">${fr
-      ? 'Rappel : l’inscription n’est pas remboursable.'
-      : 'Reminder: registration is non-refundable.'}</p>
+      ? `Empêchement ? Vous pouvez annuler votre inscription et être remboursé·e jusqu’au ${cancellationDeadlineLabel('fr')} en nous écrivant. Passé ce délai, l’inscription n’est plus remboursable. <a href="https://gscpickleball.ch${routes.tournamentRules.fr}" style="color:#0f766e">Règlement du tournoi</a>`
+      : `Can’t make it? You can cancel your registration and get a refund until ${cancellationDeadlineLabel('en')} by writing to us. After that date, registration is non-refundable. <a href="https://gscpickleball.ch${routes.tournamentRules.en}" style="color:#0f766e">Tournament rules</a>`}</p>
     <a href="${tournament.mapsUrl}" style="display:inline-block;background:#0d9488;color:#fff;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:bold">${escapeHtml(t.ctaMap)}</a>
     <p style="margin:24px 0 0;font-size:13px;color:#6b7280;line-height:1.55">${fr ? 'Une question ?' : 'Any questions?'} <a href="mailto:${facts.email}" style="color:#0f766e">${facts.email}</a></p>
   </div>

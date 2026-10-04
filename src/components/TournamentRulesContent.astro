@@ -1,0 +1,121 @@
+---
+// Tournament rules (FR/EN), linked from the registration checkbox, the
+// practical info and the confirmation e-mail. Dates and prices come from
+// src/i18n/tournament.ts so they never drift from the registration form.
+import { tournament, tournamentCopy, cancellationDeadlineLabel, formatCHF } from '../i18n/tournament';
+import { facts, routes, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const t = tournamentCopy[lang];
+const deadline = cancellationDeadlineLabel(lang);
+const doubles = formatCHF(tournament.categories[0].priceCents, lang);
+const combo = formatCHF(tournament.combos[0].priceCents, lang);
+const memberDoubles = formatCHF(tournament.categories[0].memberPriceCents, lang);
+const memberCombo = formatCHF(tournament.combos[0].memberPriceCents, lang);
+
+const link = 'text-teal-700 underline';
+const h2 = 'text-2xl font-semibold mb-3 mt-10 first:mt-0 text-gray-900';
+const p = 'mb-4';
+const ul = 'list-disc pl-6 space-y-1 mb-4';
+---
+<p class="text-sm text-gray-500 mb-8">
+  {fr ? 'Version du 4 octobre 2026' : 'Version of 4 October 2026'}
+</p>
+
+<h2 class={h2}>{fr ? '1. Organisation' : '1. Organiser'}</h2>
+<p class={p}>
+  {fr
+    ? <>Le tournoi est organisé par le <strong>Geneva Sports Club</strong>, association multisports basée à Genève (ci-après « l’organisation »). Contact : <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a> · <a href={`tel:${facts.phoneSession}`} class={link}>{facts.phoneSessionDisplay}</a>.</>
+    : <>The tournament is organised by the <strong>Geneva Sports Club</strong>, a multi-sport association based in Geneva (the “organisers”). Contact: <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a> · <a href={`tel:${facts.phoneSession}`} class={link}>{facts.phoneSessionDisplay}</a>.</>}
+</p>
+
+<h2 class={h2}>{fr ? '2. Date, lieu et programme' : '2. Date, venue and programme'}</h2>
+<ul class={ul}>
+  <li>{fr ? `${t.dateLong}, de 9h à 18h, ${tournament.venueName}, ${tournament.venueStreet}, ${tournament.venuePostalCode} Genève.` : `${t.dateLong}, 9am to 6pm, ${tournament.venueName}, ${tournament.venueStreet}, ${tournament.venuePostalCode} Geneva.`}</li>
+  <li>{fr ? 'Matin : doubles hommes et dames. Après-midi : double mixte.' : 'Morning: men’s and women’s doubles. Afternoon: mixed doubles.'}</li>
+  <li>{fr ? 'Les horaires précis de chaque tableau et le format des matchs sont communiqués dans le groupe WhatsApp du tournoi avant l’événement.' : 'The exact times for each draw and the match format are shared in the tournament WhatsApp group before the event.'}</li>
+</ul>
+
+<h2 class={h2}>{fr ? '3. Conditions de participation' : '3. Eligibility'}</h2>
+<ul class={ul}>
+  <li>{fr ? `Le tournoi est ouvert aux personnes âgées de ${tournament.minAge} ans et plus.` : `The tournament is open to people aged ${tournament.minAge} and over.`}</li>
+  <li>{fr ? 'Chaque joueuse et chaque joueur s’inscrit individuellement, même en double. Chacun·e indique son ou sa partenaire, ou demande à l’organisation de lui en trouver un·e.' : 'Every player registers individually, even for doubles. Each player names their partner or asks the organisers to find them one.'}</li>
+  <li>{fr ? 'Il est possible de s’inscrire à un double du matin (hommes ou dames) et au double mixte de l’après-midi.' : 'Players may enter one morning doubles draw (men’s or women’s) and the afternoon mixed doubles.'}</li>
+  <li>{fr ? 'Le nombre de places est limité dans chaque tableau. Les places sont attribuées dans l’ordre des inscriptions payées (premier arrivé, premier servi).' : 'Places are limited in every draw and allocated in the order paid registrations are received (first come, first served).'}</li>
+</ul>
+
+<h2 class={h2}>{fr ? '4. Inscription et paiement' : '4. Registration and payment'}</h2>
+<ul class={ul}>
+  <li>{fr ? 'L’inscription se fait en ligne et n’est définitive qu’après le paiement, confirmé par e-mail.' : 'Registration is done online and is only final once paid, which is confirmed by e-mail.'}</li>
+  <li>{fr ? `Tarifs : ${doubles} par tableau de double, ${combo} pour un double du matin + le double mixte.` : `Fees: ${doubles} per doubles draw, ${combo} for a morning doubles draw + the mixed doubles.`}</li>
+  <li>{fr ? `Les membres du Geneva Sports Club bénéficient d’un tarif réduit (${memberDoubles} / ${memberCombo}) grâce au code de réduction qui leur est communiqué. Ce code est strictement personnel et réservé aux membres ; en cas d’utilisation abusive, l’organisation peut demander le paiement de la différence.` : `Geneva Sports Club members get a reduced fee (${memberDoubles} / ${memberCombo}) with the discount code sent to them. The code is strictly reserved for members; in case of misuse, the organisers may ask for the difference to be paid.`}</li>
+  <li>{fr ? `Pendant le paiement, la place est réservée ${tournament.holdMinutes} minutes ; passé ce délai, elle est libérée.` : `During payment, the place is held for ${tournament.holdMinutes} minutes; after that, it is released.`}</li>
+  <li>{fr ? 'Le paiement est traité par Stripe ; l’organisation n’a jamais accès à vos données de paiement.' : 'Payment is processed by Stripe; the organisers never have access to your payment details.'}</li>
+</ul>
+
+<h2 class={h2}>{fr ? '5. Annulation par le participant' : '5. Cancellation by the player'}</h2>
+<ul class={ul}>
+  <li>
+    {fr
+      ? <>Vous pouvez annuler votre inscription <strong>jusqu’au {deadline}</strong>, soit au plus tard {tournament.cancellationDays} jours avant le tournoi, en écrivant à <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a>. Le montant payé vous est alors remboursé.</>
+      : <>You can cancel your registration <strong>until {deadline}</strong>, i.e. no later than {tournament.cancellationDays} days before the tournament, by writing to <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a>. The amount paid is then refunded.</>}
+  </li>
+  <li>{fr ? 'Passé ce délai, ou en cas d’absence le jour du tournoi, l’inscription n’est pas remboursée.' : 'After that date, or if you don’t show up on the day, the registration is not refunded.'}</li>
+  <li>{fr ? 'Avec l’accord de l’organisation, une inscription peut être transférée à une autre personne remplissant les conditions de participation.' : 'With the organisers’ agreement, a registration may be transferred to another person who meets the eligibility conditions.'}</li>
+  <li>{fr ? 'Si votre partenaire se désiste, prévenez-nous au plus vite : nous essaierons de vous trouver un·e autre partenaire.' : 'If your partner withdraws, let us know as soon as possible: we will try to find you another partner.'}</li>
+</ul>
+
+<h2 class={h2}>{fr ? '6. Annulation ou modification par l’organisation' : '6. Cancellation or changes by the organisers'}</h2>
+<ul class={ul}>
+  <li><strong>{fr ? 'En cas d’annulation du tournoi, vous êtes entièrement remboursé·e.' : 'If the tournament is cancelled, you are refunded in full.'}</strong></li>
+  <li>{fr ? 'En cas de report à une autre date, votre inscription reste valable ; si la nouvelle date ne vous convient pas, vous êtes entièrement remboursé·e sur simple demande.' : 'If it is postponed, your registration remains valid; if the new date doesn’t suit you, you are refunded in full on request.'}</li>
+  <li>{fr ? 'Si un tableau ne réunit pas assez de participants, l’organisation peut l’annuler ou le fusionner avec un autre ; les inscriptions concernées sont alors remboursées si vous ne souhaitez pas jouer dans le nouveau format.' : 'If a draw does not have enough players, the organisers may cancel it or merge it with another; affected registrations are refunded if you don’t wish to play in the new format.'}</li>
+  <li>{fr ? 'L’organisation peut adapter les horaires, le format des matchs ou la composition des tableaux pour le bon déroulement de la journée.' : 'The organisers may adjust the schedule, match format or draws to keep the day running smoothly.'}</li>
+</ul>
+
+<h2 class={h2}>{fr ? '7. Déroulement et comportement' : '7. Conduct on the day'}</h2>
+<ul class={ul}>
+  <li>{fr ? 'Les participants se présentent à l’heure indiquée par l’organisation. Un retard important peut entraîner la perte d’un match.' : 'Players arrive at the time given by the organisers. Significant lateness may mean forfeiting a match.'}</li>
+  <li>{fr ? 'Chaussures de salle à semelle non marquante obligatoires. Des raquettes peuvent être prêtées en cas de besoin.' : 'Non-marking indoor shoes are compulsory. Paddles can be lent if needed.'}</li>
+  <li>{fr ? 'Le fair-play, le respect des autres joueurs, de l’organisation et des locaux sont de rigueur. L’organisation peut exclure toute personne au comportement inapproprié, sans remboursement.' : 'Fair play and respect for other players, the organisers and the venue are expected. The organisers may exclude anyone behaving inappropriately, without a refund.'}</li>
+  <li>{fr ? 'Les décisions de l’organisation concernant le déroulement sportif sont définitives.' : 'The organisers’ decisions on how the competition runs are final.'}</li>
+</ul>
+
+<h2 class={h2}>{fr ? '8. Santé, assurance et responsabilité' : '8. Health, insurance and liability'}</h2>
+<ul class={ul}>
+  <li>{fr ? 'Chaque participant joue sous sa propre responsabilité et doit être en bonne condition physique.' : 'Each player takes part at their own risk and must be in good physical condition.'}</li>
+  <li>{fr ? 'Chaque participant doit être couvert par sa propre assurance maladie et accidents ; l’organisation n’en fournit aucune.' : 'Each player must be covered by their own health and accident insurance; the organisers provide none.'}</li>
+  <li>{fr ? 'Dans les limites permises par la loi, l’organisation décline toute responsabilité en cas d’accident, de blessure, de perte ou de vol d’objets personnels.' : 'To the extent permitted by law, the organisers accept no liability for accidents, injuries, or loss or theft of personal belongings.'}</li>
+</ul>
+
+<h2 class={h2}>{fr ? '9. Photos, vidéos et données personnelles' : '9. Photos, videos and personal data'}</h2>
+<ul class={ul}>
+  <li>{fr ? 'Des photos et vidéos peuvent être prises pendant le tournoi et publiées sur les canaux du Geneva Sports Club (site, Meetup, réseaux sociaux). Si vous ne souhaitez pas apparaître, signalez-le à l’organisation le jour même ou par e-mail.' : 'Photos and videos may be taken during the tournament and published on the Geneva Sports Club’s channels (website, Meetup, social media). If you don’t want to appear, tell the organisers on the day or by e-mail.'}</li>
+  <li>
+    {fr
+      ? <>Vos données d’inscription sont traitées conformément à notre <a href={routes.privacy.fr} class={link}>politique de confidentialité</a>.</>
+      : <>Your registration data is handled in line with our <a href={routes.privacy.en} class={link}>privacy policy</a>.</>}
+  </li>
+</ul>
+
+<h2 class={h2}>{fr ? '10. Prix et cadeaux' : '10. Prizes and gifts'}</h2>
+<p class={p}>
+  {fr
+    ? 'Les prix et cadeaux ne peuvent pas être échangés contre de l’argent.'
+    : 'Prizes and gifts cannot be exchanged for cash.'}
+</p>
+
+<h2 class={h2}>{fr ? '11. Acceptation et droit applicable' : '11. Acceptance and governing law'}</h2>
+<p class={p}>
+  {fr
+    ? 'L’inscription au tournoi implique l’acceptation du présent règlement. Le droit suisse est applicable ; le for est à Genève.'
+    : 'Registering for the tournament implies acceptance of these rules. Swiss law applies; the place of jurisdiction is Geneva.'}
+</p>
+
+<p class="mt-10">
+  <a href={routes.tournament[lang]} class="btn-press inline-flex items-center gap-2 rounded-xl bg-[#002b2b] hover:bg-[#003d3d] text-white font-semibold px-5 py-3">
+    ← {fr ? 'Retour au tournoi' : 'Back to the tournament'}
+  </a>
+</p>

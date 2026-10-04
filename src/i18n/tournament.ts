@@ -26,6 +26,9 @@ export const tournament = {
    */
   published: false,
 
+  /** Players can cancel (and get refunded) up to this many days before the start. */
+  cancellationDays: 3,
+
   /** Start / end in Geneva local time (CET = UTC+1 in November). */
   startISO: '2026-11-15T09:00:00+01:00',
   endISO: '2026-11-15T18:00:00+01:00',
@@ -153,6 +156,17 @@ export function formatCHF(cents: number, lang: Lang): string {
   return lang === 'fr' ? `${s} CHF` : `CHF ${s}`;
 }
 
+/** Last day a player can cancel with a refund, e.g. "jeudi 12 novembre 2026". */
+export function cancellationDeadlineLabel(lang: Lang): string {
+  const d = new Date(tournament.startISO);
+  d.setDate(d.getDate() - tournament.cancellationDays);
+  // Weekday formatted separately: some browsers insert a comma ("jeudi, 12 …"), wrong in French.
+  const locale = lang === 'fr' ? 'fr-CH' : 'en-GB';
+  const weekday = d.toLocaleDateString(locale, { weekday: 'long', timeZone: 'Europe/Zurich' });
+  const date = d.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Zurich' });
+  return `${weekday} ${date}`;
+}
+
 export const tournamentCopy = {
   fr: {
     kicker: 'Tournoi de pickleball · 1re édition',
@@ -212,7 +226,8 @@ export const tournamentCopy = {
       findPartner: 'Trouvez-moi un·e partenaire',
       withPartner: 'J’ai déjà un·e partenaire',
       age: 'J’ai 18 ans ou plus.',
-      noRefund: 'Je comprends que l’inscription n’est pas remboursable.',
+      rules: 'J’accepte le',
+      rulesLink: 'règlement du tournoi',
       paddle: 'Avez-vous besoin d’une raquette de prêt ?',
       promo: 'Code de réduction (facultatif)',
       promoApply: 'Appliquer',
@@ -257,7 +272,7 @@ export const tournamentCopy = {
       { dt: 'Matériel', dd: 'Des raquettes peuvent être prêtées en cas de besoin' },
       { dt: 'Tenue', dd: 'Chaussures de salle à semelle non marquante' },
       { dt: 'Restauration', dd: 'Restauration sur place disponible' },
-      { dt: 'Remboursement', dd: 'Les inscriptions ne sont pas remboursables' },
+      { dt: 'Annulation', dd: `Possible jusqu’au ${cancellationDeadlineLabel('fr')} (3 jours avant), avec remboursement` },
       { dt: 'Cadeaux', dd: 'Surprise !' },
     ],
     partnersTitle: 'Nos partenaires',
@@ -323,7 +338,8 @@ export const tournamentCopy = {
       findPartner: 'Find me a partner',
       withPartner: 'I already have a partner',
       age: 'I am 18 or older.',
-      noRefund: 'I understand registration is non-refundable.',
+      rules: 'I accept the',
+      rulesLink: 'tournament rules',
       paddle: 'Do you need to borrow a paddle?',
       promo: 'Discount code (optional)',
       promoApply: 'Apply',
@@ -368,7 +384,7 @@ export const tournamentCopy = {
       { dt: 'Equipment', dd: 'Paddles can be lent if needed' },
       { dt: 'Shoes', dd: 'Non-marking indoor shoes' },
       { dt: 'Food', dd: 'Food and drinks available on site' },
-      { dt: 'Refunds', dd: 'Registrations are non-refundable' },
+      { dt: 'Cancellation', dd: `Possible until ${cancellationDeadlineLabel('en')} (3 days before), with a refund` },
       { dt: 'Prizes', dd: 'Surprise!' },
     ],
     partnersTitle: 'Our partners',

@@ -17,7 +17,7 @@ interface Props {
 
 type Remaining = Partial<Record<CategoryId, number>>;
 type Partner = { name: string; find: boolean };
-type ErrorKey = 'category' | 'firstName' | 'lastName' | 'email' | 'phone' | 'paddle' | 'age' | 'noRefund' | `partner-${CategoryId}`;
+type ErrorKey = 'category' | 'firstName' | 'lastName' | 'email' | 'phone' | 'paddle' | 'age' | 'acceptRules' | `partner-${CategoryId}`;
 type Errors = Partial<Record<ErrorKey, string>>;
 
 const POLL_MS = 20_000;
@@ -31,7 +31,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   const [partners, setPartners] = useState<Partial<Record<CategoryId, Partner>>>({});
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '' });
   const [age, setAge] = useState(false);
-  const [noRefund, setNoRefund] = useState(false);
+  const [acceptRules, setAcceptRules] = useState(false);
   const [needsPaddle, setNeedsPaddle] = useState<boolean | null>(null);
   const [promoInput, setPromoInput] = useState('');
   const [promo, setPromo] = useState<{ code: string } | null>(null);
@@ -169,7 +169,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
     }
     if (!age) e.age = t.errors.checkbox;
     if (needsPaddle === null) e.paddle = t.errors.choice;
-    if (!noRefund) e.noRefund = t.errors.checkbox;
+    if (!acceptRules) e.acceptRules = t.errors.checkbox;
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -191,7 +191,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           })),
           ...form,
           age,
-          noRefund,
+          acceptRules,
           needsPaddle,
           promoCode: promo?.code ?? '',
           lang,
@@ -598,8 +598,21 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
 
         <div className="space-y-3 mb-8">
           {[
-            { key: 'age' as const, checked: age, set: setAge, label: t.fields.age },
-            { key: 'noRefund' as const, checked: noRefund, set: setNoRefund, label: t.fields.noRefund },
+            { key: 'age' as const, checked: age, set: setAge, label: <>{t.fields.age}</> },
+            {
+              key: 'acceptRules' as const,
+              checked: acceptRules,
+              set: setAcceptRules,
+              label: (
+                <>
+                  {t.fields.rules}{' '}
+                  <a href={routes.tournamentRules[lang]} target="_blank" rel="noopener" className="underline text-teal-700 hover:text-teal-900">
+                    {t.fields.rulesLink}
+                  </a>
+                  .
+                </>
+              ),
+            },
           ].map((cb) => (
             <div key={cb.key}>
               <label className="flex items-start gap-3 cursor-pointer">

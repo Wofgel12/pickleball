@@ -23,7 +23,7 @@ function clean(v: unknown, max = 120): string {
 /**
  * Validates the form, reserves every chosen draw (all or nothing) and
  * returns the Stripe Checkout URL.
- * Body: { draws: [{ category, partnerName, findPartner }], firstName, lastName, email, phone, age, noRefund, lang }
+ * Body: { draws: [{ category, partnerName, findPartner }], firstName, lastName, email, phone, age, acceptRules, needsPaddle, promoCode, lang }
  */
 export const POST: APIRoute = async ({ request, url }) => {
   if (!isConfigured()) return json({ error: 'unavailable' }, 503);
@@ -68,7 +68,7 @@ export const POST: APIRoute = async ({ request, url }) => {
     !isValidPhone(input.phone) ||
     draws.some((d) => d.category.double && !d.findPartner && !d.partnerName) ||
     body.age !== true ||
-    body.noRefund !== true ||
+    body.acceptRules !== true ||
     typeof body.needsPaddle !== 'boolean'
   ) {
     return json({ error: 'invalid' }, 400);

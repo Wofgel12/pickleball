@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import TournamentRulesContent from '../../../components/TournamentRulesContent.astro';
+import { tournament } from '../../../i18n/tournament';
+---
+<BaseLayout pageKey="tournamentRules" lang="en" noindex={!tournament.published}>
+  <div class="bg-tile">
+    <PageHero lang="en" title="Tournament rules" lead="Geneva Sports Club pickleball tournament — Sunday 15 November 2026, Collège Calvin, Geneva." />
+    <section class="py-12 px-4">
+      <div class="max-w-4xl mx-auto">
+        <article
+          class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-sm border-2 p-8 md:p-12 text-gray-800 leading-relaxed"
+          style="border-color: #002b2b;"
+        >
+          <TournamentRulesContent lang="en" />
+        </article>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -19,6 +19,7 @@ export const routes = {
   privacy: { fr: '/politique-confidentialite/', en: '/en/privacy-policy/' },
   // Landing page, deliberately absent from the menu and footer.
   tournament: { fr: '/tournoi/', en: '/en/tournament/' },
+  tournamentRules: { fr: '/tournoi/reglement/', en: '/en/tournament/rules/' },
 } as const;
 export type RouteKey = keyof typeof routes;
 
@@ -144,6 +145,16 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
       description: 'Geneva Sports Club pickleball tournament on 15 November 2026 at Collège Calvin, Geneva: men’s, women’s and mixed doubles. Limited places.',
     },
   },
+  tournamentRules: {
+    fr: {
+      title: 'Règlement du tournoi de pickleball — 15 novembre 2026 | GSC',
+      description: 'Règlement du tournoi de pickleball du Geneva Sports Club : inscription, paiement, annulation et remboursement, déroulement, responsabilité.',
+    },
+    en: {
+      title: 'Pickleball Tournament Rules — 15 November 2026 | GSC',
+      description: 'Rules of the Geneva Sports Club pickleball tournament: registration, payment, cancellation and refunds, how the day runs, liability.',
+    },
+  },
 };
 
 // Navigation links (visible labels per language)
@@ -158,6 +169,7 @@ export const navLabels: Record<RouteKey, Record<Lang, string>> = {
   legal:       { fr: 'Mentions légales',              en: 'Legal Notice' },
   privacy:     { fr: 'Politique de confidentialité',  en: 'Privacy Policy' },
   tournament:  { fr: 'Tournoi',                       en: 'Tournament' },
+  tournamentRules: { fr: 'Règlement du tournoi',      en: 'Tournament rules' },
 };
 
 // Common UI strings used across components

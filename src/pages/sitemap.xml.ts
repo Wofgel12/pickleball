@@ -9,7 +9,7 @@ const SITE = 'https://gscpickleball.ch';
 // excluded here so they do not consume crawl budget.
 const indexableKeys: RouteKey[] = ['home', 'participate', 'learn', 'gear', 'faq', 'news', 'contact'];
 // The tournament landing page joins the sitemap once it is published.
-if (tournament.published) indexableKeys.push('tournament');
+if (tournament.published) indexableKeys.push('tournament', 'tournamentRules');
 
 export const GET: APIRoute = ({ site }) => {
   const baseUrl = (site?.toString() ?? SITE).replace(/\/$/, '');
