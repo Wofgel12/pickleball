@@ -110,8 +110,8 @@ const processors = [
 <p class="mb-4">
   <strong>{fr ? 'Pas de statistiques ni de publicité.' : 'No analytics, no advertising.'}</strong>{' '}
   {fr
-    ? 'Le site n’utilise aucun outil de mesure d’audience ni aucun pixel publicitaire. Il ne dépose aucun cookie et n’enregistre rien dans votre navigateur (ni cookie, ni stockage local). Aucun bandeau de consentement n’est donc nécessaire.'
-    : 'The site uses no audience-measurement tool and no advertising pixel. It sets no cookies and stores nothing in your browser (no cookies, no local storage). No consent banner is therefore needed.'}
+    ? 'Le site n’utilise aucun outil de mesure d’audience ni aucun pixel publicitaire. Il ne dépose lui-même aucun cookie et n’enregistre rien dans votre navigateur (ni cookie, ni stockage local). Seules les cartes Google Maps intégrées peuvent entraîner des cookies de Google (voir section 3).'
+    : 'The site uses no audience-measurement tool and no advertising pixel. It sets no cookies itself and stores nothing in your browser (no cookies, no local storage). Only the embedded Google Maps may lead to cookies from Google (see section 3).'}
 </p>
 
 <h3 class={h3}>{fr ? '2.2 Formulaire de contact' : '2.2 Contact form'}</h3>
@@ -160,15 +160,15 @@ const processors = [
 <h2 class={h2}>{fr ? '3. Contenus de tiers intégrés au site' : '3. Third-party content embedded in the site'}</h2>
 <p class="mb-2">
   {fr
-    ? 'Certaines pages affichent des contenus fournis par des tiers. Nous les avons configurés pour qu’aucun cookie ne soit déposé sans action de votre part :'
-    : 'Some pages display content provided by third parties. We have set them up so that no cookie is set without you taking action:'}
+    ? 'Certaines pages affichent des contenus fournis par des tiers. Pour les afficher, votre navigateur se connecte à leurs serveurs, qui reçoivent votre adresse IP :'
+    : 'Some pages display content provided by third parties. To show it, your browser connects to their servers, which receive your IP address:'}
 </p>
 <ul class="list-disc pl-6 space-y-2 mb-4">
   <li>
     <strong>Google Maps</strong>{' '}
     {fr
-      ? '(pages Participer, Contact et Tournoi) : la carte ne se charge que si vous cliquez sur « Afficher la carte ». Avant ce clic, votre navigateur ne contacte pas Google. Une fois la carte affichée, Google peut déposer des cookies.'
-      : '(Participate, Contact and Tournament pages): the map only loads if you click “Show the map”. Before that, your browser does not contact Google. Once the map is displayed, Google may set cookies.'}
+      ? '(pages Participer, Contact et Tournoi) : la carte se charge lorsque vous arrivez à son niveau sur la page. Google peut alors déposer des cookies, selon sa propre politique de confidentialité.'
+      : '(Participate, Contact and Tournament pages): the map loads when you scroll to it. Google may then set cookies, under its own privacy policy.'}
   </li>
   <li>
     <strong>YouTube</strong>{' '}

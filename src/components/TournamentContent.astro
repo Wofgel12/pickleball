@@ -193,9 +193,7 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
     </details>
     <div class="flex flex-col overflow-hidden rounded-2xl border-2 border-[#002b2b] bg-white/95">
       <MapEmbed
-        lang={lang}
         src={tournament.mapsEmbedUrl + (fr ? 'fr' : 'en')}
-        mapsLink={tournament.mapsUrl}
         class="flex-1 min-h-[300px]"
         title={fr ? `Carte : ${tournament.venueName}, Genève` : `Map: ${tournament.venueName}, Geneva`}
       />

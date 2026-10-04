@@ -286,7 +286,6 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
         </span>
         <p className="font-semibold">{t.comboBanner}</p>
       </div>
-      <p className="-mt-3 mb-6 text-center text-sm text-gray-700">{t.memberBanner}</p>
 
       {/* Draws with live counters */}
       <div className="grid md:grid-cols-3 gap-4 md:gap-5">
