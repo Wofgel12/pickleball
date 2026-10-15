@@ -1,63 +1,183 @@
 ---
-// Decorative line drawings of pickleball paddles and balls that draw themselves
-// on the page background, hold, then erase — looping, staggered. Pure SVG + CSS
-// (no JS, no Lottie file). Sits behind the content of an `isolate` wrapper.
+// Decorative pickleball line drawings that draw themselves on the page
+// background, hold, then erase — looping, staggered. Pure SVG + CSS (no JS,
+// no Lottie file). Sits behind the content of an `isolate` wrapper.
 //
-// Each shape uses pathLength="1" so a single keyframe (dashoffset 1 → 0 → -1)
+// Every stroke uses pathLength="1", so one keyframe (dashoffset 1 → 0 → -1)
 // draws and erases any outline regardless of its real length.
 
-type Doodle = { kind: 'paddle' | 'ball'; top: string; side: 'left' | 'right'; offset: string; size: number; rotate: number; delay: number; mobile?: boolean };
+type Kind = 'paddle' | 'ball' | 'court' | 'net' | 'speedBall' | 'dink' | 'crossed' | 'trophy' | 'medal' | 'eleven' | 'sparkle';
 
-// Positions spread down the page, alternating sides, in the margins.
+type Doodle = {
+  kind: Kind;
+  top: string;
+  side: 'left' | 'right';
+  offset: string;
+  size: number; // width in px
+  rotate?: number;
+  delay: number; // s
+  duration?: number; // s, default 10
+  mobile?: boolean; // also shown on small screens
+};
+
+// Spread down the page, alternating sides, mostly in the margins.
 const doodles: Doodle[] = [
-  { kind: 'paddle', top: '4%',  side: 'left',  offset: '2%',  size: 120, rotate: -18, delay: 0,   mobile: true },
-  { kind: 'ball',   top: '9%',  side: 'right', offset: '4%',  size: 70,  rotate: 0,   delay: 2.5 },
-  { kind: 'paddle', top: '22%', side: 'right', offset: '1%',  size: 140, rotate: 22,  delay: 1.2, mobile: true },
-  { kind: 'ball',   top: '30%', side: 'left',  offset: '5%',  size: 60,  rotate: 0,   delay: 4 },
-  { kind: 'paddle', top: '45%', side: 'left',  offset: '1%',  size: 130, rotate: 12,  delay: 3 },
-  { kind: 'ball',   top: '55%', side: 'right', offset: '6%',  size: 64,  rotate: 0,   delay: 0.8, mobile: true },
-  { kind: 'paddle', top: '68%', side: 'right', offset: '2%',  size: 125, rotate: -24, delay: 5 },
-  { kind: 'ball',   top: '80%', side: 'left',  offset: '4%',  size: 58,  rotate: 0,   delay: 2 },
-  { kind: 'paddle', top: '90%', side: 'left',  offset: '3%',  size: 115, rotate: 16,  delay: 3.8, mobile: true },
+  { kind: 'paddle',    top: '2%',  side: 'left',  offset: '2%', size: 110, rotate: -18, delay: 0,   mobile: true },
+  { kind: 'sparkle',   top: '3%',  side: 'right', offset: '9%', size: 34,  delay: 1.5, duration: 6 },
+  { kind: 'ball',      top: '7%',  side: 'right', offset: '3%', size: 66,  delay: 2.5, mobile: true },
+  { kind: 'speedBall', top: '13%', side: 'left',  offset: '1%', size: 130, rotate: -8,  delay: 4,   duration: 8 },
+  { kind: 'court',     top: '17%', side: 'right', offset: '1%', size: 120, rotate: 8,   delay: 1,   duration: 12, mobile: true },
+  { kind: 'eleven',    top: '24%', side: 'left',  offset: '3%', size: 80,  rotate: -6,  delay: 5.5 },
+  { kind: 'dink',      top: '29%', side: 'right', offset: '2%', size: 140, delay: 3,   duration: 9 },
+  { kind: 'trophy',    top: '34%', side: 'left',  offset: '2%', size: 90,  rotate: -4,  delay: 0.5, mobile: true },
+  { kind: 'sparkle',   top: '37%', side: 'left',  offset: '9%', size: 28,  delay: 3.5, duration: 6 },
+  { kind: 'crossed',   top: '41%', side: 'right', offset: '2%', size: 120, delay: 6,   duration: 11 },
+  { kind: 'ball',      top: '47%', side: 'left',  offset: '5%', size: 54,  delay: 2 },
+  { kind: 'net',       top: '51%', side: 'right', offset: '1%', size: 130, rotate: -4,  delay: 4.5, duration: 11, mobile: true },
+  { kind: 'paddle',    top: '57%', side: 'left',  offset: '1%', size: 115, rotate: 14,  delay: 1.8 },
+  { kind: 'medal',     top: '62%', side: 'right', offset: '4%', size: 70,  rotate: 6,   delay: 0.2, mobile: true },
+  { kind: 'speedBall', top: '67%', side: 'left',  offset: '2%', size: 120, rotate: 10,  delay: 5,   duration: 8 },
+  { kind: 'sparkle',   top: '70%', side: 'right', offset: '9%', size: 30,  delay: 2.8, duration: 6 },
+  { kind: 'court',     top: '74%', side: 'right', offset: '2%', size: 110, rotate: -10, delay: 3.2, duration: 12 },
+  { kind: 'dink',      top: '79%', side: 'left',  offset: '1%', size: 130, delay: 0.8, duration: 9, mobile: true },
+  { kind: 'paddle',    top: '84%', side: 'right', offset: '2%', size: 105, rotate: -22, delay: 4.2 },
+  { kind: 'trophy',    top: '89%', side: 'left',  offset: '3%', size: 80,  rotate: 5,   delay: 2.4, mobile: true },
+  { kind: 'ball',      top: '93%', side: 'right', offset: '5%', size: 58,  delay: 1.1, mobile: true },
+  { kind: 'eleven',    top: '96%', side: 'left',  offset: '8%', size: 70,  rotate: 6,   delay: 3.9 },
 ];
 
-// Ball holes (pickleball pattern), as small circles around the centre.
+// width / height ratio of each drawing's viewBox
+const viewBoxes: Record<Kind, [number, number]> = {
+  paddle: [100, 170], ball: [100, 100], court: [100, 160], net: [160, 90],
+  speedBall: [170, 90], dink: [180, 90], crossed: [140, 140], trophy: [100, 120],
+  medal: [80, 120], eleven: [100, 80], sparkle: [40, 40],
+};
+
+// Pickleball holes: six around the centre + one in the middle.
 const holes = [0, 60, 120, 180, 240, 300].map((deg) => {
   const r = (deg * Math.PI) / 180;
   return { cx: 50 + Math.cos(r) * 24, cy: 50 + Math.sin(r) * 24 };
 });
 ---
 <div class="paddle-doodles" aria-hidden="true">
-  {doodles.map((d) => (
-    <svg
-      class:list={['doodle', !d.mobile && 'hidden md:block']}
-      viewBox={d.kind === 'paddle' ? '0 0 100 170' : '0 0 100 100'}
-      width={d.size}
-      height={d.kind === 'paddle' ? Math.round(d.size * 1.7) : d.size}
-      style={`top:${d.top};${d.side}:${d.offset};transform:rotate(${d.rotate}deg);--delay:${d.delay}s`}
-      fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      {d.kind === 'paddle' ? (
-        <>
-          <!-- Paddle face -->
-          <path pathLength="1" d="M28 8 H72 A20 20 0 0 1 92 28 V84 A32 32 0 0 1 60 116 H40 A32 32 0 0 1 8 84 V28 A20 20 0 0 1 28 8 Z" />
-          <!-- Edge guard line -->
-          <path pathLength="1" class="thin" d="M30 18 H70 A12 12 0 0 1 82 30 V82 A24 24 0 0 1 58 106 H42 A24 24 0 0 1 18 82 V30 A12 12 0 0 1 30 18 Z" />
-          <!-- Handle + grip wraps -->
-          <path pathLength="1" d="M41 116 V156 A6 6 0 0 0 47 162 H53 A6 6 0 0 0 59 156 V116" />
-          <path pathLength="1" class="thin" d="M41 128 L59 124 M41 140 L59 136 M41 152 L59 148" />
-        </>
-      ) : (
-        <>
-          <circle pathLength="1" cx="50" cy="50" r="42" />
-          {holes.map((h) => <circle pathLength="1" class="thin" cx={h.cx} cy={h.cy} r="6" />)}
-          <circle pathLength="1" class="thin" cx="50" cy="50" r="6" />
-        </>
-      )}
-    </svg>
-  ))}
+  {doodles.map((d) => {
+    const [vw, vh] = viewBoxes[d.kind];
+    return (
+      <svg
+        class:list={['doodle', !d.mobile && 'hidden md:block']}
+        viewBox={`0 0 ${vw} ${vh}`}
+        width={d.size}
+        height={Math.round((d.size * vh) / vw)}
+        style={`top:${d.top};${d.side}:${d.offset};transform:rotate(${d.rotate ?? 0}deg);--delay:${d.delay}s;--duration:${d.duration ?? 10}s`}
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        {d.kind === 'paddle' && (
+          <>
+            <path pathLength="1" d="M28 8 H72 A20 20 0 0 1 92 28 V84 A32 32 0 0 1 60 116 H40 A32 32 0 0 1 8 84 V28 A20 20 0 0 1 28 8 Z" />
+            <path pathLength="1" class="thin" d="M30 18 H70 A12 12 0 0 1 82 30 V82 A24 24 0 0 1 58 106 H42 A24 24 0 0 1 18 82 V30 A12 12 0 0 1 30 18 Z" />
+            <path pathLength="1" d="M41 116 V156 A6 6 0 0 0 47 162 H53 A6 6 0 0 0 59 156 V116" />
+            <path pathLength="1" class="thin" d="M41 128 L59 124 M41 140 L59 136 M41 152 L59 148" />
+          </>
+        )}
+
+        {d.kind === 'ball' && (
+          <>
+            <circle pathLength="1" cx="50" cy="50" r="42" />
+            {holes.map((h) => <circle pathLength="1" class="thin" cx={h.cx} cy={h.cy} r="6" />)}
+            <circle pathLength="1" class="thin" cx="50" cy="50" r="6" />
+          </>
+        )}
+
+        {d.kind === 'court' && (
+          <>
+            <!-- Court from above: outline, net, kitchen lines, centre service lines -->
+            <path pathLength="1" d="M10 8 H90 V152 H10 Z" />
+            <path pathLength="1" d="M4 80 H96" />
+            <path pathLength="1" class="thin" d="M10 58 H90 M10 102 H90" />
+            <path pathLength="1" class="thin" d="M50 8 V58 M50 102 V152" />
+          </>
+        )}
+
+        {d.kind === 'net' && (
+          <>
+            <!-- Net from the side: posts, top tape, mesh -->
+            <path pathLength="1" d="M10 84 V14 M150 84 V14" />
+            <path pathLength="1" d="M10 18 Q80 26 150 18" />
+            <path pathLength="1" class="thin" d="M10 40 Q80 46 150 40 M10 62 Q80 66 150 62" />
+            <path pathLength="1" class="thin" d="M34 20 V84 M57 22 V84 M80 23 V84 M103 22 V84 M126 20 V84" />
+          </>
+        )}
+
+        {d.kind === 'speedBall' && (
+          <>
+            <!-- Ball with motion lines -->
+            <circle pathLength="1" cx="125" cy="45" r="32" />
+            <circle pathLength="1" class="thin" cx="125" cy="45" r="5" />
+            <circle pathLength="1" class="thin" cx="141" cy="36" r="4.5" />
+            <circle pathLength="1" class="thin" cx="112" cy="58" r="4.5" />
+            <circle pathLength="1" class="thin" cx="138" cy="60" r="4.5" />
+            <path pathLength="1" d="M8 26 H70 M22 45 H82 M8 64 H70" />
+          </>
+        )}
+
+        {d.kind === 'dink' && (
+          <>
+            <!-- Soft dink: dotted arc just over the net, ball landing in the kitchen -->
+            <path pathLength="1" d="M6 82 H174" />
+            <path pathLength="1" d="M90 82 V44" />
+            <path pathLength="1" class="thin dotted" d="M24 70 Q90 0 150 70" />
+            <circle pathLength="1" cx="156" cy="74" r="7" />
+          </>
+        )}
+
+        {d.kind === 'crossed' && (
+          <>
+            <!-- Two crossed paddles -->
+            <g transform="rotate(-35 70 70)">
+              <path pathLength="1" d="M50 6 H90 A14 14 0 0 1 104 20 V62 A24 24 0 0 1 80 86 H60 A24 24 0 0 1 36 62 V20 A14 14 0 0 1 50 6 Z" />
+              <path pathLength="1" d="M63 86 V126 A4 4 0 0 0 67 130 H73 A4 4 0 0 0 77 126 V86" />
+            </g>
+            <g transform="rotate(35 70 70)">
+              <path pathLength="1" d="M50 6 H90 A14 14 0 0 1 104 20 V62 A24 24 0 0 1 80 86 H60 A24 24 0 0 1 36 62 V20 A14 14 0 0 1 50 6 Z" />
+              <path pathLength="1" d="M63 86 V126 A4 4 0 0 0 67 130 H73 A4 4 0 0 0 77 126 V86" />
+            </g>
+          </>
+        )}
+
+        {d.kind === 'trophy' && (
+          <>
+            <path pathLength="1" d="M28 10 H72 V40 A22 22 0 0 1 28 40 Z" />
+            <path pathLength="1" class="thin" d="M28 18 H14 A12 12 0 0 0 28 44 M72 18 H86 A12 12 0 0 1 72 44" />
+            <path pathLength="1" d="M50 62 V84 M34 84 H66 V96 H34 Z M26 96 H74 V108 H26 Z" />
+            <circle pathLength="1" class="thin" cx="50" cy="30" r="8" />
+          </>
+        )}
+
+        {d.kind === 'medal' && (
+          <>
+            <path pathLength="1" class="thin" d="M22 6 L40 52 M58 6 L40 52 M10 6 H70" />
+            <circle pathLength="1" cx="40" cy="80" r="28" />
+            <circle pathLength="1" class="thin" cx="40" cy="80" r="18" />
+            <path pathLength="1" class="thin" d="M40 70 L43 77 H50 L44 81 L46 88 L40 84 L34 88 L36 81 L30 77 H37 Z" />
+          </>
+        )}
+
+        {d.kind === 'eleven' && (
+          <>
+            <!-- "11": the winning score in pickleball -->
+            <path pathLength="1" d="M18 22 L32 10 V70 M22 70 H42" />
+            <path pathLength="1" d="M58 22 L72 10 V70 M62 70 H82" />
+          </>
+        )}
+
+        {d.kind === 'sparkle' && (
+          <path pathLength="1" d="M20 2 V14 M20 26 V38 M2 20 H14 M26 20 H38 M8 8 L13 13 M27 27 L32 32 M32 8 L27 13 M13 27 L8 32" />
+        )}
+      </svg>
+    );
+  })}
 </div>
 
 <style>
@@ -81,8 +201,14 @@ const holes = [0, 60, 120, 180, 240, 300].map((deg) => {
   .doodle :global(circle) {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    animation: doodle-draw 10s ease-in-out infinite;
+    animation: doodle-draw var(--duration, 10s) ease-in-out infinite;
     animation-delay: var(--delay);
+  }
+  /* Dotted trajectory: dots appear progressively instead of a solid stroke. */
+  .doodle :global(.dotted) {
+    stroke-dasharray: 0.02 0.03;
+    stroke-dashoffset: 0;
+    animation-name: doodle-fade;
   }
   /* draw (0→35%), hold, erase from the start (65→95%), short pause */
   @keyframes doodle-draw {
@@ -92,11 +218,17 @@ const holes = [0, 60, 120, 180, 240, 300].map((deg) => {
     95% { stroke-dashoffset: -1; }
     100% { stroke-dashoffset: -1; }
   }
+  @keyframes doodle-fade {
+    0%, 10% { opacity: 0; }
+    35%, 65% { opacity: 1; }
+    90%, 100% { opacity: 0; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .doodle :global(path),
     .doodle :global(circle) {
       animation: none;
       stroke-dashoffset: 0;
+      opacity: 1;
     }
   }
 </style>
