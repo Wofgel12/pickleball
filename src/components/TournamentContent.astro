@@ -3,6 +3,7 @@ import Countdown from './islands/Countdown.tsx';
 import TournamentRegistration from './islands/TournamentRegistration.tsx';
 import MapEmbed from './MapEmbed.astro';
 import RichText from './RichText.astro';
+import DoodleShape from './DoodleShape.astro';
 import { tournament, tournamentCopy } from '../i18n/tournament';
 import { facts, routes, type Lang } from '../i18n/ui';
 import fluffyLogo from '../assets/partners/fluffypuffy.webp';
@@ -42,6 +43,10 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       <div class="absolute inset-0 rounded-full" style="background-image:radial-gradient(circle,#65a30d 0 5%,transparent 6%);background-size:28% 28%;background-position:center;opacity:.35"></div>
     </div>
     <div class="absolute -bottom-12 -left-12 w-32 h-32 md:w-40 md:h-40 rounded-full bg-teal-400/30 pointer-events-none" aria-hidden="true"></div>
+    <!-- Line drawings in the empty corners (behind the text) -->
+    <DoodleShape kind="crossed" tone="dark" width={150} delay={0.6} duration={11} class="absolute bottom-6 right-8 hidden lg:block" style="transform:rotate(-8deg)" />
+    <DoodleShape kind="speedBall" tone="dark" width={120} delay={4} duration={9} class="absolute bottom-40 right-6 hidden lg:block" style="transform:rotate(-14deg)" />
+    <DoodleShape kind="net" tone="dark" width={120} delay={2.2} duration={12} class="absolute top-8 left-8 hidden md:block" style="transform:rotate(-6deg)" />
 
     <div class="relative z-10 px-6 py-12 md:px-14 md:py-16 text-center hero-stagger">
       <div>
@@ -230,7 +235,9 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
 
 <!-- ============ CONTACT ============ -->
 <section class="px-4 pb-20">
-  <div class="max-w-3xl mx-auto text-center bg-white/95 rounded-2xl border-2 border-[#002b2b] p-8 md:p-10">
+  <div class="relative isolate overflow-hidden max-w-3xl mx-auto text-center bg-white/95 rounded-2xl border-2 border-[#002b2b] p-8 md:p-10">
+    <DoodleShape kind="ball" width={58} delay={1.5} class="absolute bottom-6 left-8 -z-10 hidden md:block" />
+    <DoodleShape kind="paddle" width={64} delay={3.5} class="absolute top-6 right-10 -z-10 hidden md:block" style="transform:rotate(18deg)" />
     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{t.contactTitle}</h2>
     <p class="text-gray-700 mb-5">{t.contactText}</p>
     <div class="flex flex-wrap justify-center gap-3">
