@@ -59,8 +59,8 @@ const ul = 'list-disc pl-6 space-y-1 mb-4';
 <ul class={ul}>
   <li>
     {fr
-      ? <>Vous pouvez annuler votre inscription <strong>jusqu’au {deadline}</strong>, soit au plus tard {tournament.cancellationDays} jours avant le tournoi, en écrivant à <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a>. Le montant payé vous est alors remboursé.</>
-      : <>You can cancel your registration <strong>until {deadline}</strong>, i.e. no later than {tournament.cancellationDays} days before the tournament, by writing to <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a>. The amount paid is then refunded.</>}
+      ? <>Vous pouvez annuler votre inscription <strong>jusqu’au {deadline}</strong>, soit au plus tard {tournament.cancellationDays} jours avant le tournoi, en écrivant à <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a>. Le montant payé vous est alors remboursé, en déduisant les frais de remboursement prélevés par la plateforme Stripe.</>
+      : <>You can cancel your registration <strong>until {deadline}</strong>, i.e. no later than {tournament.cancellationDays} days before the tournament, by writing to <a href={`mailto:${facts.email}`} class={link}>{facts.email}</a>. The amount paid is then refunded, minus the refund fees charged by the Stripe platform.</>}
   </li>
   <li>{fr ? 'Passé ce délai, ou en cas d’absence le jour du tournoi, l’inscription n’est pas remboursée.' : 'After that date, or if you don’t show up on the day, the registration is not refunded.'}</li>
   <li>{fr ? 'Avec l’accord de l’organisation, une inscription peut être transférée à une autre personne remplissant les conditions de participation.' : 'With the organisers’ agreement, a registration may be transferred to another person who meets the eligibility conditions.'}</li>

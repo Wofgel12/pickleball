@@ -339,27 +339,48 @@ export async function sendConfirmationEmail(order: RegistrationRow[]): Promise<b
   if (!apiKey || !from || order.length === 0) return false;
 
   const reg = order[0];
-  const lang: Lang = reg.lang === 'en' ? 'en' : 'fr';
-  const fr = lang === 'fr';
-  const t = tournamentCopy[lang];
-
   // Programme order: morning draw first, mixed (afternoon) second.
   const draws = order
     .map((r) => ({ row: r, cat: findCategory(r.category) }))
     .sort((x, y) => tournament.categories.indexOf(x.cat!) - tournament.categories.indexOf(y.cat!));
-  const drawNames = draws.map((d) => (d.cat ? d.cat.name[lang] : d.row.category)).join(' + ');
+  const drawNames = (lang: Lang) => draws.map((d) => (d.cat ? d.cat.name[lang] : d.row.category)).join(' + ');
+
+  // Bilingual e-mail: French first, then English (announced at the top).
+  const subject = `Inscription confirmée / Registration confirmed — Tournoi GSC Pickleball (${drawNames('fr')})`;
+  const html = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0;background:#f4f7f6;font-family:Arial,Helvetica,sans-serif;color:#1f2937">
+<div style="max-width:560px;margin:0 auto;padding:24px">
+  <p style="margin:0 0 12px;font-size:13px;color:#6b7280;text-align:center"><a href="#en" style="color:#0f766e">English version below</a> ↓</p>
+  ${confirmationCard(order, draws, 'fr')}
+  <div id="en" style="height:32px"></div>
+  ${confirmationCard(order, draws, 'en')}
+</div></body></html>`;
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from, to: [reg.email], reply_to: facts.email, subject, html }),
+  });
+  if (!res.ok) throw new Error(`resend ${res.status}: ${await res.text()}`);
+  return true;
+}
+
+type EmailDraw = { row: RegistrationRow; cat: TournamentCategory | undefined };
+
+/** One language version of the confirmation e-mail (header + summary). */
+function confirmationCard(order: RegistrationRow[], draws: EmailDraw[], lang: Lang): string {
+  const reg = order[0];
+  const fr = lang === 'fr';
+  const t = tournamentCopy[lang];
   const totalCents = order.reduce((n, r) => n + r.amount_cents, 0);
 
   const rows: [string, string][] = [
-    ...draws.flatMap(({ row, cat }): [string, string][] => [
-      [
-        cat ? `${cat.name[lang]} (${t.slots[cat.slot].toLowerCase()})` : row.category,
-        cat && !cat.double
-          ? (fr ? 'Tableau individuel' : 'Individual draw')
-          : row.find_partner
-          ? (fr ? 'Partenaire : on vous en trouve un·e, on vous recontacte avant le tournoi.' : 'Partner: we’ll find you one and be in touch before the tournament.')
-          : `${fr ? 'Partenaire' : 'Partner'} : ${row.partner_name ?? ''}`,
-      ],
+    ...draws.map(({ row, cat }): [string, string] => [
+      cat ? `${cat.name[lang]} (${t.slots[cat.slot].toLowerCase()})` : row.category,
+      cat && !cat.double
+        ? (fr ? 'Tableau individuel' : 'Individual draw')
+        : row.find_partner
+        ? (fr ? 'Partenaire : on vous en trouve un·e, on vous recontacte avant le tournoi.' : 'Partner: we’ll find you one and be in touch before the tournament.')
+        : `${fr ? 'Partenaire :' : 'Partner:'} ${row.partner_name ?? ''}`,
     ]),
     [fr ? 'Raquette de prêt' : 'Loan paddle', reg.needs_paddle
       ? (fr ? 'Oui, une raquette vous sera prêtée sur place' : 'Yes, a paddle will be lent to you on site')
@@ -377,16 +398,11 @@ export async function sendConfirmationEmail(order: RegistrationRow[]): Promise<b
   ];
 
   const whatsappNumber = reg.phone ? ` ${fr ? 'au' : 'on'} <strong>${escapeHtml(reg.phone)}</strong>` : '';
+  const rulesUrl = `https://gscpickleball.ch${routes.tournamentRules[lang]}`;
 
-  const subject = fr
-    ? `Inscription confirmée — Tournoi GSC Pickleball (${drawNames})`
-    : `Registration confirmed — GSC Pickleball Tournament (${drawNames})`;
-
-  const html = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0;background:#f4f7f6;font-family:Arial,Helvetica,sans-serif;color:#1f2937">
-<div style="max-width:560px;margin:0 auto;padding:24px">
-  <div style="background:#002b2b;color:#fff;border-radius:16px 16px 0 0;padding:28px 24px">
+  return `<div style="background:#002b2b;color:#fff;border-radius:16px 16px 0 0;padding:28px 24px">
     <p style="margin:0 0 6px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#5eead4">${escapeHtml(t.kicker)}</p>
-    <h1 style="margin:0;font-size:24px;line-height:1.25">${fr ? 'C’est confirmé' : 'You’re in'}, ${escapeHtml(reg.first_name)} !</h1>
+    <h1 style="margin:0;font-size:24px;line-height:1.25">${fr ? 'C’est confirmé' : 'You’re in'}, ${escapeHtml(reg.first_name)}${fr ? ' !' : '!'}</h1>
   </div>
   <div style="background:#fff;border:2px solid #002b2b;border-top:0;border-radius:0 0 16px 16px;padding:24px">
     <p style="margin:0 0 16px;line-height:1.55">${fr
@@ -409,21 +425,12 @@ export async function sendConfirmationEmail(order: RegistrationRow[]): Promise<b
       ${rows.map(([k, v]) => `<tr><td style="padding:8px 0;color:#0f766e;font-weight:bold;width:40%;vertical-align:top">${escapeHtml(k)}</td><td style="padding:8px 0">${escapeHtml(v)}</td></tr>`).join('')}
     </table>
     <p style="margin:20px 0 8px;line-height:1.55">${fr
-      ? 'Pensez à vos chaussures de salle à semelle non marquante. Des raquettes peuvent être prêtées en cas de besoin.'
-      : 'Remember your non-marking indoor shoes. Paddles can be lent if needed.'}</p>
+      ? 'Pensez à vos chaussures de salle à semelle non marquante.'
+      : 'Remember your non-marking indoor shoes.'}</p>
     <p style="margin:0 0 20px;line-height:1.55">${fr
-      ? `Empêchement ? Vous pouvez annuler votre inscription et être remboursé·e jusqu’au ${cancellationDeadlineLabel('fr')} en nous écrivant. Passé ce délai, l’inscription n’est plus remboursable. <a href="https://gscpickleball.ch${routes.tournamentRules.fr}" style="color:#0f766e">Règlement du tournoi</a>`
-      : `Can’t make it? You can cancel your registration and get a refund until ${cancellationDeadlineLabel('en')} by writing to us. After that date, registration is non-refundable. <a href="https://gscpickleball.ch${routes.tournamentRules.en}" style="color:#0f766e">Tournament rules</a>`}</p>
+      ? `Merci de prendre connaissance du <a href="${rulesUrl}" style="color:#0f766e;font-weight:bold">règlement du tournoi</a>.`
+      : `Please take a moment to read the <a href="${rulesUrl}" style="color:#0f766e;font-weight:bold">tournament rules</a>.`}</p>
     <a href="${tournament.mapsUrl}" style="display:inline-block;background:#0d9488;color:#fff;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:bold">${escapeHtml(t.ctaMap)}</a>
     <p style="margin:24px 0 0;font-size:13px;color:#6b7280;line-height:1.55">${fr ? 'Une question ?' : 'Any questions?'} <a href="mailto:${facts.email}" style="color:#0f766e">${facts.email}</a></p>
-  </div>
-</div></body></html>`;
-
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from, to: [reg.email], reply_to: facts.email, subject, html }),
-  });
-  if (!res.ok) throw new Error(`resend ${res.status}: ${await res.text()}`);
-  return true;
+  </div>`;
 }
