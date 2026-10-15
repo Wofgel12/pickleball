@@ -1,0 +1,45 @@
+---
+// Home page banner announcing the tournament (shown once the page is
+// published, and only until the tournament day).
+import DoodleShape from './DoodleShape.astro';
+import { tournament, tournamentCopy } from '../i18n/tournament';
+import { routes, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = tournamentCopy[lang];
+const fr = lang === 'fr';
+const show = tournament.published && Date.now() < new Date(tournament.endISO).getTime();
+---
+{show && (
+  <section class="px-4 pt-12" aria-labelledby="tournament-banner-title">
+    <div class="relative isolate overflow-hidden max-w-5xl mx-auto rounded-[1.75rem] bg-[#002b2b] text-white shadow-xl">
+      <div class="absolute -top-14 -right-14 w-44 h-44 hidden md:block rounded-full bg-[#d9f99d] opacity-90 -z-10" aria-hidden="true">
+        <div class="absolute inset-0 rounded-full" style="background-image:radial-gradient(circle,#65a30d 0 5%,transparent 6%);background-size:28% 28%;background-position:center;opacity:.35"></div>
+      </div>
+      <DoodleShape kind="crossed" tone="dark" width={76} delay={0.6} duration={11} class="absolute bottom-2 right-14 -z-10 hidden lg:block" style="transform:rotate(-8deg)" />
+      <DoodleShape kind="speedBall" tone="dark" width={90} delay={3} duration={9} class="absolute bottom-3 right-4 -z-10 md:hidden" />
+
+      <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-10 px-6 py-8 pb-16 md:px-12 md:py-10">
+        <div class="flex-1">
+          <p class="inline-block rounded-full bg-white/10 border border-white/20 px-3 py-1 text-sm font-semibold text-teal-100 mb-4">
+            <span aria-hidden="true">🏆 </span>{fr ? 'Tournoi · ' : 'Tournament · '}{t.dateLong}
+          </p>
+          <h2 id="tournament-banner-title" class="text-2xl md:text-3xl font-bold leading-tight text-balance mb-3 md:pr-24">
+            {t.title}
+          </h2>
+          <p class="text-white/80">
+            {tournament.venueName}, {fr ? 'Genève' : 'Geneva'} · {t.hours} · {fr ? 'doubles hommes, dames et mixte · places limitées' : 'men’s, women’s and mixed doubles · limited places'}
+          </p>
+        </div>
+        <a
+          href={routes.tournament[lang]}
+          class="shiny-cta btn-press shrink-0 self-start md:self-center inline-flex items-center gap-2 rounded-2xl text-[#002b2b] text-lg font-bold px-7 py-3.5 shadow-lg"
+        >
+          {t.ctaRegister}
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+)}

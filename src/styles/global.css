@@ -99,3 +99,45 @@
     transition: none !important;
   }
 }
+
+/* Shiny CTA ("Je m'inscris", tournament page + home banner): a light reflection
+   that keeps running around the border (same effect as the CTAs on
+   animation-culinaire.ch, in the site's teal). */
+  .shiny-cta {
+    --cta-bg: #2dd4bf; /* teal-400 */
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--cta-bg);
+  }
+  .shiny-cta:hover {
+    --cta-bg: #5eead4; /* teal-300 */
+  }
+  /* Spinning conic light, wider than the button; only a 3px ring of it shows. */
+  .shiny-cta::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -2;
+    width: 170%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    background: conic-gradient(#0000 0deg, #ffffff26 30deg, #fff 62deg 80deg, #ccfbf1 96deg, #ffffff26 128deg, #0000 165deg 360deg);
+    animation: cta-ring-spin 3s linear infinite;
+  }
+  .shiny-cta::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--cta-bg);
+    transition: background-color 0.2s;
+  }
+  @keyframes cta-ring-spin {
+    to { rotate: 360deg; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shiny-cta::before { animation: none; }
+  }

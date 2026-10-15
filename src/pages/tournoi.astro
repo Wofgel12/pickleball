@@ -7,7 +7,7 @@ import { tournamentSchema } from '../lib/tournament-schema';
 
 const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://gscpickleball.ch';
 ---
-<BaseLayout pageKey="tournament" lang="fr" jsonLd={[tournamentSchema(SITE, 'fr')]} noindex={!tournament.published} lastReviewedISO={tournament.updatedISO}>
+<BaseLayout pageKey="tournament" lang="fr" jsonLd={[tournamentSchema(SITE, 'fr')]} noindex={!tournament.published} lastReviewedISO={tournament.updatedISO} ogImage="/og-tournoi-fr.jpg" ogImageAlt="Tournoi de pickleball du Geneva Sports Club, dimanche 15 novembre 2026, 9h–18h, Collège Calvin, Genève">
   <div class="bg-tile relative isolate">
     <PaddleDoodles />
     <TournamentContent lang="fr" />

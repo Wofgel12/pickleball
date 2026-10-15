@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import TournamentBanner from '../components/TournamentBanner.astro';
 import HomeSection from '../components/HomeSection.astro';
 import ParticipateTeaser from '../components/ParticipateTeaser.astro';
 import KeyFacts from '../components/KeyFacts.astro';
@@ -53,6 +54,8 @@ const courseSchema = {
   <Hero lang="fr" />
 
   <div class="bg-tile">
+    <TournamentBanner lang="fr" />
+
     <HomeSection lang="fr" />
 
     <ParticipateTeaser lang="fr" />

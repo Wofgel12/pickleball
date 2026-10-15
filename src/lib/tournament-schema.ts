@@ -20,7 +20,7 @@ export function tournamentSchema(site: string, lang: Lang) {
     inLanguage: lang === 'fr' ? 'fr-CH' : 'en',
     typicalAgeRange: `${tournament.minAge}-`,
     url: pageUrl,
-    image: site + '/og-pickleball-geneve.jpg',
+    image: site + (lang === 'fr' ? '/og-tournoi-fr.jpg' : '/og-tournoi-en.jpg'),
     location: {
       '@type': 'Place',
       name: tournament.venueName,

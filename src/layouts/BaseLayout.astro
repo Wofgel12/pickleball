@@ -16,6 +16,8 @@ interface Props {
   description?: string;
   /** Optional OG image absolute path (defaults to /og-pickleball-geneve.jpg) */
   ogImage?: string;
+  /** Alt text of the OG image (defaults to the weekly-session photo's). */
+  ogImageAlt?: string;
   /** Optional list of additional <script type="application/ld+json"> JSON objects */
   jsonLd?: unknown[];
   /** ISO date for content's last meaningful update (E-E-A-T signal) */
@@ -30,6 +32,7 @@ const {
   title,
   description,
   ogImage,
+  ogImageAlt,
   jsonLd = [],
   lastReviewedISO = facts.lastReviewedISO,
   noindex = false,
@@ -144,7 +147,7 @@ const lastReviewedDisplay = lang === 'fr'
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={lang === 'fr' ? 'Session de pickleball à Genève — Geneva Sports Club' : 'Pickleball session in Geneva — Geneva Sports Club'} />
+    <meta property="og:image:alt" content={ogImageAlt ?? (lang === 'fr' ? 'Session de pickleball à Genève — Geneva Sports Club' : 'Pickleball session in Geneva — Geneva Sports Club')} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />

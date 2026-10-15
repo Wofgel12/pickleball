@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
+import TournamentBanner from '../../components/TournamentBanner.astro';
 import HomeSection from '../../components/HomeSection.astro';
 import ParticipateTeaser from '../../components/ParticipateTeaser.astro';
 import KeyFacts from '../../components/KeyFacts.astro';
@@ -51,6 +52,8 @@ const courseSchema = {
 <BaseLayout pageKey="home" lang="en" jsonLd={[courseSchema, faqJsonLd(faqEN.slice(0, 6))]}>
   <Hero lang="en" />
   <div class="bg-tile">
+    <TournamentBanner lang="en" />
+
     <HomeSection lang="en" />
     <ParticipateTeaser lang="en" />
     <section class="pt-6 pb-6 px-4">
