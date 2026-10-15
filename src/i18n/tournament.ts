@@ -24,7 +24,7 @@ export const tournament = {
    * false → page is `noindex` and left out of the sitemap (safe while Stripe
    * and the page links are being set up). Flip to true on launch day.
    */
-  published: false,
+  published: true,
 
   /** Players can cancel (and get refunded) up to this many days before the start. */
   cancellationDays: 3,

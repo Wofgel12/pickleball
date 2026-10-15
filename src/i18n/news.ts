@@ -21,7 +21,7 @@ export interface NewsItem {
 export const news: NewsItem[] = [
   {
     id: 'tournoi-2026',
-    date: '2026-09-30',
+    date: '2026-10-15',
     // Announced automatically once the tournament page is published.
     visible: tournament.published,
     title: {
