@@ -236,8 +236,8 @@ export async function createCheckoutSession(opts: {
     ? `Tournoi GSC Pickleball — ${isCombo ? 'Combo ' : ''}${drawNames}${promo}`
     : `GSC Pickleball Tournament — ${isCombo ? 'Combo ' : ''}${drawNames}${promo}`;
   const productDesc = lang === 'fr'
-    ? `Dimanche 15 novembre 2026, 9h–18h, Collège Calvin, Genève.`
-    : `Sunday 15 November 2026, 9am–6pm, Collège Calvin, Geneva.`;
+    ? `Dimanche 15 novembre 2026, 9h–18h, Collège Calvin, Genève. À vos raquettes ! :)`
+    : `Sunday 15 November 2026, 9am–6pm, Collège Calvin, Geneva. Get your paddles ready! :)`;
   const metadata = {
     order_id: opts.orderId,
     tournament: tournament.id,
