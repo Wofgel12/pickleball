@@ -7,7 +7,7 @@ import { tournamentSchema } from '../lib/tournament-schema';
 
 const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://gscpickleball.ch';
 ---
-<BaseLayout pageKey="tournament" lang="fr" jsonLd={[tournamentSchema(SITE, 'fr')]} noindex={!tournament.published}>
+<BaseLayout pageKey="tournament" lang="fr" jsonLd={[tournamentSchema(SITE, 'fr')]} noindex={!tournament.published} lastReviewedISO={tournament.updatedISO}>
   <div class="bg-tile relative isolate">
     <PaddleDoodles />
     <TournamentContent lang="fr" />

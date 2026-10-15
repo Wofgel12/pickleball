@@ -25,6 +25,8 @@ export const tournament = {
    * and the page links are being set up). Flip to true on launch day.
    */
   published: true,
+  /** Last content update: sitemap lastmod + WebPage dateModified of the tournament pages. */
+  updatedISO: '2026-10-15',
 
   /** Players can cancel (and get refunded) up to this many days before the start. */
   cancellationDays: 3,
@@ -182,7 +184,7 @@ export function cancellationDeadlineLabel(lang: Lang): string {
 
 export const tournamentCopy = {
   fr: {
-    kicker: 'Tournoi de pickleball · 1re édition',
+    kicker: 'Tournoi de pickleball à Genève · 1re édition',
     title: 'Le plus grand tournoi de Suisse romande !',
     dateLong: 'Dimanche 15 novembre 2026',
     hours: '9h – 18h',
@@ -292,7 +294,7 @@ export const tournamentCopy = {
     backToSite: 'Découvrir le Geneva Sports Club',
   },
   en: {
-    kicker: 'Pickleball tournament · 1st edition',
+    kicker: 'Pickleball tournament in Geneva · 1st edition',
     title: 'The biggest tournament in French-speaking Switzerland!',
     dateLong: 'Sunday 15 November 2026',
     hours: '9am – 6pm',

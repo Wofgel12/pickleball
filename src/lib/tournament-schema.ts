@@ -34,7 +34,7 @@ export function tournamentSchema(site: string, lang: Lang) {
       },
       hasMap: tournament.mapsUrl,
     },
-    organizer: { '@id': site + '/#sportsclub' },
+    organizer: { '@type': 'SportsClub', '@id': site + '/#sportsclub', name: 'Geneva Sports Club', url: site + '/' },
     sponsor: tournament.partners.map((p) => ({ '@type': 'Organization', name: p.name, url: p.url })),
     offers: [
       ...tournament.categories.map((c) => ({
@@ -43,6 +43,7 @@ export function tournamentSchema(site: string, lang: Lang) {
         price: c.priceCents / 100,
         priceCurrency: 'CHF',
         availability: 'https://schema.org/LimitedAvailability',
+        validFrom: tournament.updatedISO,
         url: pageUrl + '#inscription',
       })),
       {
@@ -51,6 +52,7 @@ export function tournamentSchema(site: string, lang: Lang) {
         price: (tournament.combos[0].priceCents ?? 0) / 100,
         priceCurrency: 'CHF',
         availability: 'https://schema.org/LimitedAvailability',
+        validFrom: tournament.updatedISO,
         url: pageUrl + '#inscription',
       },
     ],

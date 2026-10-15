@@ -4,7 +4,7 @@ import PageHero from '../../../components/PageHero.astro';
 import TournamentRulesContent from '../../../components/TournamentRulesContent.astro';
 import { tournament } from '../../../i18n/tournament';
 ---
-<BaseLayout pageKey="tournamentRules" lang="en" noindex={!tournament.published}>
+<BaseLayout pageKey="tournamentRules" lang="en" noindex={!tournament.published} lastReviewedISO={tournament.updatedISO}>
   <div class="bg-tile">
     <PageHero lang="en" title="Tournament rules" lead="Geneva Sports Club pickleball tournament — Sunday 15 November 2026, Collège Calvin, Geneva." />
     <section class="py-12 px-4">

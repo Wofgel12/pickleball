@@ -13,11 +13,12 @@ if (tournament.published) indexableKeys.push('tournament', 'tournamentRules');
 
 export const GET: APIRoute = ({ site }) => {
   const baseUrl = (site?.toString() ?? SITE).replace(/\/$/, '');
-  const lastmod = facts.lastReviewedISO;
+  const tournamentKeys: RouteKey[] = ['tournament', 'tournamentRules'];
 
   const urls: string[] = [];
 
   for (const key of indexableKeys) {
+    const lastmod = tournamentKeys.includes(key) ? tournament.updatedISO : facts.lastReviewedISO;
     for (const lang of ['fr', 'en'] as const) {
       const loc = baseUrl + routes[key][lang];
       const altFr = baseUrl + routes[key].fr;

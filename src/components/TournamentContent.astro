@@ -52,11 +52,15 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
 
     <div class="relative z-10 px-6 py-12 md:px-14 md:py-16 text-center hero-stagger">
       <div>
-        <p class="inline-block rounded-full bg-white/10 border border-white/20 px-4 py-1.5 text-sm font-semibold tracking-wide text-teal-100 mb-6">
-          🏆 {t.kicker}
-        </p>
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-balance max-w-4xl mx-auto mb-6">
-          {t.title}
+        <!-- One h1 holding the pill + the title: the main heading carries
+             "tournoi de pickleball à Genève" for search engines. -->
+        <h1 class="mb-6">
+          <span class="inline-block rounded-full bg-white/10 border border-white/20 px-4 py-1.5 text-sm font-semibold tracking-wide text-teal-100 mb-6">
+            <span aria-hidden="true">🏆 </span>{t.kicker}
+          </span>
+          <span class="block text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-balance max-w-4xl mx-auto">
+            {t.title}
+          </span>
         </h1>
         <ul class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 text-base sm:text-lg">
           <li class="flex items-center gap-2 rounded-full bg-white text-[#002b2b] font-semibold px-4 py-2">

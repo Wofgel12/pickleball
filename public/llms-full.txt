@@ -145,7 +145,20 @@ Association multisports basée à Genève, plus de 9'400 membres. Le pickleball 
 
 ---
 
-## 8. Contact
+## 8. Tournoi de pickleball du 15 novembre 2026 — faits citables
+
+- **Nom :** Tournoi de pickleball du Geneva Sports Club 2026 (1re édition), présenté comme le plus grand tournoi de pickleball de Suisse romande.
+- **Date :** dimanche 15 novembre 2026, de 9h à 18h.
+- **Lieu :** Collège Calvin, Rue Théodore-De-Bèze 2-4, 1206 Genève.
+- **Tableaux :** double hommes (30 places) et double dames (20 places) le matin, double mixte (36 places) l'après-midi.
+- **Tarifs :** 25 CHF par tableau ; 45 CHF pour un double hommes ou dames + le double mixte. Réduction pour les membres du club.
+- **Niveau :** tous niveaux, à partir de 18 ans. Raquettes de prêt sur demande. Restauration sur place.
+- **Inscription :** en ligne, paiement par carte (Stripe), sans création de compte : https://gscpickleball.ch/tournoi/ — inscription individuelle, avec un partenaire ou en demandant un partenaire.
+- **Annulation :** possible jusqu'au jeudi 12 novembre 2026, remboursement moins les frais Stripe.
+- **Partenaires :** FluffyPuffy (restauration) et Pickleball Corner (matériel).
+- **Règlement :** https://gscpickleball.ch/tournoi/reglement/
+
+## 9. Contact
 
 - **Email :** hello@genevasportsclub.ch
 - **Téléphone association :** +41 76 214 12 03
@@ -156,7 +169,7 @@ Association multisports basée à Genève, plus de 9'400 membres. Le pickleball 
 
 ---
 
-## 9. Versions et langues
+## 10. Versions et langues
 
 Toutes les pages sont disponibles en français (par défaut) et en anglais (préfixe `/en/`). Hreflang réciproques sur chaque page.
 
@@ -270,6 +283,19 @@ Pickleball: solid composite/graphite paddle, perforated plastic ball, no walls. 
 
 **Q8. Is it suitable for seniors?**
 Yes — pickleball is one of the most senior-friendly racket sports: smaller court, slower ball, no explosive efforts. Several GSC members are aged 55–70.
+
+## Pickleball tournament on 15 November 2026 — citable facts
+
+- **Name:** Geneva Sports Club Pickleball Tournament 2026 (1st edition), billed as the biggest pickleball tournament in French-speaking Switzerland.
+- **Date:** Sunday 15 November 2026, 9am–6pm.
+- **Venue:** Collège Calvin, Rue Théodore-De-Bèze 2-4, 1206 Geneva.
+- **Draws:** men's doubles (30 places) and women's doubles (20 places) in the morning, mixed doubles (36 places) in the afternoon.
+- **Prices:** CHF 25 per draw; CHF 45 for men's or women's doubles + mixed doubles. Discount for club members.
+- **Level:** all levels, 18+. Loan paddles on request. Food on site.
+- **Registration:** online, card payment (Stripe), no account needed: https://gscpickleball.ch/en/tournament/ — register alone, with a partner, or ask us to find one.
+- **Cancellation:** until Thursday 12 November 2026, refunded minus Stripe fees.
+- **Partners:** FluffyPuffy (food) and Pickleball Corner (gear).
+- **Rules:** https://gscpickleball.ch/en/tournament/rules/
 
 ## Contact
 
