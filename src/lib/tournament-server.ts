@@ -20,7 +20,7 @@
 //                                 is published, so it can never leak into launch.
 
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { tournament, findCategory, formatCHF, tournamentCopy, cancellationDeadlineLabel, type TournamentCategory } from '../i18n/tournament';
+import { tournament, findCategory, formatCHF, tournamentCopy, type TournamentCategory } from '../i18n/tournament';
 import { facts, routes, type Lang } from '../i18n/ui';
 
 function env(name: string): string | undefined {
@@ -236,8 +236,8 @@ export async function createCheckoutSession(opts: {
     ? `Tournoi GSC Pickleball — ${isCombo ? 'Combo ' : ''}${drawNames}${promo}`
     : `GSC Pickleball Tournament — ${isCombo ? 'Combo ' : ''}${drawNames}${promo}`;
   const productDesc = lang === 'fr'
-    ? `Dimanche 15 novembre 2026, 9h–18h, Collège Calvin, Genève. Annulation possible jusqu’au ${cancellationDeadlineLabel('fr')}.`
-    : `Sunday 15 November 2026, 9am–6pm, Collège Calvin, Geneva. Cancellation possible until ${cancellationDeadlineLabel('en')}.`;
+    ? `Dimanche 15 novembre 2026, 9h–18h, Collège Calvin, Genève.`
+    : `Sunday 15 November 2026, 9am–6pm, Collège Calvin, Geneva.`;
   const metadata = {
     order_id: opts.orderId,
     tournament: tournament.id,
