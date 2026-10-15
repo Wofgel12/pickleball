@@ -1,0 +1,102 @@
+---
+// Decorative line drawings of pickleball paddles and balls that draw themselves
+// on the page background, hold, then erase — looping, staggered. Pure SVG + CSS
+// (no JS, no Lottie file). Sits behind the content of an `isolate` wrapper.
+//
+// Each shape uses pathLength="1" so a single keyframe (dashoffset 1 → 0 → -1)
+// draws and erases any outline regardless of its real length.
+
+type Doodle = { kind: 'paddle' | 'ball'; top: string; side: 'left' | 'right'; offset: string; size: number; rotate: number; delay: number; mobile?: boolean };
+
+// Positions spread down the page, alternating sides, in the margins.
+const doodles: Doodle[] = [
+  { kind: 'paddle', top: '4%',  side: 'left',  offset: '2%',  size: 120, rotate: -18, delay: 0,   mobile: true },
+  { kind: 'ball',   top: '9%',  side: 'right', offset: '4%',  size: 70,  rotate: 0,   delay: 2.5 },
+  { kind: 'paddle', top: '22%', side: 'right', offset: '1%',  size: 140, rotate: 22,  delay: 1.2, mobile: true },
+  { kind: 'ball',   top: '30%', side: 'left',  offset: '5%',  size: 60,  rotate: 0,   delay: 4 },
+  { kind: 'paddle', top: '45%', side: 'left',  offset: '1%',  size: 130, rotate: 12,  delay: 3 },
+  { kind: 'ball',   top: '55%', side: 'right', offset: '6%',  size: 64,  rotate: 0,   delay: 0.8, mobile: true },
+  { kind: 'paddle', top: '68%', side: 'right', offset: '2%',  size: 125, rotate: -24, delay: 5 },
+  { kind: 'ball',   top: '80%', side: 'left',  offset: '4%',  size: 58,  rotate: 0,   delay: 2 },
+  { kind: 'paddle', top: '90%', side: 'left',  offset: '3%',  size: 115, rotate: 16,  delay: 3.8, mobile: true },
+];
+
+// Ball holes (pickleball pattern), as small circles around the centre.
+const holes = [0, 60, 120, 180, 240, 300].map((deg) => {
+  const r = (deg * Math.PI) / 180;
+  return { cx: 50 + Math.cos(r) * 24, cy: 50 + Math.sin(r) * 24 };
+});
+---
+<div class="paddle-doodles" aria-hidden="true">
+  {doodles.map((d) => (
+    <svg
+      class:list={['doodle', !d.mobile && 'hidden md:block']}
+      viewBox={d.kind === 'paddle' ? '0 0 100 170' : '0 0 100 100'}
+      width={d.size}
+      height={d.kind === 'paddle' ? Math.round(d.size * 1.7) : d.size}
+      style={`top:${d.top};${d.side}:${d.offset};transform:rotate(${d.rotate}deg);--delay:${d.delay}s`}
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      {d.kind === 'paddle' ? (
+        <>
+          <!-- Paddle face -->
+          <path pathLength="1" d="M28 8 H72 A20 20 0 0 1 92 28 V84 A32 32 0 0 1 60 116 H40 A32 32 0 0 1 8 84 V28 A20 20 0 0 1 28 8 Z" />
+          <!-- Edge guard line -->
+          <path pathLength="1" class="thin" d="M30 18 H70 A12 12 0 0 1 82 30 V82 A24 24 0 0 1 58 106 H42 A24 24 0 0 1 18 82 V30 A12 12 0 0 1 30 18 Z" />
+          <!-- Handle + grip wraps -->
+          <path pathLength="1" d="M41 116 V156 A6 6 0 0 0 47 162 H53 A6 6 0 0 0 59 156 V116" />
+          <path pathLength="1" class="thin" d="M41 128 L59 124 M41 140 L59 136 M41 152 L59 148" />
+        </>
+      ) : (
+        <>
+          <circle pathLength="1" cx="50" cy="50" r="42" />
+          {holes.map((h) => <circle pathLength="1" class="thin" cx={h.cx} cy={h.cy} r="6" />)}
+          <circle pathLength="1" class="thin" cx="50" cy="50" r="6" />
+        </>
+      )}
+    </svg>
+  ))}
+</div>
+
+<style>
+  .paddle-doodles {
+    position: absolute;
+    inset: 0;
+    z-index: -1; /* behind content, above the wrapper's background (wrapper must be `isolate`) */
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .doodle {
+    position: absolute;
+    stroke: #14b8a6; /* site teal */
+    stroke-width: 2.2;
+    opacity: 0.32;
+  }
+  .doodle :global(.thin) {
+    stroke-width: 1.4;
+  }
+  .doodle :global(path),
+  .doodle :global(circle) {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: doodle-draw 10s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+  /* draw (0→35%), hold, erase from the start (65→95%), short pause */
+  @keyframes doodle-draw {
+    0% { stroke-dashoffset: 1; }
+    35% { stroke-dashoffset: 0; }
+    65% { stroke-dashoffset: 0; }
+    95% { stroke-dashoffset: -1; }
+    100% { stroke-dashoffset: -1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .doodle :global(path),
+    .doodle :global(circle) {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

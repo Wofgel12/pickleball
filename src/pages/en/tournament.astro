@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PaddleDoodles from '../../components/PaddleDoodles.astro';
 import TournamentContent from '../../components/TournamentContent.astro';
 import { tournament } from '../../i18n/tournament';
 import { tournamentSchema } from '../../lib/tournament-schema';
@@ -7,7 +8,8 @@ import { tournamentSchema } from '../../lib/tournament-schema';
 const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://gscpickleball.ch';
 ---
 <BaseLayout pageKey="tournament" lang="en" jsonLd={[tournamentSchema(SITE, 'en')]} noindex={!tournament.published}>
-  <div class="bg-tile">
+  <div class="bg-tile relative isolate">
+    <PaddleDoodles />
     <TournamentContent lang="en" />
   </div>
 </BaseLayout>
