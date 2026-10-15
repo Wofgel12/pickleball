@@ -46,6 +46,8 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
     <!-- Line drawings in the empty corners (behind the text) -->
     <DoodleShape kind="crossed" tone="dark" width={150} delay={0.6} duration={11} class="absolute bottom-6 right-8 hidden lg:block" style="transform:rotate(-8deg)" />
     <DoodleShape kind="speedBall" tone="dark" width={120} delay={4} duration={9} class="absolute bottom-40 right-6 hidden lg:block" style="transform:rotate(-14deg)" />
+    <DoodleShape kind="net" tone="dark" width={64} delay={2.2} duration={12} class="absolute top-4 left-4 md:hidden" style="transform:rotate(-6deg)" />
+    <DoodleShape kind="crossed" tone="dark" width={46} delay={0.6} duration={11} class="absolute bottom-2 right-3 md:hidden" />
     <DoodleShape kind="net" tone="dark" width={120} delay={2.2} duration={12} class="absolute top-8 left-8 hidden md:block" style="transform:rotate(-6deg)" />
 
     <div class="relative z-10 px-6 py-12 md:px-14 md:py-16 text-center hero-stagger">
@@ -101,7 +103,10 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
 <!-- ============ ABOUT ============ -->
 <section class="relative px-4 pb-16">
   <div class="max-w-5xl mx-auto grid md:grid-cols-5 gap-8 items-start">
-    <div class="md:col-span-3 bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 md:p-10">
+    <div class="relative md:col-span-3 bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 md:p-10">
+      <!-- Mobile: drawings over the card's corners (in its padding, never on the text) -->
+      <DoodleShape kind="ball" width={50} delay={1} class="absolute -top-6 -right-3 z-10 md:hidden" />
+      <DoodleShape kind="sparkle" width={24} delay={3} duration={6} class="absolute -bottom-3 left-8 z-10 md:hidden" />
       <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-5 text-balance">{t.aboutTitle}</h2>
       {about.map((p, i) => (
         <p class:list={['text-gray-800 text-lg mb-4 last:mb-0', i === about.length - 1 && 'font-semibold text-teal-800']}>
@@ -112,7 +117,8 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
     <div class="md:col-span-2 self-stretch flex flex-col gap-4">
     <ul class="grid gap-4">
       {t.highlights.map((h, i) => (
-        <li class="flex gap-4 items-start bg-white/95 rounded-2xl border-2 border-[#002b2b] p-5">
+        <li class="relative flex gap-4 items-start bg-white/95 rounded-2xl border-2 border-[#002b2b] p-5">
+          {i === 1 && <DoodleShape kind="paddle" width={30} delay={2} class="absolute -top-5 right-5 z-10 md:hidden" style="transform:rotate(16deg)" />}
           <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-teal-50 text-2xl flex items-center justify-center" aria-hidden="true">
             {['🎾', '🎁', '☀️'][i]}
           </span>
@@ -156,8 +162,11 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
           href={p.url}
           target="_blank"
           rel="noopener"
-          class="card-lift group flex flex-col bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 hover:shadow-lg"
+          class="card-lift group relative flex flex-col bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 hover:shadow-lg"
         >
+          {p.id === 'fluffypuffy'
+            ? <DoodleShape kind="sparkle" width={32} delay={1.4} duration={6} class="absolute top-4 right-4 z-10 md:hidden" />
+            : <DoodleShape kind="ball" width={30} delay={2.8} class="absolute top-3 left-3 z-10 md:hidden" />}
           <div class="h-28 mb-6 rounded-xl bg-white flex items-center justify-center px-4">
             <!-- Plain <img>: logos are already small, pre-sized webp files, so they
                  don't depend on Netlify's image CDN (works in local previews too). -->
@@ -197,7 +206,8 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
     <!-- Collapsed by default (saves room on mobile); native <details>: works
          without JS, with the keyboard and screen readers. -->
     <div class="self-stretch flex flex-col gap-6">
-    <details class="group bg-white/95 rounded-2xl border-2 border-[#002b2b]">
+    <details class="group relative bg-white/95 rounded-2xl border-2 border-[#002b2b]">
+      <DoodleShape kind="dink" width={90} delay={0.8} duration={9} class="absolute -bottom-6 right-6 z-10 md:hidden" />
       <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-4 p-7 md:p-9">
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{t.infoTitle}</h2>
         <span
@@ -282,6 +292,8 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
 <!-- ============ CONTACT ============ -->
 <section class="relative px-4 pb-20">
   <div class="relative isolate overflow-hidden max-w-3xl mx-auto text-center bg-white/95 rounded-2xl border-2 border-[#002b2b] p-8 md:p-10">
+    <DoodleShape kind="ball" width={30} delay={1.5} class="absolute top-3 left-3 z-10 md:hidden" />
+    <DoodleShape kind="paddle" width={24} delay={3.5} class="absolute top-3 right-4 z-10 md:hidden" style="transform:rotate(18deg)" />
     <DoodleShape kind="ball" width={58} delay={1.5} class="absolute bottom-6 left-8 -z-10 hidden md:block" />
     <DoodleShape kind="paddle" width={64} delay={3.5} class="absolute top-6 right-10 -z-10 hidden md:block" style="transform:rotate(18deg)" />
     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{t.contactTitle}</h2>
