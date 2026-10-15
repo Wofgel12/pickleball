@@ -1,6 +1,8 @@
 ---
 import { routes, navLabels, ui, type Lang, type RouteKey } from '../i18n/ui';
 import LangSwitcher from './islands/LangSwitcher.tsx';
+import TournamentBanner from './TournamentBanner.astro';
+import { tournament } from '../i18n/tournament';
 
 interface Props {
   lang: Lang;
@@ -14,8 +16,14 @@ const topLevel: RouteKey[] = ['home', 'participate'];
 const trailing: RouteKey[] = ['news', 'contact'];
 const pickleballChildren: RouteKey[] = ['learn', 'gear', 'faq'];
 const isPickleballActive = pickleballChildren.includes(pageKey);
+// Tournament announcement bar: once the page is published, until the tournament
+// ends, and not on the tournament pages themselves.
+const showTournamentBar = tournament.published
+  && Date.now() < new Date(tournament.endISO).getTime()
+  && pageKey !== 'tournament' && pageKey !== 'tournamentRules';
 ---
 <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50" aria-label={lang === 'fr' ? 'Navigation principale' : 'Main navigation'}>
+  {showTournamentBar && <TournamentBanner lang={lang} />}
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <a href={routes.home[lang]} class="flex items-center gap-3" aria-label="GSC Pickleball — Geneva Sports Club">
@@ -165,7 +173,8 @@ const isPickleballActive = pickleballChildren.includes(pageKey);
     </div>
   </div>
 </nav>
-<div class="h-16" aria-hidden="true"></div>
+<!-- Spacer under the fixed nav (+ the 36px announcement bar when shown) -->
+<div class={showTournamentBar ? 'h-[100px]' : 'h-16'} aria-hidden="true"></div>
 
 <style>
   /* Hide native disclosure triangle on summary */
