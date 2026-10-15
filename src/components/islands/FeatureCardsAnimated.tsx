@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useReducedMotion, useInView } from 'framer-motion';
+import { motion, useReducedMotion, useInView, type Variants } from 'framer-motion';
 
 export interface CardData {
   src: string;
@@ -72,7 +72,7 @@ export default function FeatureCardsAnimated({ cards }: Props) {
             style={{ borderColor: '#002b2b' }}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
-            variants={variants}
+            variants={variants as Variants}
             whileHover={reduce ? undefined : { y: -4, transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] } }}
           >
             <div className="w-full h-48 overflow-hidden">
