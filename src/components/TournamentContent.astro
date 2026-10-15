@@ -88,7 +88,7 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       </div>
 
       <div>
-        <a href="#inscription" class="btn-press inline-flex items-center gap-2 rounded-2xl bg-teal-400 hover:bg-teal-300 text-[#002b2b] text-lg font-bold px-8 py-4 shadow-lg">
+        <a href="#inscription" class="shiny-cta btn-press inline-flex items-center gap-2 rounded-2xl text-[#002b2b] text-lg font-bold px-8 py-4 shadow-lg">
           {t.ctaRegister}
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
@@ -307,3 +307,46 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
     </p>
   </div>
 </section>
+
+<style>
+  /* "Je m'inscris": a light reflection that keeps running around the border
+     (same effect as the CTAs on animation-culinaire.ch, in the site's teal). */
+  .shiny-cta {
+    --cta-bg: #2dd4bf; /* teal-400 */
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--cta-bg);
+  }
+  .shiny-cta:hover {
+    --cta-bg: #5eead4; /* teal-300 */
+  }
+  /* Spinning conic light, wider than the button; only a 3px ring of it shows. */
+  .shiny-cta::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -2;
+    width: 170%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    background: conic-gradient(#0000 0deg, #ffffff26 30deg, #fff 62deg 80deg, #ccfbf1 96deg, #ffffff26 128deg, #0000 165deg 360deg);
+    animation: cta-ring-spin 3s linear infinite;
+  }
+  .shiny-cta::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--cta-bg);
+    transition: background-color 0.2s;
+  }
+  @keyframes cta-ring-spin {
+    to { rotate: 360deg; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shiny-cta::before { animation: none; }
+  }
+</style>
