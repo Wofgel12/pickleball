@@ -99,7 +99,7 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
 </section>
 
 <!-- ============ ABOUT ============ -->
-<section class="px-4 pb-16">
+<section class="relative px-4 pb-16">
   <div class="max-w-5xl mx-auto grid md:grid-cols-5 gap-8 items-start">
     <div class="md:col-span-3 bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 md:p-10">
       <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-5 text-balance">{t.aboutTitle}</h2>
@@ -109,7 +109,8 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
         </p>
       ))}
     </div>
-    <ul class="md:col-span-2 grid gap-4">
+    <div class="md:col-span-2 self-stretch flex flex-col gap-4">
+    <ul class="grid gap-4">
       {t.highlights.map((h, i) => (
         <li class="flex gap-4 items-start bg-white/95 rounded-2xl border-2 border-[#002b2b] p-5">
           <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-teal-50 text-2xl flex items-center justify-center" aria-hidden="true">
@@ -122,12 +123,29 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
         </li>
       ))}
     </ul>
+    <!-- Fills the space left under the cards (height = about card − cards) -->
+    <div class="relative flex-1 min-h-0 overflow-hidden hidden md:block" aria-hidden="true">
+      <DoodleShape kind="dink" width={190} delay={1.2} duration={9} class="absolute top-6 left-1/2 -translate-x-1/2" />
+      <DoodleShape kind="sparkle" width={30} delay={3} duration={6} class="absolute top-4 right-4" />
+      <DoodleShape kind="ball" width={46} delay={4.5} class="absolute bottom-4 left-6" />
+    </div>
+    </div>
+  </div>
+  <!-- Mobile: drawings in the gap before the next section -->
+  <div class="absolute inset-x-0 bottom-0 h-16 md:hidden pointer-events-none" aria-hidden="true">
+    <DoodleShape kind="dink" width={100} delay={0.5} class="absolute bottom-3 left-[8%]" />
+    <DoodleShape kind="sparkle" width={22} delay={2.5} class="absolute top-3 left-1/2" />
+    <DoodleShape kind="ball" width={38} delay={1.5} class="absolute bottom-4 right-[10%]" />
   </div>
 </section>
 
 <!-- ============ PARTNERS ============ -->
-<section class="px-4 pb-20">
-  <div class="max-w-5xl mx-auto">
+<section class="relative px-4 pb-20">
+  <div class="relative isolate max-w-5xl mx-auto">
+    <DoodleShape kind="trophy" width={80} delay={0.8} class="absolute -top-4 left-[4%] -z-10 hidden xl:block" style="transform:rotate(-8deg)" />
+    <DoodleShape kind="sparkle" width={28} delay={2.6} duration={6} class="absolute top-16 left-[14%] -z-10 hidden xl:block" />
+    <DoodleShape kind="medal" width={60} delay={3.4} class="absolute -top-4 right-[5%] -z-10 hidden xl:block" style="transform:rotate(8deg)" />
+    <DoodleShape kind="sparkle" width={24} delay={5} duration={6} class="absolute top-20 right-[14%] -z-10 hidden xl:block" />
     <div class="text-center max-w-2xl mx-auto mb-10">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">{t.partnersTitle}</h2>
       <p class="text-lg text-gray-700">{t.partnersLead}</p>
@@ -165,13 +183,20 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       ))}
     </div>
   </div>
+  <!-- Mobile: drawings in the gap before the next section -->
+  <div class="absolute inset-x-0 bottom-0 h-20 md:hidden pointer-events-none" aria-hidden="true">
+    <DoodleShape kind="trophy" width={40} delay={1} class="absolute bottom-4 left-[12%]" style="transform:rotate(-8deg)" />
+    <DoodleShape kind="speedBall" width={90} delay={3} class="absolute bottom-5 left-1/2 -translate-x-1/2" />
+    <DoodleShape kind="medal" width={30} delay={2} class="absolute bottom-4 right-[12%]" style="transform:rotate(8deg)" />
+  </div>
 </section>
 
 <!-- ============ PRACTICAL INFO ============ -->
-<section class="px-4 pb-20">
+<section class="relative px-4 pb-20">
   <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
     <!-- Collapsed by default (saves room on mobile); native <details>: works
          without JS, with the keyboard and screen readers. -->
+    <div class="self-stretch flex flex-col gap-6">
     <details class="group bg-white/95 rounded-2xl border-2 border-[#002b2b]">
       <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-4 p-7 md:p-9">
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{t.infoTitle}</h2>
@@ -196,6 +221,13 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       </a>
       </div>
     </details>
+    <!-- Space under the collapsed card; shrinks to nothing once it's opened -->
+    <div class="relative flex-1 min-h-0 overflow-hidden hidden md:block" aria-hidden="true">
+      <DoodleShape kind="court" width={110} delay={0.4} duration={12} class="absolute top-4 left-[12%]" style="transform:rotate(-10deg)" />
+      <DoodleShape kind="speedBall" width={150} delay={3.2} duration={8} class="absolute top-1/2 right-[8%] -translate-y-1/2" />
+      <DoodleShape kind="sparkle" width={26} delay={5.5} duration={6} class="absolute bottom-6 left-[45%]" />
+    </div>
+    </div>
     <div class="flex flex-col overflow-hidden rounded-2xl border-2 border-[#002b2b] bg-white/95">
       <MapEmbed
         src={tournament.mapsEmbedUrl + (fr ? 'fr' : 'en')}
@@ -218,11 +250,19 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       </div>
     </div>
   </div>
+  <!-- Mobile: drawings in the gap before the next section -->
+  <div class="absolute inset-x-0 bottom-0 h-20 md:hidden pointer-events-none" aria-hidden="true">
+    <DoodleShape kind="net" width={90} delay={0.8} class="absolute bottom-5 left-[10%]" />
+    <DoodleShape kind="sparkle" width={22} delay={3.5} class="absolute top-4 right-[30%]" />
+    <DoodleShape kind="ball" width={38} delay={2.2} class="absolute bottom-5 right-[12%]" />
+  </div>
 </section>
 
 <!-- ============ DRAWS + REGISTRATION ============ -->
 <section id="inscription" class="px-4 pb-20 scroll-mt-20">
-  <div class="max-w-6xl mx-auto">
+  <div class="relative isolate max-w-6xl mx-auto">
+    <DoodleShape kind="crossed" width={110} delay={1} duration={11} class="absolute -top-6 left-[3%] -z-10 hidden xl:block" style="transform:rotate(-6deg)" />
+    <DoodleShape kind="eleven" width={70} delay={4} class="absolute -top-2 right-[5%] -z-10 hidden xl:block" style="transform:rotate(6deg)" />
     <div class="text-center max-w-3xl mx-auto mb-10">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">{t.categoriesTitle}</h2>
       <p class="text-lg text-gray-700">{t.categoriesLead}</p>
@@ -231,10 +271,16 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
          banner must render and scroll into view immediately. -->
     <TournamentRegistration client:load lang={lang} contactEmail={facts.email} />
   </div>
+  <!-- Mobile: drawings in the gap before the next section -->
+  <div class="absolute inset-x-0 bottom-0 h-20 md:hidden pointer-events-none" aria-hidden="true">
+    <DoodleShape kind="crossed" width={50} delay={1.2} class="absolute bottom-4 left-[12%]" />
+    <DoodleShape kind="eleven" width={56} delay={3} class="absolute bottom-5 left-1/2 -translate-x-1/2" />
+    <DoodleShape kind="paddle" width={28} delay={2} class="absolute bottom-4 right-[14%]" style="transform:rotate(18deg)" />
+  </div>
 </section>
 
 <!-- ============ CONTACT ============ -->
-<section class="px-4 pb-20">
+<section class="relative px-4 pb-20">
   <div class="relative isolate overflow-hidden max-w-3xl mx-auto text-center bg-white/95 rounded-2xl border-2 border-[#002b2b] p-8 md:p-10">
     <DoodleShape kind="ball" width={58} delay={1.5} class="absolute bottom-6 left-8 -z-10 hidden md:block" />
     <DoodleShape kind="paddle" width={64} delay={3.5} class="absolute top-6 right-10 -z-10 hidden md:block" style="transform:rotate(18deg)" />
