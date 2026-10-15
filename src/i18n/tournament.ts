@@ -124,15 +124,28 @@ export function normalizeSelection(ids: readonly string[]): TournamentCategory[]
   return (cats as TournamentCategory[]).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 }
 
+/** Price tier unlocked by a code: members code, or the test code (for a real payment test). */
+export type PriceTier = 'public' | 'member' | 'test';
+
+/** Total charged with the test code, whatever the selection (Stripe minimum: CHF 0.50). */
+export const TEST_PRICE_CENTS = 100;
+
 /**
  * Total price, per-draw split (stored on each registration row) and whether
- * a combo discount applies. `member` selects the prices unlocked by the code.
+ * a combo discount applies, for the given price tier.
  */
-export function priceSelection(cats: readonly TournamentCategory[], member = false): {
+export function priceSelection(cats: readonly TournamentCategory[], tier: PriceTier | boolean = 'public'): {
   totalCents: number;
   perDrawCents: number[];
   discounted: boolean;
 } {
+  const resolved: PriceTier = tier === true ? 'member' : tier === false ? 'public' : tier;
+  if (resolved === 'test') {
+    const first = Math.floor(TEST_PRICE_CENTS / cats.length);
+    const perDrawCents = cats.map((_, i) => (i === 0 ? TEST_PRICE_CENTS - first * (cats.length - 1) : first));
+    return { totalCents: TEST_PRICE_CENTS, perDrawCents, discounted: cats.length > 1 };
+  }
+  const member = resolved === 'member';
   const fullPrices = cats.map((c) => (member ? c.memberPriceCents : c.priceCents));
   const found = cats.length > 1 ? findCombo(cats.map((c) => c.id)) : undefined;
   const comboPrice = member ? found?.memberPriceCents : found?.priceCents;
@@ -229,10 +242,10 @@ export const tournamentCopy = {
       paddle: 'Avez-vous besoin d’une raquette de prêt ?',
       promo: 'Code de réduction (facultatif)',
       promoApply: 'Appliquer',
-      promoApplied: (code: string) => `Code ${code} appliqué : tarif membre`,
+      promoApplied: (code: string, tier: string) => `Code ${code} appliqué : ${tier === 'test' ? 'tarif test (1 CHF)' : 'tarif membre'}`,
       promoRemove: 'Retirer',
       comboPrice: 'Prix combo',
-      discount: 'Réduction membre',
+      discount: (tier: string) => (tier === 'test' ? 'Réduction (test)' : 'Réduction membre'),
       paddleYes: 'Oui',
       paddleNo: 'Non, j’ai ma raquette',
     },
@@ -338,10 +351,10 @@ export const tournamentCopy = {
       paddle: 'Do you need to borrow a paddle?',
       promo: 'Discount code (optional)',
       promoApply: 'Apply',
-      promoApplied: (code: string) => `Code ${code} applied: member price`,
+      promoApplied: (code: string, tier: string) => `Code ${code} applied: ${tier === 'test' ? 'test price (CHF 1)' : 'member price'}`,
       promoRemove: 'Remove',
       comboPrice: 'Combo price',
-      discount: 'Member discount',
+      discount: (tier: string) => (tier === 'test' ? 'Discount (test)' : 'Member discount'),
       paddleYes: 'Yes',
       paddleNo: 'No, I have my own',
     },

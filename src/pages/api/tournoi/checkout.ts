@@ -76,14 +76,14 @@ export const POST: APIRoute = async ({ request, url }) => {
 
   // Optional discount code: re-checked here, whatever the form displayed.
   const rawPromo = typeof body.promoCode === 'string' ? body.promoCode.trim() : '';
-  const promoCode = rawPromo ? validPromoCode(rawPromo) : null;
-  if (rawPromo && !promoCode) return json({ error: 'promo' }, 400);
-  input.discountCode = promoCode;
+  const promo = rawPromo ? validPromoCode(rawPromo) : null;
+  if (rawPromo && !promo) return json({ error: 'promo' }, 400);
+  input.discountCode = promo?.code ?? null;
 
   try {
     // The members code unlocks the member prices; the difference is stored per draw.
     const base = priceSelection(categories);
-    const paid = promoCode ? priceSelection(categories, true) : base;
+    const paid = promo ? priceSelection(categories, promo.tier) : base;
     const { totalCents, perDrawCents } = paid;
     const discountPerDrawCents = base.perDrawCents.map((c, i) => c - paid.perDrawCents[i]);
     const orderId = await reserveOrder(input, perDrawCents, discountPerDrawCents);

@@ -34,7 +34,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   const [acceptRules, setAcceptRules] = useState(false);
   const [needsPaddle, setNeedsPaddle] = useState<boolean | null>(null);
   const [promoInput, setPromoInput] = useState('');
-  const [promo, setPromo] = useState<{ code: string } | null>(null);
+  const [promo, setPromo] = useState<{ code: string; tier: 'member' | 'test' } | null>(null);
   const [promoError, setPromoError] = useState(false);
   const [promoChecking, setPromoChecking] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
@@ -93,7 +93,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
   const basePrice = draws.length ? priceSelection(draws) : null;
   const isCombo = Boolean(basePrice?.discounted);
   // Display only: the server re-checks the code and recomputes the amount.
-  const memberPrice = draws.length && promo ? priceSelection(draws, true) : null;
+  const memberPrice = draws.length && promo ? priceSelection(draws, promo.tier) : null;
   const promoPrice = basePrice && memberPrice
     ? { totalCents: memberPrice.totalCents, discountCents: basePrice.totalCents - memberPrice.totalCents }
     : null;
@@ -111,7 +111,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
         body: JSON.stringify({ code }),
       });
       const data = await res.json().catch(() => ({}));
-      if (data.valid) setPromo({ code: data.code });
+      if (data.valid) setPromo({ code: data.code, tier: data.tier === 'test' ? 'test' : 'member' });
       else {
         setPromo(null);
         setPromoError(true);
@@ -513,7 +513,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
           <label htmlFor="t-promo" className="block text-sm font-semibold text-gray-800 mb-1.5">{t.fields.promo}</label>
           {promo ? (
             <div className="flex items-center justify-between gap-3 rounded-xl border-2 border-teal-500 bg-teal-50/60 px-4 py-3">
-              <span className="font-semibold text-teal-900">✓ {t.fields.promoApplied(promo.code)}</span>
+              <span className="font-semibold text-teal-900">✓ {t.fields.promoApplied(promo.code, promo.tier)}</span>
               <button
                 type="button"
                 onClick={() => {
@@ -576,7 +576,7 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
             )}
             {promo && promoPrice && (
               <div className="flex justify-between text-teal-800 font-semibold py-0.5">
-                <span>{t.fields.discount}</span>
+                <span>{t.fields.discount(promo.tier)}</span>
                 <span>−{formatCHF(promoPrice.discountCents, lang)}</span>
               </div>
             )}

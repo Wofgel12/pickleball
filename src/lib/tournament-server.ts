@@ -13,6 +13,7 @@
 // Discount code (optional, never written in the public repo):
 //   TOURNAMENT_PROMO_CODE        the members code, set in Netlify only (case-insensitive);
 //                                unlocks the member prices defined in src/i18n/tournament.ts
+//   TOURNAMENT_TEST_CODE         optional test code: any order costs CHF 1 (delete after testing)
 // Testing only:
 //   TOURNAMENT_FAKE_PAYMENT=true  skips Stripe: orders are confirmed immediately
 //                                 (no Stripe keys needed). Ignored once the page
@@ -31,10 +32,15 @@ function env(name: string): string | undefined {
 }
 
 /** Normalised members code when `raw` matches TOURNAMENT_PROMO_CODE, otherwise null. */
-export function validPromoCode(raw: unknown): string | null {
-  const expected = env('TOURNAMENT_PROMO_CODE')?.trim().toUpperCase();
+export function validPromoCode(raw: unknown): { code: string; tier: 'member' | 'test' } | null {
   const code = typeof raw === 'string' ? raw.trim().toUpperCase() : '';
-  return expected && code && code === expected ? code : null;
+  if (!code) return null;
+  const member = env('TOURNAMENT_PROMO_CODE')?.trim().toUpperCase();
+  if (member && code === member) return { code, tier: 'member' };
+  // Test code (CHF 1 per order) for a real-payment check: remove the variable afterwards.
+  const test = env('TOURNAMENT_TEST_CODE')?.trim().toUpperCase();
+  if (test && code === test) return { code, tier: 'test' };
+  return null;
 }
 
 /** Fake-payment test mode: on only when explicitly enabled AND the page isn't published yet. */

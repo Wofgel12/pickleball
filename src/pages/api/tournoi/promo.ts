@@ -15,5 +15,5 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ valid: false }, 400);
   }
   const valid = validPromoCode(code);
-  return valid ? json({ valid: true, code: valid }) : json({ valid: false });
+  return valid ? json({ valid: true, code: valid.code, tier: valid.tier }) : json({ valid: false });
 };
