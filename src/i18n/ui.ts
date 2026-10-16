@@ -137,12 +137,12 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
   },
   tournament: {
     fr: {
-      title: 'Tournoi de Pickleball à Genève — 15 novembre 2026 | GSC',
-      description: 'Tournoi de pickleball du Geneva Sports Club le 15 novembre 2026 au Collège Calvin, Genève : doubles hommes, dames et mixte. Places limitées.',
+      title: 'Tournoi de pickleball à Genève – 15 nov. 2026 | Inscriptions',
+      description: 'Le plus grand tournoi de pickleball de Suisse romande se déroulera le 15 novembre 2026 à Genève. Au programme : doubles hommes, dames et mixte. Places limitées.',
     },
     en: {
-      title: 'Pickleball Tournament in Geneva — 15 Nov 2026 | GSC',
-      description: 'Geneva Sports Club pickleball tournament on 15 November 2026 at Collège Calvin, Geneva: men’s, women’s and mixed doubles. Limited places.',
+      title: 'Pickleball Tournament in Geneva – 15 Nov 2026 | Registration',
+      description: 'The biggest pickleball tournament in French-speaking Switzerland takes place on 15 November 2026 in Geneva: men’s, women’s and mixed doubles. Limited places.',
     },
   },
   tournamentRules: {
