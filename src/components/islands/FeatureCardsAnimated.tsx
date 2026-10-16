@@ -68,7 +68,7 @@ export default function FeatureCardsAnimated({ cards }: Props) {
         return (
           <motion.article
             key={i}
-            className="text-center rounded-2xl bg-white/90 backdrop-blur-sm border-2 overflow-hidden card-lift"
+            className="text-center rounded-2xl bg-white/90 border-2 overflow-hidden card-lift"
             style={{ borderColor: '#002b2b' }}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}

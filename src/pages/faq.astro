@@ -1,11 +1,13 @@
 ---
+import PaddleDoodles from '../components/PaddleDoodles.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import FaqContent from '../components/FaqContent.astro';
 import { faqFR, faqJsonLd } from '../i18n/faq';
 ---
 <BaseLayout pageKey="faq" lang="fr" jsonLd={[faqJsonLd(faqFR)]}>
-  <div class="bg-tile">
+  <div class="bg-tile relative isolate">
+    <PaddleDoodles />
     <PageHero
       lang="fr"
       title="FAQ pickleball à Genève"

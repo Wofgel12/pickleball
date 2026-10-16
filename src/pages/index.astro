@@ -1,4 +1,5 @@
 ---
+import PaddleDoodles from '../components/PaddleDoodles.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import HomeSection from '../components/HomeSection.astro';
@@ -52,7 +53,8 @@ const courseSchema = {
 <BaseLayout pageKey="home" lang="fr" jsonLd={[courseSchema, faqJsonLd(faqFR.slice(0, 6))]}>
   <Hero lang="fr" />
 
-  <div class="bg-tile">
+  <div class="bg-tile relative isolate">
+    <PaddleDoodles />
     <HomeSection lang="fr" />
 
     <ParticipateTeaser lang="fr" />

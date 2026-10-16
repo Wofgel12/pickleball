@@ -1,4 +1,5 @@
 ---
+import PaddleDoodles from '../components/PaddleDoodles.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import GearContent from '../components/GearContent.astro';
@@ -21,7 +22,8 @@ const articleSchema = {
 };
 ---
 <BaseLayout pageKey="gear" lang="fr" jsonLd={[articleSchema]}>
-  <div class="bg-tile">
+  <div class="bg-tile relative isolate">
+    <PaddleDoodles />
     <PageHero
       lang="fr"
       title="Équipement de pickleball : raquettes & balles"

@@ -1,4 +1,5 @@
 ---
+import PaddleDoodles from '../components/PaddleDoodles.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import ParticipateContent from '../components/ParticipateContent.astro';
@@ -53,7 +54,8 @@ const service = {
 };
 ---
 <BaseLayout pageKey="participate" lang="fr" jsonLd={[service]}>
-  <div class="bg-tile">
+  <div class="bg-tile relative isolate">
+    <PaddleDoodles />
     <PageHero
       lang="fr"
       title="Participer à une session de pickleball à Genève"

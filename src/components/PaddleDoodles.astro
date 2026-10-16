@@ -4,6 +4,12 @@
 // The shapes themselves live in DoodleShape.astro.
 import DoodleShape, { type DoodleKind } from './DoodleShape.astro';
 
+interface Props {
+  /** 'light' keeps every other drawing (short pages such as the 404). */
+  density?: 'full' | 'light';
+}
+const { density = 'full' } = Astro.props;
+
 type Doodle = {
   kind: DoodleKind;
   top: string;
@@ -43,7 +49,7 @@ const doodles: Doodle[] = [
 ];
 ---
 <div class="paddle-doodles" aria-hidden="true">
-  {doodles.map((d) => (
+  {doodles.filter((_, i) => density === 'full' || i % 2 === 0).map((d) => (
     <DoodleShape
       kind={d.kind}
       width={d.size}
@@ -62,5 +68,7 @@ const doodles: Doodle[] = [
     z-index: -1; /* behind content, above the wrapper's background (wrapper must be `isolate`) */
     overflow: hidden;
     pointer-events: none;
+    /* Repaints of the animated strokes stay inside this layer. */
+    contain: strict;
   }
 </style>

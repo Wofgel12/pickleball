@@ -164,10 +164,15 @@ const holes = [0, 60, 120, 180, 240, 300].map((deg) => {
   .doodle .thin {
     stroke-width: 1.4;
   }
+  /* Hidden (fully "undrawn") until BaseLayout's script adds html.doodles-on
+     after the page has loaded: the drawings never compete with first paint. */
   .doodle path,
   .doodle circle {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
+  }
+  .doodles-on .doodle path,
+  .doodles-on .doodle circle {
     animation: doodle-draw var(--duration, 10s) ease-in-out infinite;
     animation-delay: var(--delay, 0s);
   }
@@ -175,7 +180,15 @@ const holes = [0, 60, 120, 180, 240, 300].map((deg) => {
   .doodle .dotted {
     stroke-dasharray: 0.02 0.03;
     stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  .doodles-on .doodle .dotted {
     animation-name: doodle-fade;
+  }
+  /* Off-screen drawings are paused (set by the IntersectionObserver). */
+  .doodle.doodle-off path,
+  .doodle.doodle-off circle {
+    animation-play-state: paused;
   }
   /* draw (0→35%), hold, erase from the start (65→95%), short pause */
   @keyframes doodle-draw {
@@ -190,9 +203,14 @@ const holes = [0, 60, 120, 180, 240, 300].map((deg) => {
     35%, 65% { opacity: 1; }
     90%, 100% { opacity: 0; }
   }
+  /* Background drawings that would cross text are hidden by BaseLayout's script. */
+  .doodle.doodle-hidden {
+    visibility: hidden;
+  }
+  /* Reduced motion: drawings shown complete and still (once placed). */
   @media (prefers-reduced-motion: reduce) {
-    .doodle path,
-    .doodle circle {
+    .doodles-on .doodle path,
+    .doodles-on .doodle circle {
       animation: none;
       stroke-dashoffset: 0;
       opacity: 1;

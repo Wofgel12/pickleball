@@ -1,4 +1,5 @@
 ---
+import PaddleDoodles from '../components/PaddleDoodles.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import LearnContent from '../components/LearnContent.astro';
@@ -25,7 +26,8 @@ const articleSchema = {
 };
 ---
 <BaseLayout pageKey="learn" lang="fr" jsonLd={[articleSchema]}>
-  <div class="bg-tile">
+  <div class="bg-tile relative isolate">
+    <PaddleDoodles />
     <PageHero
       lang="fr"
       title="Apprendre le pickleball à Genève"

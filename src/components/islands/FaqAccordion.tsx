@@ -29,7 +29,7 @@ export default function FaqAccordion({ items, defaultOpen = 0 }: Props) {
         return (
           <div
             key={i}
-            className="bg-white/90 backdrop-blur-sm rounded-xl border-2 overflow-hidden transition-all duration-300 hover:shadow-md"
+            className="bg-white/90 rounded-xl border-2 overflow-hidden transition-all duration-300 hover:shadow-md"
             style={{ borderColor: '#002b2b' }}
           >
             <button

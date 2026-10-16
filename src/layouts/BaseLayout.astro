@@ -191,5 +191,74 @@ const lastReviewedDisplay = lang === 'fr'
     <style is:global>
       :root { --bg-tile-url: url('/bg-tile.webp'); }
     </style>
+    <!-- Background line drawings (DoodleShape), started once the page has loaded
+         and the browser is idle (never on data saver):
+         1. background drawings that would cross text, an image or a control are
+            hidden (re-checked after a resize), so they never get in the way;
+         2. off-screen drawings are paused;
+         3. reduced motion: drawings stay still (see DoodleShape's CSS). -->
+    <script is:inline>
+      (() => {
+        const conn = navigator.connection;
+        if (conn && conn.saveData) return;
+        const html = document.documentElement;
+        const opaque = new WeakMap();
+        // Is the element on a (nearly) opaque surface? Drawings sit behind those.
+        const onCard = (el) => {
+          if (!el || el.classList.contains('bg-tile') || el === document.body) return false;
+          if (opaque.has(el)) return opaque.get(el);
+          const st = getComputedStyle(el);
+          const m = st.backgroundColor.match(/rgba?\(([^)]+)\)/);
+          const a = m ? +(m[1].split(',')[3] ?? 1) : 0;
+          const r = a >= 0.8 || st.backgroundImage !== 'none' || onCard(el.parentElement);
+          opaque.set(el, r);
+          return r;
+        };
+        const hit = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+        const place = () => {
+          const doodles = [...document.querySelectorAll('.paddle-doodles svg.doodle')];
+          doodles.forEach((d) => d.classList.remove('doodle-hidden'));
+          const boxes = doodles.map((d) => ({ d, r: d.getBoundingClientRect() })).filter((x) => x.r.width);
+          if (!boxes.length) return;
+          const near = (r) => boxes.some((x) => hit(x.r, r));
+          const blocked = [];
+          for (const main of document.querySelectorAll('main')) {
+            const walk = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+            for (let n; (n = walk.nextNode());) {
+              const el = n.parentElement;
+              if (!n.data.trim() || el.closest('.paddle-doodles') || !near(el.getBoundingClientRect()) || onCard(el)) continue;
+              const range = document.createRange();
+              range.selectNodeContents(n);
+              for (const r of range.getClientRects()) blocked.push(r);
+            }
+            for (const el of main.querySelectorAll('img, video, iframe, a, button, input, textarea, select, label')) {
+              const r = el.getBoundingClientRect();
+              if (r.width && near(r) && !onCard(el)) blocked.push(r);
+            }
+          }
+          for (const x of boxes) if (blocked.some((b) => hit(x.r, b))) x.d.classList.add('doodle-hidden');
+        };
+        const start = () => {
+          place();
+          let t;
+          let lastW = innerWidth;
+          addEventListener('resize', () => {
+            if (innerWidth === lastW) return; // ignore mobile toolbar show/hide
+            lastW = innerWidth;
+            clearTimeout(t);
+            t = setTimeout(place, 250);
+          }, { passive: true });
+          if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+              for (const e of entries) e.target.classList.toggle('doodle-off', !e.isIntersecting);
+            }, { rootMargin: '150px' });
+            document.querySelectorAll('svg.doodle').forEach((d) => { d.classList.add('doodle-off'); io.observe(d); });
+          }
+          html.classList.add('doodles-on');
+        };
+        const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 2500 }) : setTimeout(start, 300));
+        if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
+      })();
+    </script>
   </body>
 </html>
