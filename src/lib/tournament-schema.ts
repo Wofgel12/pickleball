@@ -34,6 +34,12 @@ export function tournamentSchema(site: string, lang: Lang) {
       },
       hasMap: tournament.mapsUrl,
     },
+    // Required-ish by Google's Event rich results ("performer" missing warning):
+    // the players taking part in the tournament.
+    performer: {
+      '@type': 'PerformingGroup',
+      name: lang === 'fr' ? 'Joueuses et joueurs du tournoi GSC Pickleball' : 'GSC Pickleball tournament players',
+    },
     organizer: { '@type': 'SportsClub', '@id': site + '/#sportsclub', name: 'Geneva Sports Club', url: site + '/' },
     sponsor: tournament.partners.map((p) => ({ '@type': 'Organization', name: p.name, url: p.url })),
     offers: [
