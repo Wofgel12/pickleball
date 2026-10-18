@@ -1,0 +1,74 @@
+---
+// "Ils parlent de nous": the Geneva Sports Club segment of Léman Bleu's
+// "Sport Passion" programme. The video stays on Léman Bleu's video host
+// (Infomaniak) and nothing is downloaded until the visitor presses play
+// (preload="none" + a local poster image), so it costs the page nothing.
+import type { Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+
+const show = {
+  pageUrl: 'https://www.lemanbleu.ch/fr/Emissions/545612-Sport-Passion.html',
+  // 720p file of the whole programme, served by Léman Bleu's Infomaniak VOD.
+  videoUrl: 'https://play.vod2.infomaniak.com/single/1jijk03unh5sm/1jhvl2upwql6y/1jijk03unh5t8.mp4',
+  // Our segment inside the programme, in seconds.
+  start: 181, // 3:01
+  end: 400, // 6:40
+};
+---
+<section class="relative px-4 pb-20" aria-labelledby="press-title">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-8">
+      <h2 id="press-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+        {fr ? 'Ils parlent de nous' : 'In the media'}
+      </h2>
+      <p class="text-lg text-gray-700">
+        {fr
+          ? 'Le Geneva Sports Club et ses sessions de pickleball dans l’émission « Sport Passion » de Léman Bleu.'
+          : 'The Geneva Sports Club and its pickleball sessions on Léman Bleu’s “Sport Passion” programme.'}
+      </p>
+    </div>
+
+    <figure class="overflow-hidden rounded-2xl border-2 border-[#002b2b] bg-white/95 shadow-lg">
+      <video
+        class="press-video block w-full aspect-video bg-black"
+        controls
+        playsinline
+        preload="none"
+        poster="/press/lemanbleu-sport-passion.jpg"
+        data-start={show.start}
+        data-end={show.end}
+        aria-label={fr ? 'Reportage de Léman Bleu sur le pickleball au Geneva Sports Club' : 'Léman Bleu report on pickleball at the Geneva Sports Club'}
+      >
+        <!-- #t=start,end: browsers play only our segment of the programme -->
+        <source src={`${show.videoUrl}#t=${show.start},${show.end}`} type="video/mp4" />
+      </video>
+      <figcaption class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 text-sm text-gray-600 border-t-2 border-[#002b2b]">
+        <span>{fr ? '© Léman Bleu — Sport Passion, « Genève, terrain de sport sans frontière »' : '© Léman Bleu — Sport Passion, “Genève, terrain de sport sans frontière”'}</span>
+        <a href={show.pageUrl} target="_blank" rel="noopener" class="font-semibold text-teal-700 hover:text-teal-900 underline underline-offset-2">
+          {fr ? 'Voir l’émission complète' : 'Watch the full programme'} ↗
+        </a>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  // Keep playback inside our segment (some browsers ignore the #t end time,
+  // or let the visitor seek outside it).
+  document.querySelectorAll<HTMLVideoElement>('video.press-video').forEach((video) => {
+    const start = Number(video.dataset.start);
+    const end = Number(video.dataset.end);
+    video.addEventListener('play', () => {
+      if (video.currentTime < start - 1 || video.currentTime >= end) video.currentTime = start;
+    });
+    video.addEventListener('timeupdate', () => {
+      if (video.currentTime >= end) {
+        video.pause();
+        video.currentTime = start;
+      }
+    });
+  });
+</script>
