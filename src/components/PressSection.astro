@@ -72,8 +72,10 @@ const show = {
   // and the button comes back when the clip ends.
   document.querySelectorAll<HTMLVideoElement>('video.press-video').forEach((video) => {
     const button = video.parentElement?.querySelector<HTMLButtonElement>('.press-play');
+    // Inline display: the `hidden` attribute alone loses against the button's
+    // `flex` class, which kept the overlay on top of the playing video.
     const showButton = (visible: boolean) => {
-      if (button) button.hidden = !visible;
+      if (button) button.style.display = visible ? '' : 'none';
       video.controls = !visible;
     };
     button?.addEventListener('click', () => {
