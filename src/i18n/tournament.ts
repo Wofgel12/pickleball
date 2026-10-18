@@ -83,15 +83,14 @@ export const tournament = {
         en: 'Crêpes, mini pancakes and plenty of other treats to refuel between matches.',
       },
     },
+    // Not announced yet: rendered as a "to be revealed" card (no logo, no link)
+    // and left out of the structured data until it has a name and a url.
     {
-      id: 'pickleballcorner',
-      name: 'Pickleball Corner',
-      url: 'https://pickleballcorner.ch/fr',
+      id: 'equipment-tba',
+      name: '',
+      url: '',
       role: { fr: 'Partenaire matériel', en: 'Equipment partner' },
-      text: {
-        fr: 'Le spécialiste suisse du pickleball propose des réductions à nos membres sur son site web pour s’équiper le jour J.',
-        en: 'Switzerland’s pickleball specialist offers our members discounts on its website to gear up for the big day.',
-      },
+      text: { fr: '', en: '' },
     },
   ],
 } as const;
@@ -288,7 +287,7 @@ export const tournamentCopy = {
       { dt: 'Cadeaux', dd: 'Surprise !' },
     ],
     partnersTitle: 'Nos partenaires',
-    partnersLead: 'Cette année, deux partenaires de renom nous accompagnent dans cette aventure.',
+    partnersLead: 'Les partenaires de cette première édition qui nous accompagnent dans cette aventure.',
     contactTitle: 'Une question ?',
     contactText: 'Écrivez-nous, on vous répond rapidement.',
     backToSite: 'Découvrir le Geneva Sports Club',
@@ -397,7 +396,7 @@ export const tournamentCopy = {
       { dt: 'Prizes', dd: 'Surprise!' },
     ],
     partnersTitle: 'Our partners',
-    partnersLead: 'This year, two renowned partners are joining us on this adventure.',
+    partnersLead: 'The partners of this first edition joining us on this adventure.',
     contactTitle: 'Any questions?',
     contactText: 'Drop us a line — we’ll get back to you quickly.',
     backToSite: 'Discover the Geneva Sports Club',

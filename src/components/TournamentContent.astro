@@ -7,11 +7,9 @@ import DoodleShape from './DoodleShape.astro';
 import { tournament, tournamentCopy } from '../i18n/tournament';
 import { facts, routes, type Lang } from '../i18n/ui';
 import fluffyLogo from '../assets/partners/fluffypuffy.webp';
-import cornerLogo from '../assets/partners/pickleballcorner.webp';
 
 const partnerLogos: Record<string, { src: ImageMetadata; alt: string }> = {
   fluffypuffy: { src: fluffyLogo, alt: 'Logo FluffyPuffy' },
-  pickleballcorner: { src: cornerLogo, alt: 'Logo Pickleball Corner' },
 };
 
 interface Props { lang: Lang; }
@@ -161,16 +159,14 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
       <p class="text-lg text-gray-700">{t.partnersLead}</p>
     </div>
     <div class="grid md:grid-cols-2 gap-6">
-      {tournament.partners.map((p) => (
+      {tournament.partners.map((p) => p.url ? (
         <a
           href={p.url}
           target="_blank"
           rel="noopener"
           class="card-lift group relative flex flex-col bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 hover:shadow-lg"
         >
-          {p.id === 'fluffypuffy'
-            ? <DoodleShape kind="sparkle" width={32} delay={1.4} duration={6} class="absolute top-4 right-4 z-10 md:hidden" />
-            : <DoodleShape kind="ball" width={30} delay={2.8} class="absolute top-3 left-3 z-10 md:hidden" />}
+          <DoodleShape kind="sparkle" width={32} delay={1.4} duration={6} class="absolute top-4 right-4 z-10 md:hidden" />
           <div class="h-28 mb-6 rounded-xl bg-white flex items-center justify-center px-4">
             <!-- Plain <img>: logos are already small, pre-sized webp files, so they
                  don't depend on Netlify's image CDN (works in local previews too). -->
@@ -193,6 +189,20 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
             </span>
           </div>
         </a>
+      ) : (
+        <!-- Partner not announced yet: mystery card, no logo and no link -->
+        <div class="relative flex flex-col bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7">
+          <DoodleShape kind="ball" width={30} delay={2.8} class="absolute top-3 left-3 z-10 md:hidden" />
+          <div class="h-28 mb-6 rounded-xl border-2 border-dashed border-teal-200 bg-teal-50/60 flex items-center justify-center gap-3" aria-hidden="true">
+            <DoodleShape kind="sparkle" width={22} delay={0.4} duration={6} />
+            <span class="w-16 h-16 rounded-full bg-[#002b2b] text-teal-300 text-4xl font-bold flex items-center justify-center">?</span>
+            <DoodleShape kind="sparkle" width={22} delay={3.4} duration={6} />
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-teal-700 mb-1">{p.role[lang]}</p>
+            <p class="text-2xl font-bold text-gray-900">{fr ? 'Sera dévoilé ces prochains jours' : 'To be revealed in the coming days'}</p>
+          </div>
+        </div>
       ))}
     </div>
   </div>

@@ -41,7 +41,7 @@ export function tournamentSchema(site: string, lang: Lang) {
       name: lang === 'fr' ? 'Joueuses et joueurs du tournoi GSC Pickleball' : 'GSC Pickleball tournament players',
     },
     organizer: { '@type': 'SportsClub', '@id': site + '/#sportsclub', name: 'Geneva Sports Club', url: site + '/' },
-    sponsor: tournament.partners.map((p) => ({ '@type': 'Organization', name: p.name, url: p.url })),
+    sponsor: tournament.partners.filter((p) => p.url).map((p) => ({ '@type': 'Organization', name: p.name, url: p.url })),
     offers: [
       ...tournament.categories.map((c) => ({
         '@type': 'Offer',
