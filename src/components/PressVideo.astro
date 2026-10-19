@@ -1,0 +1,66 @@
+---
+// Léman Bleu clip with a big play button over the poster. Nothing but the
+// poster image is loaded until the visitor presses play (preload="none").
+import { lemanBleuReport as report } from '../lib/press';
+import type { Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; class?: string; }
+const { lang, class: className } = Astro.props;
+const fr = lang === 'fr';
+---
+<figure class:list={['overflow-hidden rounded-2xl border-2 border-[#002b2b] bg-white/95 shadow-lg', className]}>
+  <div class="relative">
+    <video
+      class="press-video block w-full aspect-video bg-black"
+      playsinline
+      preload="none"
+      poster={report.poster}
+      aria-label={report.label[lang]}
+    >
+      <source src={report.videoUrl} type="video/mp4" />
+    </video>
+    <!-- Big play button over the poster (the native controls appear once playing) -->
+    <button
+      type="button"
+      class="press-play group absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/25 hover:bg-black/15 transition-colors cursor-pointer"
+      aria-label={fr ? 'Lire le reportage' : 'Play the report'}
+    >
+      <span class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-teal-400 text-[#002b2b] shadow-2xl ring-4 ring-white/80 transition-transform duration-200 group-hover:scale-110" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-9 h-9 md:w-11 md:h-11 translate-x-0.5" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.52.85l10.4-6.5a1 1 0 0 0 0-1.7L9.52 4.65A1 1 0 0 0 8 5.5z"/></svg>
+      </span>
+      <span class="rounded-full bg-black/60 px-4 py-1.5 text-sm md:text-base font-semibold text-white">
+        {fr ? `Regarder le reportage · ${report.minutes} min` : `Watch the report · ${report.minutes} min`}
+      </span>
+    </button>
+  </div>
+  <figcaption class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 text-sm text-gray-600 border-t-2 border-[#002b2b]">
+    <span>{report.credit[lang]}</span>
+    <a href={report.pageUrl} target="_blank" rel="noopener" class="font-semibold text-teal-700 hover:text-teal-900 underline underline-offset-2">
+      {fr ? 'Voir l’émission complète' : 'Watch the full programme'} ↗
+    </a>
+  </figcaption>
+</figure>
+
+<script>
+  // Big play button over the poster; the native controls take over once playing,
+  // and the button comes back when the clip ends.
+  document.querySelectorAll<HTMLVideoElement>('video.press-video').forEach((video) => {
+    const button = video.parentElement?.querySelector<HTMLButtonElement>('.press-play');
+    // Inline display: the `hidden` attribute alone loses against the button's
+    // `flex` class, which kept the overlay on top of the playing video.
+    const showButton = (visible: boolean) => {
+      if (button) button.style.display = visible ? '' : 'none';
+      video.controls = !visible;
+    };
+    button?.addEventListener('click', () => {
+      showButton(false);
+      video.play().catch(() => showButton(true));
+    });
+    video.addEventListener('play', () => showButton(false));
+    video.addEventListener('ended', () => {
+      video.currentTime = 0;
+      video.load(); // back to the poster
+      showButton(true);
+    });
+  });
+</script>

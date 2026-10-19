@@ -97,12 +97,12 @@ export const meta: Record<RouteKey, Record<Lang, { title: string; description: s
   },
   news: {
     fr: {
-      title: 'Actualités Pickleball Genève — Geneva Sports Club',
-      description: 'Les dernières nouvelles du pickleball au Geneva Sports Club : tournois, événements, nouveautés des sessions à Genève et vie du club.',
+      title: 'Actualités pickleball Genève : tournoi et Léman Bleu',
+      description: 'Tournoi de pickleball le 15 novembre 2026 au Collège Calvin et reportage de Léman Bleu sur le Geneva Sports Club : l’actualité du pickleball à Genève.',
     },
     en: {
-      title: 'Pickleball Geneva News — Geneva Sports Club',
-      description: 'The latest pickleball news from the Geneva Sports Club: tournaments, events, session updates in Geneva and club life.',
+      title: 'Pickleball Geneva news: tournament and Léman Bleu',
+      description: 'Big pickleball tournament on 15 November 2026 at Collège Calvin and a Léman Bleu TV report on the Geneva Sports Club: all the pickleball news in Geneva.',
     },
   },
   contact: {

@@ -1,23 +1,12 @@
 ---
 // "Ils parlent de nous": the Geneva Sports Club segment of Léman Bleu's
-// "Sport Passion" programme. The page only loads the poster image of the
-// clip, and nothing is downloaded until the visitor presses play
-// (preload="none" + a local poster image), so it costs the page nothing.
+// "Sport Passion" programme (player in PressVideo.astro).
+import PressVideo from './PressVideo.astro';
 import type { Lang } from '../i18n/ui';
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const fr = lang === 'fr';
-
-const show = {
-  pageUrl: 'https://www.lemanbleu.ch/fr/Emissions/545612-Sport-Passion.html',
-  // Our segment of the programme (3:20 → 6:17), cut and re-encoded in 720p
-  // (~28 MB). Léman Bleu's own video host answers range requests unreliably,
-  // which stalled playback when starting mid-file, so the clip is served from
-  // this site instead.
-  videoUrl: '/press/lemanbleu-sport-passion.mp4',
-  minutes: 3,
-};
 ---
 <section class="relative px-4 pt-16 md:pt-20" aria-labelledby="press-title">
   <div class="max-w-4xl mx-auto">
@@ -32,61 +21,6 @@ const show = {
       </p>
     </div>
 
-    <figure class="overflow-hidden rounded-2xl border-2 border-[#002b2b] bg-white/95 shadow-lg">
-      <div class="relative">
-        <video
-          class="press-video block w-full aspect-video bg-black"
-          playsinline
-          preload="none"
-          poster="/press/lemanbleu-sport-passion.jpg"
-          aria-label={fr ? 'Reportage de Léman Bleu sur le pickleball au Geneva Sports Club' : 'Léman Bleu report on pickleball at the Geneva Sports Club'}
-        >
-          <source src={show.videoUrl} type="video/mp4" />
-        </video>
-        <!-- Big play button over the poster (the native controls appear once playing) -->
-        <button
-          type="button"
-          class="press-play group absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/25 hover:bg-black/15 transition-colors cursor-pointer"
-          aria-label={fr ? 'Lire le reportage' : 'Play the report'}
-        >
-          <span class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-teal-400 text-[#002b2b] shadow-2xl ring-4 ring-white/80 transition-transform duration-200 group-hover:scale-110" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-9 h-9 md:w-11 md:h-11 translate-x-0.5" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.52.85l10.4-6.5a1 1 0 0 0 0-1.7L9.52 4.65A1 1 0 0 0 8 5.5z"/></svg>
-          </span>
-          <span class="rounded-full bg-black/60 px-4 py-1.5 text-sm md:text-base font-semibold text-white">
-            {fr ? `Regarder le reportage · ${show.minutes} min` : `Watch the report · ${show.minutes} min`}
-          </span>
-        </button>
-      </div>
-      <figcaption class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 text-sm text-gray-600 border-t-2 border-[#002b2b]">
-        <span>{fr ? '© Léman Bleu — Sport Passion, « Genève, terrain de sport sans frontière »' : '© Léman Bleu — Sport Passion, “Genève, terrain de sport sans frontière”'}</span>
-        <a href={show.pageUrl} target="_blank" rel="noopener" class="font-semibold text-teal-700 hover:text-teal-900 underline underline-offset-2">
-          {fr ? 'Voir l’émission complète' : 'Watch the full programme'} ↗
-        </a>
-      </figcaption>
-    </figure>
+    <PressVideo lang={lang} />
   </div>
 </section>
-
-<script>
-  // Big play button over the poster; the native controls take over once playing,
-  // and the button comes back when the clip ends.
-  document.querySelectorAll<HTMLVideoElement>('video.press-video').forEach((video) => {
-    const button = video.parentElement?.querySelector<HTMLButtonElement>('.press-play');
-    // Inline display: the `hidden` attribute alone loses against the button's
-    // `flex` class, which kept the overlay on top of the playing video.
-    const showButton = (visible: boolean) => {
-      if (button) button.style.display = visible ? '' : 'none';
-      video.controls = !visible;
-    };
-    button?.addEventListener('click', () => {
-      showButton(false);
-      video.play().catch(() => showButton(true));
-    });
-    video.addEventListener('play', () => showButton(false));
-    video.addEventListener('ended', () => {
-      video.currentTime = 0;
-      video.load(); // back to the poster
-      showButton(true);
-    });
-  });
-</script>
