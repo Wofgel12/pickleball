@@ -28,7 +28,7 @@ export default function FeatureCardsAnimated({ cards }: Props) {
   const reduce = useReducedMotion();
 
   return (
-    <div ref={ref} className="grid md:grid-cols-3 gap-8 mb-12">
+    <div ref={ref} className="grid md:grid-cols-3 gap-8 mb-10">
       {cards.map((c, i) => {
         const stacked = stackOffsets[i] ?? stackOffsets[0];
 

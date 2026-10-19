@@ -5,12 +5,12 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const fr = lang === 'fr';
 ---
-<section class="py-20 px-4">
+<section class="px-4 pt-16 md:pt-20">
   <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
       {fr ? 'Rejoignez nos entraînements de Pickleball' : 'Join our Pickleball training sessions'}
     </h2>
-    <p class="text-lg leading-relaxed text-gray-700 mb-10">
+    <p class="text-lg leading-relaxed text-gray-700 mb-8 md:mb-10">
       {fr
         ? "Notre association sportive propose deux sessions de Pickleball à Genève par semaine ouvertes à tous les niveaux : le lundi et le vendredi. Il n'y a pas de frais d'adhésion à l'association. Une simple cotisation de 10.- est demandée uniquement lorsque vous participez à une session. Le processus d'inscription pour découvrir le pickleball est très simple : il vous suffit de cliquer sur le bouton ci-dessous et de suivre les instructions. À très vite !"
         : "Our sports association offers two Pickleball sessions in Geneva per week, open to all levels: on Mondays and Fridays. There is no membership fee. A small fee of 10.- is requested only when you take part in a session. The registration process to discover pickleball is very simple: just click the button below and follow the instructions. See you soon!"}
