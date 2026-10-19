@@ -60,13 +60,11 @@ export const news: NewsItem[] = [
         'Le Geneva Sports Club contribue à faire progresser la visibilité du **pickleball à Genève**. Grâce à **Léman Bleu**, nous avons pu expliquer ce qu’est le pickleball, ce sport de raquette accessible et convivial que nous essayons de démocratiser à Genève, et pourquoi il séduit chaque semaine de plus en plus de joueuses et de joueurs.',
         'Dans son émission **Sport Passion** « Genève, terrain de sport sans frontière », présentée par Pierre Pillet et consacrée à toutes celles et ceux qui pratiquent le sport en dehors des clubs traditionnels, la chaîne genevoise a suivi l’une de nos sessions. Alvaro Paniagua Lopez, du Geneva Sports Club, y était invité aux côtés de l’Association genevoise de cricket.',
         'Au programme du reportage : des parties en double où l’on change régulièrement de partenaire, des débutants qui prennent la raquette pour la première fois et l’ambiance détendue que l’on retrouve chaque **lundi et vendredi de 20h à 22h**. Un grand merci à Léman Bleu pour cette belle mise en lumière !',
-        'Envie d’essayer ? Nos sessions sont ouvertes à **tous les niveaux**, débutants compris, pour **10 CHF**, raquettes et balles fournies.',
       ],
       en: [
         'The Geneva Sports Club is helping to raise the profile of **pickleball in Geneva**. Thanks to **Léman Bleu**, we were able to explain what pickleball is — an accessible, friendly racket sport we are working to bring to everyone in Geneva — and why more and more players are joining us every week.',
         'In its **Sport Passion** programme “Genève, terrain de sport sans frontière”, presented by Pierre Pillet and dedicated to people who play sport outside traditional clubs, the Geneva TV channel followed one of our sessions. Alvaro Paniagua Lopez, from the Geneva Sports Club, was a guest alongside the Geneva Cricket Association.',
         'In the report: doubles games with regular partner rotations, beginners picking up a paddle for the first time, and the relaxed atmosphere you’ll find every **Monday and Friday from 8pm to 10pm**. A big thank you to Léman Bleu for the spotlight!',
-        'Want to give it a try? Our sessions are open to **all levels**, beginners included, for **CHF 10**, paddles and balls provided.',
       ],
     },
     video: 'lemanBleu',
