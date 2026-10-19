@@ -1,0 +1,55 @@
+---
+// Full page of one news item (/actualites/<slug>/ and /en/news/<slug>/).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PaddleDoodles from './PaddleDoodles.astro';
+import NewsArticleBody from './NewsArticleBody.astro';
+import { newsArticleSchema } from '../lib/news-schema';
+import type { NewsItem } from '../i18n/news';
+import { routes, type Lang } from '../i18n/ui';
+
+interface Props { item: NewsItem; lang: Lang; }
+const { item, lang } = Astro.props;
+const page = item.page!;
+const fr = lang === 'fr';
+const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://gscpickleball.ch';
+const paths = {
+  fr: `${routes.news.fr}${page.slug.fr}/`,
+  en: `${routes.news.en}${page.slug.en}/`,
+};
+const image = typeof item.image === 'object' ? item.image[lang] : item.image;
+const dateLabel = new Date(item.date + 'T12:00:00').toLocaleDateString(fr ? 'fr-CH' : 'en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+<BaseLayout
+  pageKey="news"
+  lang={lang}
+  paths={paths}
+  title={page.title[lang]}
+  description={page.description[lang]}
+  crumb={item.title[lang]}
+  ogImage={image}
+  ogImageAlt={item.title[lang]}
+  lastReviewedISO={item.date}
+  jsonLd={[newsArticleSchema(SITE, lang, item)]}
+>
+  <div class="bg-tile relative isolate">
+    <PaddleDoodles />
+    <section class="px-4 pt-10 md:pt-14 pb-16 md:pb-20">
+      <div class="max-w-4xl mx-auto">
+        <a href={routes.news[lang]} class="inline-flex items-center gap-1 font-semibold text-teal-700 hover:text-teal-900 mb-6">
+          ← {fr ? 'Toutes les actualités' : 'All news'}
+        </a>
+        <article class="bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 md:p-10">
+          <time datetime={item.date} class="text-sm font-semibold uppercase tracking-wider text-teal-700">
+            {dateLabel}
+          </time>
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-6 text-balance">{item.title[lang]}</h1>
+          <NewsArticleBody item={item} lang={lang} />
+        </article>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

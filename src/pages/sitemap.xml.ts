@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { routes, type RouteKey } from '../i18n/ui';
 import { facts } from '../i18n/ui';
 import { tournament } from '../i18n/tournament';
+import { visibleNews, newsUrl } from '../i18n/news';
 
 const SITE = 'https://gscpickleball.ch';
 
@@ -17,12 +18,22 @@ export const GET: APIRoute = ({ site }) => {
 
   const urls: string[] = [];
 
-  for (const key of indexableKeys) {
-    const lastmod = tournamentKeys.includes(key) ? tournament.updatedISO : facts.lastReviewedISO;
+  // Pages: route keys, then news items that have their own article page.
+  const pages = [
+    ...indexableKeys.map((key) => ({
+      paths: routes[key],
+      lastmod: tournamentKeys.includes(key) ? tournament.updatedISO : facts.lastReviewedISO,
+    })),
+    ...visibleNews()
+      .filter((item) => item.page)
+      .map((item) => ({ paths: { fr: newsUrl(item, 'fr'), en: newsUrl(item, 'en') }, lastmod: item.date })),
+  ];
+
+  for (const { paths, lastmod } of pages) {
     for (const lang of ['fr', 'en'] as const) {
-      const loc = baseUrl + routes[key][lang];
-      const altFr = baseUrl + routes[key].fr;
-      const altEn = baseUrl + routes[key].en;
+      const loc = baseUrl + paths[lang];
+      const altFr = baseUrl + paths.fr;
+      const altEn = baseUrl + paths.en;
       urls.push(
         `  <url>\n` +
         `    <loc>${loc}</loc>\n` +

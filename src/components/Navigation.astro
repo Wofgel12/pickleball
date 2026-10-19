@@ -7,8 +7,10 @@ import { tournament } from '../i18n/tournament';
 interface Props {
   lang: Lang;
   pageKey: RouteKey;
+  /** Sub-page URLs (news article…) for the language switcher. */
+  paths?: Record<Lang, string>;
 }
-const { lang, pageKey } = Astro.props;
+const { lang, pageKey, paths } = Astro.props;
 
 // Top-level menu order. The "Le Pickleball" group is rendered separately
 // because it contains sub-routes (learn + gear).
@@ -110,7 +112,7 @@ const showTournamentBar = tournament.published
       </ul>
 
       <div class="flex items-center gap-3">
-        <LangSwitcher client:load lang={lang} pageKey={pageKey} />
+        <LangSwitcher client:load lang={lang} pageKey={pageKey} paths={paths} />
 
         <!-- Mobile menu -->
         <details class="md:hidden relative">

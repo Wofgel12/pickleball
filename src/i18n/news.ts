@@ -17,6 +17,14 @@ export interface NewsItem {
   cta?: { label: Record<Lang, string>; href: Record<Lang, string> };
   /** Show the Léman Bleu clip (src/lib/press.ts) under the text. */
   video?: 'lemanBleu';
+  /** Own article page (/actualites/<slug>/, /en/news/<slug>/) with its own
+   *  title and description for search engines. Without it, the item only
+   *  lives on the News page. */
+  page?: {
+    slug: Record<Lang, string>;
+    title: Record<Lang, string>;
+    description: Record<Lang, string>;
+  };
   /** Image for the NewsArticle structured data (defaults to the site's OG image). */
   image?: string | Record<Lang, string>;
   visible?: boolean;
@@ -69,12 +77,28 @@ export const news: NewsItem[] = [
     },
     video: 'lemanBleu',
     image: '/press/lemanbleu-sport-passion.jpg',
+    page: {
+      slug: { fr: 'leman-bleu-reportage-pickleball-geneve', en: 'leman-bleu-pickleball-geneva-tv-report' },
+      title: {
+        fr: 'Reportage Léman Bleu sur le pickleball à Genève | GSC',
+        en: 'Léman Bleu TV report on pickleball in Geneva | GSC',
+      },
+      description: {
+        fr: 'Le Geneva Sports Club dans l’émission Sport Passion de Léman Bleu : découvrez en vidéo le pickleball à Genève, un sport de raquette ouvert à tous.',
+        en: 'The Geneva Sports Club on Léman Bleu’s Sport Passion programme: watch the video and discover pickleball in Geneva, a racket sport open to all.',
+      },
+    },
     cta: {
       label: { fr: 'Participer à une session', en: 'Join a session' },
       href: { fr: routes.participate.fr, en: routes.participate.en },
     },
   },
 ];
+
+/** URL of an item: its own page, or its anchor on the News page. */
+export function newsUrl(item: NewsItem, lang: Lang): string {
+  return item.page ? `${routes.news[lang]}${item.page.slug[lang]}/` : `${routes.news[lang]}#${item.id}`;
+}
 
 /** Visible items, newest first. */
 export function visibleNews(): NewsItem[] {

@@ -24,6 +24,11 @@ interface Props {
   lastReviewedISO?: string;
   /** Emit <meta name="robots" content="noindex,nofollow"> (legal pages, 404) */
   noindex?: boolean;
+  /** URLs of a sub-page of `pageKey` (e.g. a news article): used for the
+   *  canonical, hreflang, language switcher and an extra breadcrumb level. */
+  paths?: Record<Lang, string>;
+  /** Breadcrumb name of that sub-page (defaults to the title). */
+  crumb?: string;
 }
 
 const {
@@ -36,10 +41,12 @@ const {
   jsonLd = [],
   lastReviewedISO = facts.lastReviewedISO,
   noindex = false,
+  paths,
+  crumb,
 } = Astro.props;
 
 const SITE = Astro.site?.toString().replace(/\/$/, '') ?? 'https://gscpickleball.ch';
-const route = routes[pageKey];
+const route = paths ?? routes[pageKey];
 const canonical = SITE + route[lang];
 const altFr = SITE + route.fr;
 const altEn = SITE + route.en;
@@ -60,7 +67,8 @@ const breadcrumbItems = pageKey === 'home'
     ]
   : [
       { name: lang === 'fr' ? 'Accueil' : 'Home', url: SITE + routes.home[lang] },
-      { name: navLabels[pageKey][lang], url: canonical },
+      { name: navLabels[pageKey][lang], url: SITE + routes[pageKey][lang] },
+      ...(paths ? [{ name: crumb ?? title ?? '', url: canonical }] : []),
     ];
 
 const breadcrumbSchema = {
@@ -181,7 +189,7 @@ const lastReviewedDisplay = lang === 'fr'
     <slot name="head" />
   </head>
   <body>
-    <Navigation lang={lang} pageKey={pageKey} />
+    <Navigation lang={lang} pageKey={pageKey} paths={paths} />
     <main id="main">
       <slot />
     </main>

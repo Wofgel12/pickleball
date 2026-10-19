@@ -1,0 +1,13 @@
+---
+import NewsArticlePage from '../../components/NewsArticlePage.astro';
+import { news, type NewsItem } from '../../i18n/news';
+
+export function getStaticPaths() {
+  return news
+    .filter((item) => item.page && item.visible !== false)
+    .map((item) => ({ params: { slug: item.page!.slug.fr }, props: { item } }));
+}
+
+const { item } = Astro.props as { item: NewsItem };
+---
+<NewsArticlePage item={item} lang="fr" />

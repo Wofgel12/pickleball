@@ -1,0 +1,22 @@
+---
+// Text, video and call-to-action of a news item (News page and article pages).
+import RichText from './RichText.astro';
+import PressVideo from './PressVideo.astro';
+import type { NewsItem } from '../i18n/news';
+import type { Lang } from '../i18n/ui';
+
+interface Props { item: NewsItem; lang: Lang; }
+const { item, lang } = Astro.props;
+---
+{item.body[lang].map((p) => (
+  <p class="text-lg text-gray-800 mb-4 last:mb-0"><RichText text={p} /></p>
+))}
+{item.video === 'lemanBleu' && <PressVideo lang={lang} class="mt-6 shadow-none" />}
+{item.cta && (
+  <a
+    href={item.cta.href[lang]}
+    class="btn-press mt-6 inline-flex items-center gap-2 rounded-xl bg-[#002b2b] hover:bg-[#003d3d] text-white font-semibold px-5 py-3"
+  >
+    {item.cta.label[lang]} →
+  </a>
+)}

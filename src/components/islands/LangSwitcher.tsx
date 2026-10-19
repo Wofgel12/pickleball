@@ -3,6 +3,8 @@ import { routes, type Lang, type RouteKey } from '../../i18n/ui';
 interface Props {
   lang: Lang;
   pageKey: RouteKey;
+  /** Sub-page URLs (news article…), overriding the page key's routes. */
+  paths?: Record<Lang, string>;
 }
 
 /**
@@ -10,9 +12,9 @@ interface Props {
  * Renders both buttons as anchor links, so the switch is a real navigation
  * to the alternate-locale URL — preserving SEO and respecting browser back-nav.
  */
-export default function LangSwitcher({ lang, pageKey }: Props) {
-  const frUrl = routes[pageKey].fr;
-  const enUrl = routes[pageKey].en;
+export default function LangSwitcher({ lang, pageKey, paths }: Props) {
+  const frUrl = (paths ?? routes[pageKey]).fr;
+  const enUrl = (paths ?? routes[pageKey]).en;
   return (
     <div className="flex bg-gray-100 rounded-lg p-1" role="group" aria-label="Language switcher">
       <a
