@@ -183,8 +183,8 @@ export function cancellationDeadlineLabel(lang: Lang): string {
 
 export const tournamentCopy = {
   fr: {
-    kicker: 'Tournoi de pickleball à Genève · 1re édition',
-    title: 'Le plus grand tournoi de pickleball de Suisse romande !',
+    kicker: 'Tournoi de pickleball amical à Genève · 1re édition',
+    title: 'Le plus grand tournoi amical de pickleball de Suisse romande !',
     dateLong: 'Dimanche 15 novembre 2026',
     hours: '9h – 18h',
     ctaRegister: 'Je m’inscris',
@@ -293,8 +293,8 @@ export const tournamentCopy = {
     backToSite: 'Découvrir le Geneva Sports Club',
   },
   en: {
-    kicker: 'Pickleball tournament in Geneva · 1st edition',
-    title: 'The biggest pickleball tournament in French-speaking Switzerland!',
+    kicker: 'Friendly pickleball tournament in Geneva · 1st edition',
+    title: 'The biggest friendly pickleball tournament in French-speaking Switzerland!',
     dateLong: 'Sunday 15 November 2026',
     hours: '9am – 6pm',
     ctaRegister: 'Register now',
