@@ -190,7 +190,7 @@ export const facts = {
   location: 'La Jonction, 1205 Genève, Suisse',
   locationEn: 'La Jonction, 1205 Geneva, Switzerland',
   venueName: 'École de Cité-Jonction',
-  email: 'hello@genevasportsclub.ch',
+  email: 'contact@gscpickleball.ch',
   phonePrimary: '+41762141203',
   phonePrimaryDisplay: '+41 76 214 12 03',
   phoneSession: '+41788826810',
