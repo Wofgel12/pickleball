@@ -155,7 +155,7 @@ Association multisports basée à Genève, plus de 9'400 membres. Le pickleball 
 - **Niveau :** tous niveaux, à partir de 18 ans. Raquettes de prêt sur demande. Restauration sur place.
 - **Inscription :** en ligne, paiement par carte (Stripe), sans création de compte : https://gscpickleball.ch/tournoi/ — inscription individuelle, avec un partenaire ou en demandant un partenaire.
 - **Annulation :** possible jusqu'au jeudi 12 novembre 2026, remboursement moins les frais Stripe.
-- **Partenaires :** FluffyPuffy (restauration) ; partenaire matériel dévoilé prochainement.
+- **Partenaires :** FluffyPuffy (restauration) et Pickleball Corner (partenaire de l’organisation).
 - **Règlement :** https://gscpickleball.ch/tournoi/reglement/
 
 ## 9. Contact
@@ -294,7 +294,7 @@ Yes — pickleball is one of the most senior-friendly racket sports: smaller cou
 - **Level:** all levels, 18+. Loan paddles on request. Food on site.
 - **Registration:** online, card payment (Stripe), no account needed: https://gscpickleball.ch/en/tournament/ — register alone, with a partner, or ask us to find one.
 - **Cancellation:** until Thursday 12 November 2026, refunded minus Stripe fees.
-- **Partners:** FluffyPuffy (food); equipment partner to be announced soon.
+- **Partners:** FluffyPuffy (food) and Pickleball Corner (organising partner).
 - **Rules:** https://gscpickleball.ch/en/tournament/rules/
 
 ## Contact

@@ -7,9 +7,11 @@ import DoodleShape from './DoodleShape.astro';
 import { tournament, tournamentCopy } from '../i18n/tournament';
 import { facts, routes, type Lang } from '../i18n/ui';
 import fluffyLogo from '../assets/partners/fluffypuffy.webp';
+import cornerLogo from '../assets/partners/pickleballcorner.webp';
 
 const partnerLogos: Record<string, { src: ImageMetadata; alt: string }> = {
   fluffypuffy: { src: fluffyLogo, alt: 'Logo FluffyPuffy' },
+  pickleballcorner: { src: cornerLogo, alt: 'Logo Pickleball Corner' },
 };
 
 interface Props { lang: Lang; }
@@ -166,7 +168,9 @@ const meetupUrl = fr ? facts.meetupUrlFr : facts.meetupUrl;
           rel="noopener"
           class="card-lift group relative flex flex-col bg-white/95 rounded-2xl border-2 border-[#002b2b] p-7 hover:shadow-lg"
         >
-          <DoodleShape kind="sparkle" width={32} delay={1.4} duration={6} class="absolute top-4 right-4 z-10 md:hidden" />
+          {p.id === 'fluffypuffy'
+            ? <DoodleShape kind="sparkle" width={32} delay={1.4} duration={6} class="absolute top-4 right-4 z-10 md:hidden" />
+            : <DoodleShape kind="ball" width={30} delay={2.8} class="absolute top-3 left-3 z-10 md:hidden" />}
           <div class="h-28 mb-6 rounded-xl bg-white flex items-center justify-center px-4">
             <!-- Plain <img>: logos are already small, pre-sized webp files, so they
                  don't depend on Netlify's image CDN (works in local previews too). -->

@@ -83,14 +83,15 @@ export const tournament = {
         en: 'Crêpes, mini pancakes and plenty of other treats to refuel between matches.',
       },
     },
-    // Not announced yet: rendered as a "to be revealed" card (no logo, no link)
-    // and left out of the structured data until it has a name and a url.
     {
-      id: 'equipment-tba',
-      name: '',
-      url: '',
-      role: { fr: 'Partenaire matériel', en: 'Equipment partner' },
-      text: { fr: '', en: '' },
+      id: 'pickleballcorner',
+      name: 'Pickleball Corner',
+      url: 'https://pickleballcorner.ch/fr',
+      role: { fr: 'Partenaire de l’organisation', en: 'Organising partner' },
+      text: {
+        fr: 'Le spécialiste suisse du pickleball est notre partenaire pour l’organisation de cet événement.',
+        en: 'Switzerland’s pickleball specialist is our partner in organising this event.',
+      },
     },
   ],
 } as const;
