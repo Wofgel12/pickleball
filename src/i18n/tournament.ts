@@ -59,7 +59,7 @@ export const tournament = {
   // Exact times are announced later. memberPriceCents applies with the code.
   categories: [
     { id: 'men',   double: true, capacity: 30, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, memberPriceCents: MEMBER_PRICE_DOUBLES_CENTS, name: { fr: 'Double hommes', en: "Men's doubles" } },
-    { id: 'women', double: true, capacity: 20, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, memberPriceCents: MEMBER_PRICE_DOUBLES_CENTS, name: { fr: 'Double dames',  en: "Women's doubles" } },
+    { id: 'women', double: true, capacity: 12, slot: 'morning',   priceCents: PRICE_DOUBLES_CENTS, memberPriceCents: MEMBER_PRICE_DOUBLES_CENTS, name: { fr: 'Double dames',  en: "Women's doubles" } },
     { id: 'mixed', double: true, capacity: 36, slot: 'afternoon', priceCents: PRICE_DOUBLES_CENTS, memberPriceCents: MEMBER_PRICE_DOUBLES_CENTS, name: { fr: 'Double mixte',  en: 'Mixed doubles' } },
   ],
 
