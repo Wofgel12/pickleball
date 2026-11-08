@@ -314,6 +314,15 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
                 <span className="text-2xl font-bold text-gray-900">{formatCHF(c.priceCents, lang)}</span>{' '}
                 <span className="text-sm">{t.perPerson}</span>
               </p>
+              {c.id === tournament.womenWanted && !full && (
+                <div role="note" className="mb-4 flex gap-2 rounded-xl bg-amber-50 px-3 py-2.5 text-sm text-amber-900">
+                  <span aria-hidden="true">⚠️</span>
+                  <p>
+                    <strong className="block">{t.womenWantedTitle}</strong>
+                    {t.womenWantedText}
+                  </p>
+                </div>
+              )}
 
               <div className="mt-auto">
                 {full ? (
@@ -472,6 +481,12 @@ export default function TournamentRegistration({ lang, contactEmail }: Props) {
                   )}
                   <p className="mt-1.5 text-sm text-gray-600">{t.fields.partnerHint}</p>
                 </>
+              )}
+              {p.find && d.id === tournament.womenWanted && (
+                <p role="note" className="flex gap-2 rounded-xl bg-amber-50 px-3 py-2.5 text-sm text-amber-900">
+                  <span aria-hidden="true">⚠️</span>
+                  {t.womenWantedFind}
+                </p>
               )}
               {p.find && err && <p className="text-sm text-red-600">{err}</p>}
             </fieldset>

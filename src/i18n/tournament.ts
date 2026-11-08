@@ -54,6 +54,10 @@ export const tournament = {
   /** Meetup member count quoted in the description (linked to the Meetup page). */
   meetupMembers: { fr: "10'000", en: '10,000' },
 
+  // Draw short of women: a notice on its card and in the form says men can
+  // only register with a partner for now. '' = no notice.
+  womenWanted: 'mixed' as string,
+
   // Capacity counts players (each person registers individually).
   // Morning: men's + women's doubles. Afternoon: mixed doubles.
   // Exact times are announced later. memberPriceCents applies with the code.
@@ -220,6 +224,9 @@ export const tournamentCopy = {
     placesLoading: 'Places limitées',
     full: 'Complet',
     fullNote: 'Contactez les organisateurs si vous avez des questions.',
+    womenWantedTitle: 'Nous recherchons des joueuses !',
+    womenWantedText: 'Pour l’instant, les hommes sans partenaire ne peuvent pas s’inscrire au double mixte.',
+    womenWantedFind: 'Pour l’instant, seules les joueuses peuvent nous demander de leur trouver un partenaire. Messieurs, indiquez le nom de votre partenaire.',
     perPerson: 'par personne',
     choose: 'Choisir',
     chosen: 'Sélectionné',
@@ -329,6 +336,9 @@ export const tournamentCopy = {
     placesLoading: 'Limited places',
     full: 'Full',
     fullNote: 'Contact the organisers if you have any questions.',
+    womenWantedTitle: 'We’re looking for women players!',
+    womenWantedText: 'For now, men without a partner can’t register for the mixed doubles.',
+    womenWantedFind: 'For now, only women can ask us to find them a partner. Gentlemen, please enter your partner’s name.',
     perPerson: 'per person',
     choose: 'Choose',
     chosen: 'Selected',
